@@ -1,0 +1,235 @@
+{
+  "states": [
+    {
+      "id": "MH",
+      "name": "Maharashtra",
+      "districts": [
+        {
+          "id": "MH-AH",
+          "name": "Ahmednagar",
+          "talukas": [
+            { "id": "MH-AH-AH", "name": "Ahmednagar", "villages": ["Ahmednagar City", "Bhende", "Deogaon", "Gevrai", "Ghodegaon", "Hamidpur", "Hivre Bazar", "Kharda", "Mhaswad", "Nighoj", "Pimpalgaon Ujjaini", "Savedi", "Shrirampur Road", "Tembhurni", "Varai"] },
+            { "id": "MH-AH-KT", "name": "Karjat", "villages": ["Karjat", "Bhor", "Kalamb", "Lonere", "Nira", "Pimpode", "Posheri", "Wadgaon", "Waki"] },
+            { "id": "MH-AH-NK", "name": "Newasa", "villages": ["Newasa", "Bodhegaon", "Dahigaon", "Ghargaon", "Kolhar", "Pimparkhed", "Sar", "Tharola"] },
+            { "id": "MH-AH-RJ", "name": "Rahuri", "villages": ["Rahuri", "Belapur", "Bhimashankar", "Dhamangaon", "Jeur", "Kolhari", "Samsherpur", "Shrirampur", "Vandali"] },
+            { "id": "MH-AH-SG", "name": "Sangamner", "villages": ["Sangamner", "Agasti", "Chinchpur", "Ghargaon", "Koregaon", "Pimpri", "Takali Dhokeshwar"] },
+            { "id": "MH-AH-SP", "name": "Shrigonda", "villages": ["Shrigonda", "Belwandi", "Bhigwan", "Ghogargaon", "Kanhur", "Khamgaon", "Murud", "Nimblak", "Undargaon"] }
+          ]
+        },
+        {
+          "id": "MH-PU",
+          "name": "Pune",
+          "talukas": [
+            { "id": "MH-PU-PU", "name": "Pune City", "villages": ["Shivajinagar", "Hadapsar", "Kothrud", "Wakad", "Baner", "Kharadi", "Viman Nagar", "Aundh", "Pimple Saudagar", "Kondhwa"] },
+            { "id": "MH-PU-MV", "name": "Maval", "villages": ["Maval", "Chirner", "Gherapurandar", "Kamshet", "Katraj", "Nane", "Paud", "Pirangut", "Talegaon Dabhade", "Vadgaon Maval", "Vadhu Budruk"] },
+            { "id": "MH-PU-HV", "name": "Haveli", "villages": ["Haveli", "Alandi", "Chakan", "Dehu Road", "Khardi", "Lohagaon", "Phursungi", "Wagholi", "Waghoshi"] },
+            { "id": "MH-PU-BB", "name": "Baramati", "villages": ["Baramati", "Bhigwan", "Gaudgaon", "Indapur", "Kadband", "Katewadi", "Khamgaon", "Koregaon Bhima", "Lonand", "Mhasoba", "Nira", "Pargaon", "Pimpri", "Saswad", "Supa"] },
+            { "id": "MH-PU-BH", "name": "Bhor", "villages": ["Bhor", "Gherapurandar", "Hambarde", "Jejuri", "Nasrapur", "Pargaon", "Shirgaon", "Velhe", "Wai"] },
+            { "id": "MH-PU-KH", "name": "Khed", "villages": ["Khed", "Alandi", "Ashtapur", "Chakan", "Dehu", "Ghodeegaon", "Nigdi", "Rajgurunagar", "Sasvad", "Shikrapur"] }
+          ]
+        },
+        {
+          "id": "MH-NG",
+          "name": "Nagpur",
+          "talukas": [
+            { "id": "MH-NG-NG", "name": "Nagpur Urban", "villages": ["Nagpur City", "Ajni", "Ambazari", "Amravati Road", "Besa", "Butibori", "Hudkeshwar", "Kamptee", "Katol Road", "Manewada", "Wadi"] },
+            { "id": "MH-NG-KM", "name": "Kamptee", "villages": ["Kamptee", "Bhandewadi", "Gorewada", "Khapa", "Parsodi", "Pili", "Ramtek", "Saoner"] },
+            { "id": "MH-NG-HN", "name": "Hingna", "villages": ["Hingna", "Agargaon", "Bhandarbodi", "Borkhedi", "Gumgaon", "Khapa", "Kolar", "Mauda", "Pipla", "Wathoda"] },
+            { "id": "MH-NG-RP", "name": "Ramtek", "villages": ["Ramtek", "Bodwad", "Ghugus", "Kandri", "Khairlanji", "Mansar", "Narkhed", "Saoner", "Umred"] }
+          ]
+        },
+        {
+          "id": "MH-NS",
+          "name": "Nashik",
+          "talukas": [
+            { "id": "MH-NS-NS", "name": "Nashik", "villages": ["Nashik City", "Ambad", "Chandwad", "Dindori", "Igatpuri", "Kalwan", "Malegaon", "Nandgaon", "Niphad", "Sinnar", "Surgana", "Trimbakeshwar", "Yeola"] },
+            { "id": "MH-NS-DI", "name": "Dindori", "villages": ["Dindori", "Chandwad", "Ghoti", "Kedarkheda", "Manmad", "Niphad", "Peth", "Vani"] },
+            { "id": "MH-NS-NP", "name": "Niphad", "villages": ["Niphad", "Chandori", "Lasalgaon", "Nampur", "Palkhed", "Sarole", "Sonewadi", "Vadner"] }
+          ]
+        },
+        {
+          "id": "MH-KL",
+          "name": "Kolhapur",
+          "talukas": [
+            { "id": "MH-KL-KL", "name": "Kolhapur", "villages": ["Kolhapur City", "Ajara", "Bavda", "Bhudargad", "Gadhinglaj", "Gaganbawda", "Hatkanangle", "Kagal", "Karveer", "Panhala", "Radhanagari", "Shahuwadi", "Shirol"] },
+            { "id": "MH-KL-KG", "name": "Kagal", "villages": ["Kagal", "Bhalawani", "Ganesh Colony", "Gandhinglaj", "Kadgaon", "Kolhapur Road", "Kurundwad", "Nool", "Shirol", "Vadgaon"] }
+          ]
+        },
+        {
+          "id": "MH-ST",
+          "name": "Satara",
+          "talukas": [
+            { "id": "MH-ST-ST", "name": "Satara", "villages": ["Satara City", "Dahivadi", "Karad", "Khandala", "Koregaon", "Mahabaleshwar", "Man", "Patan", "Phaltan", "Wai"] },
+            { "id": "MH-ST-KR", "name": "Karad", "villages": ["Karad", "Atpadi", "Bavachi", "Borgaon", "Chaphal", "Gureghar", "Kasegaon", "Kodoli", "Koregaon", "Mhaswad", "Ogalewadi"] }
+          ]
+        },
+        {
+          "id": "MH-SO",
+          "name": "Solapur",
+          "talukas": [
+            { "id": "MH-SO-SO", "name": "Solapur North", "villages": ["Solapur City", "Akkalkot", "Barshi", "Karmala", "Madha", "Malshiras", "Mangalwedha", "Mohol", "Pandharpur", "Sangola", "South Solapur"] },
+            { "id": "MH-SO-PD", "name": "Pandharpur", "villages": ["Pandharpur", "Bhose", "Kumbhari", "Mangalwedha", "Narayanpur", "Sarkoli", "Wakav"] }
+          ]
+        },
+        {
+          "id": "MH-AU",
+          "name": "Aurangabad",
+          "talukas": [
+            { "id": "MH-AU-AU", "name": "Aurangabad", "villages": ["Aurangabad City", "Gangapur", "Kannad", "Khuldabad", "Paithan", "Phulambri", "Sillod", "Soegaon", "Vaijapur"] },
+            { "id": "MH-AU-GN", "name": "Gangapur", "villages": ["Gangapur", "Bhokardan", "Daultabad", "Ellora", "Kanchanwadi", "Lasur", "Nandur Shingote", "Pimpri Raja"] }
+          ]
+        },
+        {
+          "id": "MH-AM",
+          "name": "Amravati",
+          "talukas": [
+            { "id": "MH-AM-AM", "name": "Amravati", "villages": ["Amravati City", "Achalpur", "Anjangaon Surji", "Chandur Bazar", "Chandur Railway", "Chikhaldara", "Daryapur", "Dharni", "Morshi", "Nandgaon Khandeshwar", "Teosa", "Tiwsa", "Warud"] },
+            { "id": "MH-AM-AC", "name": "Achalpur", "villages": ["Achalpur", "Chandurbazar", "Dhamangaon Railway", "Dhulghat", "Murtizapur", "Nandgaon Khandeshwar", "Paratwada"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GJ",
+      "name": "Gujarat",
+      "districts": [
+        {
+          "id": "GJ-AH",
+          "name": "Ahmedabad",
+          "talukas": [
+            { "id": "GJ-AH-AH", "name": "Ahmedabad City", "villages": ["Ahmedabad", "Bopal", "Chandkheda", "Gota", "Motera", "Naranpura", "Naroda", "Nikol", "Sanand", "Vatva"] },
+            { "id": "GJ-AH-SN", "name": "Sanand", "villages": ["Sanand", "Bavla", "Changodar", "Dehgam", "Kasindra", "Kheda", "Vejalpur"] }
+          ]
+        },
+        {
+          "id": "GJ-SR",
+          "name": "Surat",
+          "talukas": [
+            { "id": "GJ-SR-SR", "name": "Surat City", "villages": ["Surat", "Adajan", "Althan", "Dindoli", "Katargam", "Pandesara", "Sachin", "Udhna", "Varachha"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "UP",
+      "name": "Uttar Pradesh",
+      "districts": [
+        {
+          "id": "UP-LK",
+          "name": "Lucknow",
+          "talukas": [
+            { "id": "UP-LK-LK", "name": "Lucknow", "villages": ["Lucknow City", "Aishbagh", "Alambagh", "Chinhat", "Gomti Nagar", "Hazratganj", "Indira Nagar", "Mallhaur", "Mahanagar", "Nishatganj"] }
+          ]
+        },
+        {
+          "id": "UP-AG",
+          "name": "Agra",
+          "talukas": [
+            { "id": "UP-AG-AG", "name": "Agra", "villages": ["Agra City", "Dayalbagh", "Fatehpur Sikri", "Khandauli", "Nunhai", "Rohta", "Shahganj", "Tajganj"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MP",
+      "name": "Madhya Pradesh",
+      "districts": [
+        {
+          "id": "MP-BH",
+          "name": "Bhopal",
+          "talukas": [
+            { "id": "MP-BH-BH", "name": "Bhopal", "villages": ["Bhopal City", "Bairagarh", "Berasia", "Huzur", "Kolar Road", "Mandideep", "Misrod", "Ratibad"] }
+          ]
+        },
+        {
+          "id": "MP-IN",
+          "name": "Indore",
+          "talukas": [
+            { "id": "MP-IN-IN", "name": "Indore", "villages": ["Indore City", "Depalpur", "Mhow", "Sanwer", "Simrol"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PB",
+      "name": "Punjab",
+      "districts": [
+        {
+          "id": "PB-LU",
+          "name": "Ludhiana",
+          "talukas": [
+            { "id": "PB-LU-LU", "name": "Ludhiana", "villages": ["Ludhiana City", "Dakha", "Jagraon", "Khanna", "Machhiwara", "Raikot", "Samrala"] }
+          ]
+        },
+        {
+          "id": "PB-AM",
+          "name": "Amritsar",
+          "talukas": [
+            { "id": "PB-AM-AM", "name": "Amritsar", "villages": ["Amritsar City", "Ajnala", "Attari", "Baba Bakala", "Majitha", "Ramdas", "Tarn Taran"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HR",
+      "name": "Haryana",
+      "districts": [
+        {
+          "id": "HR-KR",
+          "name": "Karnal",
+          "talukas": [
+            { "id": "HR-KR-KR", "name": "Karnal", "villages": ["Karnal City", "Gharaunda", "Indri", "Nilokheri", "Taraori"] }
+          ]
+        },
+        {
+          "id": "HR-HI",
+          "name": "Hisar",
+          "talukas": [
+            { "id": "HR-HI-HI", "name": "Hisar", "villages": ["Hisar City", "Adampur", "Agroha", "Barwala", "Hansi", "Narnaund", "Uklana"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RJ",
+      "name": "Rajasthan",
+      "districts": [
+        {
+          "id": "RJ-JP",
+          "name": "Jaipur",
+          "talukas": [
+            { "id": "RJ-JP-JP", "name": "Jaipur", "villages": ["Jaipur City", "Amer", "Chomu", "Dudu", "Kotputli", "Phulera", "Sambhar", "Shahpura", "Viratnagar"] }
+          ]
+        },
+        {
+          "id": "RJ-JO",
+          "name": "Jodhpur",
+          "talukas": [
+            { "id": "RJ-JO-JO", "name": "Jodhpur", "villages": ["Jodhpur City", "Balesar", "Bhopalgarh", "Bilara", "Luni", "Mandore", "Osian", "Shergarh"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KA",
+      "name": "Karnataka",
+      "districts": [
+        {
+          "id": "KA-BL",
+          "name": "Bengaluru Urban",
+          "talukas": [
+            { "id": "KA-BL-BL", "name": "Bengaluru North", "villages": ["Bengaluru City", "Devanahalli", "Doddaballapur", "Hesaraghatta", "Jala", "Yelahanka"] },
+            { "id": "KA-BL-BS", "name": "Bengaluru South", "villages": ["Anekal", "Attibele", "Bannerghatta", "Electronic City", "Hebbagodi", "Jigani", "Sarjapur"] }
+          ]
+        },
+        {
+          "id": "KA-MY",
+          "name": "Mysuru",
+          "talukas": [
+            { "id": "KA-MY-MY", "name": "Mysuru", "villages": ["Mysuru City", "H D Kote", "Hunsur", "Krishnarajanagara", "Nanjangud", "Periyapatna", "T Narasipur"] }
+          ]
+        }
+      ]
+    }
+  ]
+}
