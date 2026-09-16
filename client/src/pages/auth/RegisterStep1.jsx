@@ -10,7 +10,13 @@ import { requestOTP } from "../../services/authService";
 import { ROLE_OPTIONS } from "../../constants/roles";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
-import { Sprout } from "lucide-react";
+import { Sprout, Tractor, HardHat, Store, CheckCircle2 } from "lucide-react";
+
+const PREMIUM_ROLES = [
+  { id: "farmer", label: "Farmer", icon: Tractor, activeBorder: "border-emerald-500", activeBg: "bg-emerald-50", iconColor: "text-emerald-500", badgeBg: "bg-emerald-500" },
+  { id: "labour", label: "Labour", icon: HardHat, activeBorder: "border-amber-500", activeBg: "bg-amber-50", iconColor: "text-amber-500", badgeBg: "bg-amber-500" },
+  { id: "dealer", label: "Dealer", icon: Store, activeBorder: "border-blue-500", activeBg: "bg-blue-50", iconColor: "text-blue-500", badgeBg: "bg-blue-500" },
+];
 
 /**
  * Registration Step 1 — Personal Information + Get OTP
@@ -107,13 +113,14 @@ const RegisterStep1 = ({ onSuccess }) => {
               placeholder="9876543210"
               type="tel"
               inputMode="numeric"
-              maxLength={15}
+              maxLength={10}
+              prefix="+91"
               error={errors.mobile?.message}
               {...register("mobile", {
                 required: "Mobile number is required.",
                 pattern: {
-                  value: /^(\+91|91|0)?[6-9]\d{9}$/,
-                  message: "Please enter a valid Indian mobile number.",
+                  value: /^[6-9]\d{9}$/,
+                  message: "Please enter a valid 10-digit Indian mobile number.",
                 },
               })}
             />
@@ -156,17 +163,43 @@ const RegisterStep1 = ({ onSuccess }) => {
               })}
             />
 
-            {/* Role */}
-            <Select
-              id="role"
-              label="I am a"
-              placeholder="Select your role"
-              options={ROLE_OPTIONS}
-              error={errors.role?.message}
-              {...register("role", {
-                required: "Please select your role.",
-              })}
-            />
+            {/* Premium Role Selector */}
+            <div className="mb-6">
+              <label className="input-label mb-3">I am a</label>
+              <div className="grid grid-cols-3 gap-3">
+                {PREMIUM_ROLES.map((role) => {
+                  const Icon = role.icon;
+                  const isActive = selectedRole === role.id;
+                  return (
+                    <label
+                      key={role.id}
+                      className={`relative flex flex-col items-center justify-center p-4 rounded-2xl cursor-pointer border-2 transition-all duration-300 ${
+                        isActive
+                          ? `${role.activeBorder} ${role.activeBg} shadow-md scale-105`
+                          : "border-surface-200 bg-white/70 hover:bg-white hover:border-primary-300 hover:shadow-sm hover:-translate-y-1"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value={role.id}
+                        className="sr-only"
+                        {...register("role", { required: "Please select your role." })}
+                      />
+                      <Icon className={`w-8 h-8 mb-2 transition-colors ${isActive ? role.iconColor : "text-gray-400"}`} />
+                      <span className={`text-sm font-bold transition-colors ${isActive ? "text-gray-900" : "text-gray-500"}`}>
+                        {role.label}
+                      </span>
+                      {isActive && (
+                        <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${role.badgeBg} flex items-center justify-center shadow-sm animate-fade-in`}>
+                          <CheckCircle2 className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                    </label>
+                  );
+                })}
+              </div>
+              {errors.role && <p className="error-text mt-2" role="alert">{errors.role.message}</p>}
+            </div>
 
             <Button type="submit" loading={loading} className="mt-4">
               Get OTP
