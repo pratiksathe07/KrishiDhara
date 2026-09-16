@@ -102,8 +102,8 @@ const Login = () => {
     <AnimatedBackground>
       <div className="auth-card">
         {/* Brand header */}
-        <div className="text-center mb-8 relative z-10">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto object-contain mb-4 animate-float drop-shadow-xl rounded-xl" />
+        <div className="text-center mb-8 relative z-10 flex flex-col items-center">
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-4 animate-float drop-shadow-xl rounded-xl" />
           <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Agricultural Services Platform</p>
         </div>
 
