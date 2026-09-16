@@ -9,6 +9,8 @@ import LocationSelector from "../../components/LocationSelector";
 import { register as registerApi } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 
+import AnimatedBackground from "../../components/ui/AnimatedBackground";
+
 /**
  * Registration Step 3 — Farmer Profile (Land Location + Gat No)
  */
@@ -66,22 +68,23 @@ const RegisterStep3Farmer = ({ verifiedData }) => {
   };
 
   return (
-    <div className="page-container">
+    <AnimatedBackground>
       <div className="auth-card">
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-600 mb-3 shadow-lg">
-            <span className="text-2xl">🌾</span>
+        <div className="text-center mb-6 relative z-10">
+          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
+            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
+            <span className="text-3xl relative z-10">🌾</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Farmer Profile</h1>
-          <p className="text-sm text-gray-500 mt-1">Tell us about your land</p>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Farmer Profile</h1>
+          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Tell us about your land</p>
         </div>
 
         <StepIndicator currentStep={3} />
 
-        <div className="card">
-          <div className="flex items-center gap-2 mb-5 pb-4 border-b border-surface-100">
-            <span className="text-lg">📍</span>
-            <h2 className="text-base font-semibold text-gray-800">Land Location</h2>
+        <div className="card mt-6 animate-slide-up">
+          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-surface-200/50">
+            <span className="text-xl">📍</span>
+            <h2 className="text-lg font-bold text-gray-800">Land Location</h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -103,7 +106,7 @@ const RegisterStep3Farmer = ({ verifiedData }) => {
               })}
             />
 
-            <div className="mt-2">
+            <div className="mt-4">
               <Button type="submit" loading={loading}>
                 Complete Registration
               </Button>
@@ -111,7 +114,7 @@ const RegisterStep3Farmer = ({ verifiedData }) => {
           </form>
         </div>
       </div>
-    </div>
+    </AnimatedBackground>
   );
 };
 

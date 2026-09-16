@@ -8,6 +8,8 @@ import ProductSelector from "../../components/ProductSelector";
 import { register as registerApi } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 
+import AnimatedBackground from "../../components/ui/AnimatedBackground";
+
 /**
  * Registration Step 3 — Dealer Profile (Address + Products)
  */
@@ -47,24 +49,25 @@ const RegisterStep3Dealer = ({ verifiedData }) => {
   };
 
   return (
-    <div className="page-container">
+    <AnimatedBackground>
       <div className="auth-card" style={{ maxWidth: "560px" }}>
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-600 mb-3 shadow-lg">
-            <span className="text-2xl">🌾</span>
+        <div className="text-center mb-6 relative z-10">
+          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
+            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
+            <span className="text-3xl relative z-10">🌾</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Dealer Profile</h1>
-          <p className="text-sm text-gray-500 mt-1">Complete your agricultural dealer profile</p>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Dealer Profile</h1>
+          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Complete your agricultural dealer profile</p>
         </div>
 
         <StepIndicator currentStep={3} />
 
-        <div className="card">
-          <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
+        <div className="card mt-6 animate-slide-up">
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
 
             {/* Address */}
             <div>
-              <label htmlFor="address" className="input-label">Address</label>
+              <label htmlFor="address" className="input-label font-semibold text-gray-700">Address</label>
               <textarea
                 id="address"
                 placeholder="Your business address..."
@@ -75,15 +78,15 @@ const RegisterStep3Dealer = ({ verifiedData }) => {
                   maxLength: { value: 300, message: "Address is too long." },
                 })}
               />
-              {errors.address && <p className="error-text">{errors.address.message}</p>}
+              {errors.address && <p className="error-text font-medium">{errors.address.message}</p>}
             </div>
 
             {/* Status — display only */}
-            <div className="bg-surface-50 border border-surface-200 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-500 font-medium mb-0.5">Account Status</p>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                <span className="text-sm font-semibold text-green-700">Active</span>
+            <div className="bg-surface-50/80 backdrop-blur-sm border border-surface-200/50 rounded-xl px-4 py-3">
+              <p className="text-xs text-gray-500 font-medium mb-1">Account Status</p>
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></span>
+                <span className="text-sm font-bold text-green-700 tracking-wide">Active</span>
               </div>
             </div>
 
@@ -94,13 +97,15 @@ const RegisterStep3Dealer = ({ verifiedData }) => {
               error={productError}
             />
 
-            <Button type="submit" loading={loading}>
-              Complete Registration
-            </Button>
+            <div className="pt-2">
+              <Button type="submit" loading={loading}>
+                Complete Registration
+              </Button>
+            </div>
           </form>
         </div>
       </div>
-    </div>
+    </AnimatedBackground>
   );
 };
 

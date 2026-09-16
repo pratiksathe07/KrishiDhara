@@ -26,11 +26,11 @@
 @layer components {
   /* ── Form Input ─────────────────────────────── */
   .input-field {
-    @apply w-full rounded-xl border border-surface-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm
-           placeholder:text-gray-400
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+    @apply w-full rounded-xl border border-surface-200 bg-white/70 px-4 py-3 text-sm text-gray-900 shadow-sm
+           backdrop-blur-sm placeholder:text-gray-400
+           focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-400 focus:-translate-y-0.5 focus:shadow-md
            disabled:cursor-not-allowed disabled:bg-surface-100 disabled:text-gray-500
-           transition duration-150;
+           transition-all duration-300;
   }
 
   .input-field.error {
@@ -44,74 +44,83 @@
 
   /* ── Primary Button ─────────────────────────── */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2
-           rounded-xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white
-           shadow-sm hover:bg-primary-700 active:bg-primary-800
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2
+           rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-3 text-sm font-bold text-white
+           shadow-md hover:shadow-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-95
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-           disabled:cursor-not-allowed disabled:opacity-60
-           transition duration-150 w-full;
+           disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-md
+           transition-all duration-300 w-full;
+  }
+
+  /* Shimmer effect inside primary button */
+  .btn-primary::after {
+    content: '';
+    @apply absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg];
+  }
+  .btn-primary:not(:disabled):hover::after {
+    @apply animate-shimmer;
   }
 
   /* ── Secondary / Outline Button ─────────────── */
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2
-           rounded-xl border border-surface-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700
-           shadow-sm hover:bg-surface-50 hover:border-surface-300 active:bg-surface-100
+           rounded-xl border border-surface-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-700 backdrop-blur-sm
+           shadow-sm hover:bg-surface-50 hover:border-surface-300 hover:-translate-y-0.5 active:bg-surface-100 active:translate-y-0 active:scale-95
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-           disabled:cursor-not-allowed disabled:opacity-60
-           transition duration-150 w-full;
+           disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0
+           transition-all duration-300 w-full;
   }
 
   /* ── Ghost Button (for links like "Back") ───── */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-1.5
            text-sm font-medium text-primary-600 hover:text-primary-700
-           focus:outline-none focus:underline
-           transition duration-150;
+           focus:outline-none focus:underline hover:scale-105 active:scale-95
+           transition duration-300;
   }
 
   /* ── Card ───────────────────────────────────── */
   .card {
-    @apply rounded-2xl bg-white shadow-card border border-surface-100 p-6 sm:p-8;
+    @apply rounded-3xl bg-white/80 shadow-glass border border-white/40 p-6 sm:p-8 backdrop-blur-md relative z-10
+           hover:shadow-glass-hover transition-all duration-500;
   }
 
   /* ── Page container ─────────────────────────── */
   .page-container {
-    @apply min-h-screen bg-gradient-to-br from-primary-50 via-white to-earth-50
-           flex items-center justify-center px-4 py-12;
+    @apply min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-12 bg-surface-50;
   }
 
   /* ── Auth card wrapper ──────────────────────── */
   .auth-card {
-    @apply w-full max-w-md;
+    @apply w-full max-w-md relative z-10 animate-slide-up;
   }
 
   /* ── Error text ─────────────────────────────── */
   .error-text {
-    @apply text-xs text-red-500 mt-1;
+    @apply text-xs text-red-500 mt-1 animate-fade-in;
   }
 
   /* ── Skill/Product chip ─────────────────────── */
   .chip {
-    @apply inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium
-           cursor-pointer select-none transition duration-150;
+    @apply inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-medium
+           cursor-pointer select-none transition-all duration-300 backdrop-blur-sm;
   }
 
   .chip-unselected {
-    @apply bg-surface-100 text-gray-600 border border-surface-200 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700;
+    @apply bg-white/60 text-gray-600 border border-surface-200 hover:bg-primary-50/80 hover:border-primary-300 hover:text-primary-700 hover:-translate-y-0.5 hover:shadow-sm;
   }
 
   .chip-selected {
-    @apply bg-primary-100 text-primary-800 border border-primary-300;
+    @apply bg-gradient-to-r from-primary-100 to-primary-50 text-primary-800 border border-primary-400 shadow-sm scale-[1.02];
   }
 
   /* ── Step indicator dot ─────────────────────── */
   .step-dot {
-    @apply flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition duration-300;
+    @apply flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all duration-500 relative overflow-hidden;
   }
 
   .step-dot-active {
-    @apply bg-primary-600 text-white shadow-md ring-4 ring-primary-200;
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-glow ring-4 ring-primary-200/50 scale-110;
   }
 
   .step-dot-completed {
@@ -119,14 +128,14 @@
   }
 
   .step-dot-pending {
-    @apply bg-surface-200 text-gray-500;
+    @apply bg-surface-200/80 backdrop-blur-sm text-gray-500 border border-surface-300;
   }
 
   /* ── OTP Input box ──────────────────────────── */
   .otp-box {
-    @apply h-12 w-11 rounded-xl border-2 border-surface-200 bg-white text-center text-xl font-bold text-gray-900
-           focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none
-           transition duration-150;
+    @apply h-14 w-12 rounded-xl border-2 border-surface-200 bg-white/70 backdrop-blur-sm text-center text-2xl font-bold text-gray-900
+           focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 focus:outline-none focus:-translate-y-1 focus:shadow-md
+           transition-all duration-300;
   }
 }
 

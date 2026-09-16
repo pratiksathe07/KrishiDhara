@@ -5,6 +5,8 @@ import Button from "../../components/ui/Button";
 import StepIndicator from "../../components/ui/StepIndicator";
 import { verifyOTP, requestOTP } from "../../services/authService";
 
+import AnimatedBackground from "../../components/ui/AnimatedBackground";
+
 const RESEND_COOLDOWN = 60; // seconds
 
 /**
@@ -71,35 +73,36 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
   };
 
   return (
-    <div className="page-container">
+    <AnimatedBackground>
       <div className="auth-card">
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-600 mb-3 shadow-lg">
-            <span className="text-2xl">🌾</span>
+        <div className="text-center mb-6 relative z-10">
+          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
+            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
+            <span className="text-3xl relative z-10">🌾</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
-          <p className="text-sm text-gray-500 mt-1">One step closer to joining KrishiDhara</p>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Verify Your Email</h1>
+          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">One step closer to joining KrishiDhara</p>
         </div>
 
         <StepIndicator currentStep={2} />
 
-        <div className="card">
+        <div className="card mt-6 animate-slide-up">
           {/* Email display */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 bg-primary-50 border border-primary-200 rounded-xl px-4 py-2 mb-1">
-              <svg className="h-4 w-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="inline-flex items-center gap-2 bg-primary-50/80 backdrop-blur-sm border border-primary-200/50 rounded-xl px-4 py-2 mb-2 shadow-inner">
+              <svg className="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="text-sm font-semibold text-primary-700">{step1Data.email}</span>
+              <span className="text-sm font-semibold text-primary-800 tracking-wide">{step1Data.email}</span>
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm font-medium text-gray-500 mt-1">
               We sent a 6-digit code to your email address.
             </p>
           </div>
 
           {/* OTP Input */}
-          <div className="mb-5">
-            <label className="input-label text-center block mb-3">Enter OTP</label>
+          <div className="mb-6">
+            <label className="input-label text-center block mb-3 font-semibold text-gray-700">Enter OTP</label>
             <OTPInput
               value={otpDigits}
               onChange={setOtpDigits}
@@ -107,7 +110,7 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
               error={!!error}
             />
             {error && (
-              <p className="error-text text-center mt-2" role="alert">{error}</p>
+              <p className="error-text text-center mt-3 font-medium" role="alert">{error}</p>
             )}
           </div>
 
@@ -121,7 +124,7 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
           </Button>
 
           {/* Resend + Back */}
-          <div className="flex items-center justify-between mt-5">
+          <div className="flex items-center justify-between mt-6 px-1">
             <button
               type="button"
               onClick={onBack}
@@ -131,9 +134,9 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
             </button>
 
             {cooldown > 0 ? (
-              <span className="text-sm text-gray-400">
+              <span className="text-sm font-medium text-gray-400 bg-surface-100 px-3 py-1 rounded-full border border-surface-200">
                 Resend in{" "}
-                <span className="font-semibold text-gray-600 tabular-nums">{cooldown}s</span>
+                <span className="font-bold text-gray-600 tabular-nums">{cooldown}s</span>
               </span>
             ) : (
               <button
@@ -148,7 +151,7 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
           </div>
         </div>
       </div>
-    </div>
+    </AnimatedBackground>
   );
 };
 

@@ -9,6 +9,8 @@ import StepIndicator from "../../components/ui/StepIndicator";
 import { requestOTP } from "../../services/authService";
 import { ROLE_OPTIONS } from "../../constants/roles";
 
+import AnimatedBackground from "../../components/ui/AnimatedBackground";
+
 /**
  * Registration Step 1 — Personal Information + Get OTP
  * On success, calls onSuccess({ email, role, firstName, lastName, mobile, experienceYears })
@@ -58,23 +60,24 @@ const RegisterStep1 = ({ onSuccess }) => {
   };
 
   return (
-    <div className="page-container">
+    <AnimatedBackground>
       <div className="auth-card">
         {/* Brand header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-600 mb-3 shadow-lg">
-            <span className="text-2xl">🌾</span>
+        <div className="text-center mb-6 relative z-10">
+          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
+            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
+            <span className="text-3xl relative z-10">🌾</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-          <p className="text-sm text-gray-500 mt-1">Join the KrishiDhara community</p>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Create Account</h1>
+          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Join the KrishiDhara community</p>
         </div>
 
         <StepIndicator currentStep={1} />
 
-        <div className="card">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">Personal Information</h2>
+        <div className="card mt-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-5">Personal Information</h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="animate-fade-in">
             {/* First Name */}
             <Input
               id="firstName"
@@ -167,20 +170,22 @@ const RegisterStep1 = ({ onSuccess }) => {
               })}
             />
 
-            <Button type="submit" loading={loading} className="mt-2">
+            <Button type="submit" loading={loading} className="mt-4">
               Get OTP
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-5">
-            Already have an account?{" "}
-            <Link to="/login" className="font-semibold text-primary-600 hover:text-primary-700">
-              Log in
-            </Link>
-          </p>
+          <div className="mt-6 pt-5 border-t border-gray-100/50">
+            <p className="text-center text-sm font-medium text-gray-500">
+              Already have an account?{" "}
+              <Link to="/login" className="font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                Log in
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </AnimatedBackground>
   );
 };
 
