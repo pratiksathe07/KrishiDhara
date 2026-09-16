@@ -1,0 +1,51 @@
+# KrishiDhara - Project Requirements
+
+## System Prerequisites
+- Node.js v18 or higher
+- MongoDB (Atlas account or local MongoDB instance)
+- Resend Account + API key (for sending OTP emails)
+
+## Technology Stack
+- Frontend: React, Vite, Tailwind CSS v3, React Router v6, React Hook Form, Axios, react-hot-toast
+- Backend: Node.js, Express.js
+- Database: MongoDB, Mongoose
+- Authentication & Security: JWT (HTTP-only cookies), Helmet, CORS, express-rate-limit, bcryptjs
+- Email Service: Resend SDK
+- OTP Generation: crypto.randomInt (CSPRNG)
+
+## Key Functional Requirements
+- Passwordless OTP Authentication: Email-based login/registration without passwords.
+- User Roles: Three distinct roles - Farmer, Labor, and Dealer.
+- Registration Flow: 3-Step process (Personal info -> OTP verify -> Role-specific profile).
+- Location Selection: Cascading selector (State -> District -> Taluka -> Village) primarily for Farmers.
+- Role-Specific Features: 
+  - Labor: 36 selectable agricultural skills.
+  - Dealer: 59 searchable agricultural products.
+- Authorization: Server-enforced role-based access control (RBAC).
+- Security Constraints: Rate limiting for OTP requests, 5-minute OTP expiry, max 5 attempts, secure cookies.
+
+## Required Environment Variables
+### Server (server/.env)
+- MONGO_URI
+- JWT_SECRET
+- JWT_EXPIRES_IN
+- VERIFICATION_TOKEN_SECRET
+- VERIFICATION_TOKEN_EXPIRES_IN
+- RESEND_API_KEY
+- EMAIL_FROM
+- NODE_ENV
+- PORT
+- CLIENT_URL
+
+### Client (client/.env)
+- VITE_API_URL (For production usage)
+
+## Setup Steps
+1. Backend Setup:
+   - Navigate to `server/` directory
+   - Copy `.env.example` to `.env` and fill in credentials
+   - Run `npm install` and then `npm run dev`
+
+2. Frontend Setup:
+   - Navigate to `client/` directory
+   - Run `npm install` and then `npm run dev`
