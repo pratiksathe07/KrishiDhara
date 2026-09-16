@@ -1,6 +1,6 @@
-// Frontend copy of labor skills — used for UI rendering only.
+// Frontend copy of labour skills — used for UI rendering only.
 // The backend has the authoritative list that validates submissions.
-export const LABOR_SKILLS = [
+export const LABOUR_SKILLS = [
   "Plowing",
   "Harrowing",
   "Land Leveling",

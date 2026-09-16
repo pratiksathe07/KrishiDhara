@@ -1,17 +1,17 @@
 export const ROLES = {
   FARMER: "farmer",
-  LABOR: "labor",
+  LABOUR: "labour",
   DEALER: "dealer",
 };
 
 export const ROLE_LABELS = {
   farmer: "Farmer",
-  labor: "Labor",
+  labour: "Labour",
   dealer: "Dealer",
 };
 
 export const ROLE_OPTIONS = [
   { value: "farmer", label: "Farmer" },
-  { value: "labor", label: "Labor" },
+  { value: "labour", label: "Labour" },
   { value: "dealer", label: "Dealer" },
 ];

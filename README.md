@@ -1,17 +1,17 @@
 # 🌾 KrishiDhara
 
-**KrishiDhara** is a production-grade agricultural services platform connecting Farmers, Agricultural Labor, and Dealers across India. Built on the MERN stack with passwordless OTP-based authentication.
+**KrishiDhara** is a production-grade agricultural services platform connecting Farmers, Agricultural Labour, and Dealers across India. Built on the MERN stack with passwordless OTP-based authentication.
 
 ---
 
 ## Features
 
 - **Passwordless OTP Authentication** — email-based, no passwords
-- **3 User Roles** — Farmer, Labor, Dealer
+- **3 User Roles** — Farmer, Labour, Dealer
 - **Secure OTP Flow** — crypto CSPRNG, bcrypt-hashed, 5-min expiry, 5-attempt limit, 60s resend cooldown
 - **3-Step Registration** — personal info → OTP verify → role-specific profile
 - **Cascading Location Selector** — State → District → Taluka → Village (Farmer)
-- **Labor Skills** — 36 selectable agricultural skills
+- **Labour Skills** — 36 selectable agricultural skills
 - **Dealer Products** — 59 searchable agricultural products
 - **JWT Authentication** — HTTP-only Secure cookies, never localStorage
 - **Role-Based Authorization** — server-enforced, 403 for unauthorized roles
@@ -56,14 +56,14 @@ KrishiDhara/
 │       ├── pages/
 │       │   ├── auth/               ← Login, Register (3 steps × 3 roles)
 │       │   ├── farmer/             ← FarmerDashboard
-│       │   ├── labor/              ← LaborDashboard
+│       │   ├── labour/              ← LabourDashboard
 │       │   └── dealer/             ← DealerDashboard
 │       ├── services/               ← api.js, authService.js, locationService.js
-│       └── constants/              ← roles.js, laborSkills.js, dealerProducts.js
+│       └── constants/              ← roles.js, labourSkills.js, dealerProducts.js
 │
 └── server/                         ← Express backend
     ├── config/                     ← db.js, env.js
-    ├── constants/                  ← roles.js, laborSkills.js, dealerProducts.js
+    ├── constants/                  ← roles.js, labourSkills.js, dealerProducts.js
     ├── controllers/                ← authController.js, locationController.js
     ├── data/                       ← locations.json (India location data)
     ├── middleware/                 ← authenticate.js, authorize.js, errorHandler.js

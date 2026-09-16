@@ -72,21 +72,16 @@ const Home = () => {
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Transparent Navbar */}
         <nav className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="flex items-center gap-3"
           >
-            <div className="bg-primary-500 p-2 rounded-xl bg-opacity-20 backdrop-blur-md border border-primary-400/30">
-               <Sprout className="w-8 h-8 text-primary-400" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight text-white drop-shadow-md">
-              Krishi<span className="text-primary-400">Dhara</span>
-            </span>
+            <Link to="/"><img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto object-contain drop-shadow-lg rounded-xl" /></Link>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -111,12 +106,12 @@ const Home = () => {
 
         {/* Interactive Scroll Video Section (Moved ABOVE the main Hero) */}
         <section ref={videoSectionRef} className="relative w-full max-w-7xl mx-auto px-6 pt-0 pb-20 flex flex-col items-center justify-start">
-          
+
           <motion.div variants={fadeInUp} initial="hidden" animate="show" className="mb-12 -mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-500/30 bg-primary-900/30 backdrop-blur-md shadow-inner">
             <Leaf className="w-4 h-4 text-primary-400" />
             <span className="text-sm font-medium text-primary-200 tracking-wide uppercase">Connecting Agriculture, Digitally</span>
           </motion.div>
-          <motion.div 
+          <motion.div
             style={{ opacity, scale }}
             className="w-full h-[60vh] sm:h-[70vh] rounded-[2.5rem] overflow-hidden relative shadow-[0_0_60px_rgba(34,197,94,0.15)] border border-white/10 group cursor-default bg-gray-900"
           >
@@ -150,7 +145,7 @@ const Home = () => {
                   <span className="text-xs font-semibold text-white tracking-widest uppercase">Interactive Vision</span>
                 </div>
                 <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 drop-shadow-xl leading-tight">
-                  The Future of <br/>
+                  The Future of <br />
                   <span className="text-primary-400">Digital Farming</span>
                 </h2>
 
@@ -187,7 +182,7 @@ const Home = () => {
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light">
-              KrishiDhara connects farmers with agricultural labor and dealers — streamlining hiring, trading, and field management for rural India with modern technology.
+              KrishiDhara connects farmers with agricultural labour and dealers — streamlining hiring, trading, and field management for rural India with modern technology.
             </motion.p>
 
 
@@ -205,7 +200,7 @@ const Home = () => {
           >
             {[
               { icon: Tractor, role: "Farmer", desc: "Manage your land, crops, hire agricultural workers and connect with dealers directly.", color: "from-green-500/20 to-emerald-600/20", iconColor: "text-emerald-400" },
-              { icon: HardHat, role: "Labor", desc: "Find agricultural work near you. Showcase your skills and get hired by farmers.", color: "from-amber-500/20 to-orange-600/20", iconColor: "text-amber-400" },
+              { icon: HardHat, role: "Labour", desc: "Find agricultural work near you. Showcase your skills and get hired by farmers.", color: "from-amber-500/20 to-orange-600/20", iconColor: "text-amber-400" },
               { icon: Store, role: "Dealer", desc: "Connect with farmers to buy and sell agricultural produce and commodities seamlessly.", color: "from-blue-500/20 to-indigo-600/20", iconColor: "text-blue-400" },
             ].map((card, idx) => (
               <motion.div

@@ -9,6 +9,7 @@ import { loginRequestOTP, loginVerifyOTP } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
+import { Sprout } from "lucide-react";
 
 const RESEND_COOLDOWN = 60;
 
@@ -102,11 +103,7 @@ const Login = () => {
       <div className="auth-card">
         {/* Brand header */}
         <div className="text-center mb-8 relative z-10">
-          <div className="relative inline-flex items-center justify-center h-20 w-20 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-4 shadow-glass animate-float">
-            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
-            <span className="text-4xl relative z-10">🌾</span>
-          </div>
-          <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">KrishiDhara</h1>
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto object-contain mb-4 animate-float drop-shadow-xl rounded-xl" />
           <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Agricultural Services Platform</p>
         </div>
 

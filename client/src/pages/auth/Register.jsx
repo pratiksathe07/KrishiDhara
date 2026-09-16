@@ -2,7 +2,7 @@ import { useState } from "react";
 import RegisterStep1 from "./RegisterStep1";
 import RegisterStep2 from "./RegisterStep2";
 import RegisterStep3Farmer from "./RegisterStep3Farmer";
-import RegisterStep3Labor from "./RegisterStep3Labor";
+import RegisterStep3Labour from "./RegisterStep3Labour";
 import RegisterStep3Dealer from "./RegisterStep3Dealer";
 
 /**
@@ -52,8 +52,8 @@ const Register = () => {
     switch (verifiedData.role) {
       case "farmer":
         return <RegisterStep3Farmer verifiedData={verifiedData} />;
-      case "labor":
-        return <RegisterStep3Labor verifiedData={verifiedData} />;
+      case "labour":
+        return <RegisterStep3Labour verifiedData={verifiedData} />;
       case "dealer":
         return <RegisterStep3Dealer verifiedData={verifiedData} />;
       default:

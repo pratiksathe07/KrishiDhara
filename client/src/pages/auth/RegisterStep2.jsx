@@ -6,6 +6,7 @@ import StepIndicator from "../../components/ui/StepIndicator";
 import { verifyOTP, requestOTP } from "../../services/authService";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
+import { Sprout } from "lucide-react";
 
 const RESEND_COOLDOWN = 60; // seconds
 
@@ -59,7 +60,7 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
         mobile: step1Data.mobile,
         role: step1Data.role,
       };
-      if (step1Data.role === "labor") payload.experienceYears = step1Data.experienceYears;
+      if (step1Data.role === "labour") payload.experienceYears = step1Data.experienceYears;
 
       await requestOTP(payload);
       toast.success("New OTP sent! Please check your email.");
@@ -76,10 +77,7 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
     <AnimatedBackground>
       <div className="auth-card">
         <div className="text-center mb-6 relative z-10">
-          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
-            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
-            <span className="text-3xl relative z-10">🌾</span>
-          </div>
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
           <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Verify Your Email</h1>
           <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">One step closer to joining KrishiDhara</p>
         </div>

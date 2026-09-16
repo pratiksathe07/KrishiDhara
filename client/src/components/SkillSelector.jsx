@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { LABOR_SKILLS } from "../constants/laborSkills";
+import { LABOUR_SKILLS } from "../constants/labourSkills";
 
 /**
- * SkillSelector — multi-select chip grid for labor skills.
+ * SkillSelector — multi-select chip grid for labour skills.
  * Shows selected count. All chips are touch-friendly.
  */
 const SkillSelector = ({ value = [], onChange, error }) => {
   const [search, setSearch] = useState("");
 
-  const filtered = LABOR_SKILLS.filter((skill) =>
+  const filtered = LABOUR_SKILLS.filter((skill) =>
     skill.toLowerCase().includes(search.toLowerCase())
   );
 

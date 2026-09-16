@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { ALLOWED_ROLES } = require("../constants/roles");
-const { ALLOWED_SKILLS } = require("../constants/laborSkills");
+const { ALLOWED_SKILLS } = require("../constants/labourSkills");
 const { ALLOWED_PRODUCTS } = require("../constants/dealerProducts");
 
 // ─── Sub-schemas ───────────────────────────────────────────────────────────
@@ -25,11 +25,11 @@ const farmerProfileSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const laborProfileSchema = new mongoose.Schema(
+const labourProfileSchema = new mongoose.Schema(
   {
     experienceYears: {
       type: Number,
-      required: [true, "Experience in agricultural labor is required."],
+      required: [true, "Experience in agricultural labour is required."],
       min: [0, "Experience cannot be negative."],
       max: [60, "Experience cannot exceed 60 years."],
       validate: {
@@ -98,7 +98,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Role is required."],
       enum: {
         values: ALLOWED_ROLES,
-        message: "Role must be one of: farmer, labor, dealer.",
+        message: "Role must be one of: farmer, labour, dealer.",
       },
     },
     status: {
@@ -106,7 +106,7 @@ const userSchema = new mongoose.Schema(
       enum: ["active", "inactive"],
       default: "active",
     },
-    // Address is used by labor and dealer
+    // Address is used by labour and dealer
     address: {
       type: String,
       trim: true,
@@ -118,9 +118,9 @@ const userSchema = new mongoose.Schema(
       type: farmerProfileSchema,
       default: undefined,
     },
-    // Only populated for role = labor
-    laborProfile: {
-      type: laborProfileSchema,
+    // Only populated for role = labour
+    labourProfile: {
+      type: labourProfileSchema,
       default: undefined,
     },
     // Only populated for role = dealer

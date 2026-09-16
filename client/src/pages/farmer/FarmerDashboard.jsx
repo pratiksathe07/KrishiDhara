@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Sprout } from "lucide-react";
 
 const NAV_ITEMS = [
   { icon: "🏠", label: "Dashboard", href: "/farmer/dashboard" },
   { icon: "🌍", label: "My Land", href: "#" },
   { icon: "🌱", label: "Crops", href: "#" },
-  { icon: "👷", label: "Hire Labor", href: "#" },
+  { icon: "👷", label: "Hire Labour", href: "#" },
   { icon: "🏪", label: "Dealers", href: "#" },
 ];
 
@@ -24,8 +25,7 @@ const FarmerDashboard = () => {
       <header className="bg-white border-b border-surface-200 shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🌾</span>
-            <span className="text-lg font-bold text-primary-700">KrishiDhara</span>
+            <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg" />
             <span className="hidden sm:inline-block ml-2 text-xs font-medium bg-primary-100 text-primary-700 rounded-full px-2 py-0.5">
               Farmer
             </span>
@@ -67,7 +67,7 @@ const FarmerDashboard = () => {
               Welcome, {user?.firstName}! 👋
             </h1>
             <p className="text-primary-100 text-sm">
-              Manage your farm, hire labor, and connect with dealers — all in one place.
+              Manage your farm, hire labour, and connect with dealers — all in one place.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ const FarmerDashboard = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {[
               { icon: "🌿", label: "Active Crops", value: "0" },
-              { icon: "👷", label: "Hired Labor", value: "0" },
+              { icon: "👷", label: "Hired Labour", value: "0" },
               { icon: "🏪", label: "Dealers", value: "0" },
             ].map((stat) => (
               <div key={stat.label} className="card !p-5 flex flex-col gap-2">

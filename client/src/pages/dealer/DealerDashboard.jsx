@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Sprout } from "lucide-react";
 
 const NAV_ITEMS = [
   { icon: "🏠", label: "Dashboard", href: "/dealer/dashboard" },
@@ -23,8 +24,7 @@ const DealerDashboard = () => {
       <header className="bg-white border-b border-surface-200 shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🌾</span>
-            <span className="text-lg font-bold text-primary-700">KrishiDhara</span>
+            <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg" />
             <span className="hidden sm:inline-block ml-2 text-xs font-medium bg-blue-100 text-blue-700 rounded-full px-2 py-0.5">
               Dealer
             </span>

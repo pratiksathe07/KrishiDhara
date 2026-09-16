@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
-import LaborDashboard from "./pages/labor/LaborDashboard";
+import LabourDashboard from "./pages/labour/LabourDashboard";
 import DealerDashboard from "./pages/dealer/DealerDashboard";
 import { Unauthorized, NotFound } from "./pages/ErrorPages";
 
@@ -54,13 +54,13 @@ const App = () => {
             }
           />
 
-          {/* Protected — Labor */}
+          {/* Protected — Labour */}
           <Route
-            path="/labor/dashboard"
+            path="/labour/dashboard"
             element={
               <ProtectedRoute>
-                <RoleProtectedRoute allowedRoles={["labor"]}>
-                  <LaborDashboard />
+                <RoleProtectedRoute allowedRoles={["labour"]}>
+                  <LabourDashboard />
                 </RoleProtectedRoute>
               </ProtectedRoute>
             }

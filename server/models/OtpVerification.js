@@ -35,7 +35,7 @@ const otpVerificationSchema = new mongoose.Schema(
       type: String,
       enum: ALLOWED_ROLES,
     },
-    // Only for labor registration
+    // Only for labour registration
     experienceYears: { type: Number },
 
     // ── OTP ──────────────────────────────────────────────────────────────

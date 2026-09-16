@@ -1,5 +1,5 @@
 /**
- * Authoritative list of allowed labor skills.
+ * Authoritative list of allowed labour skills.
  * All skill submissions from frontend are validated against this list.
  * Never trust the frontend skill list.
  */

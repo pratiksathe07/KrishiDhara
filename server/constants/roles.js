@@ -3,6 +3,6 @@
  * This is the single source of truth on the backend.
  * Frontend role values must match exactly.
  */
-const ALLOWED_ROLES = ["farmer", "labor", "dealer"];
+const ALLOWED_ROLES = ["farmer", "labour", "dealer"];
 
 module.exports = { ALLOWED_ROLES };

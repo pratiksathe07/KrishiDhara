@@ -13,15 +13,12 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <div className="bg-primary-500/20 p-2 rounded-xl backdrop-blur-md border border-primary-400/30">
-                 <Sprout className="w-6 h-6 text-primary-400" />
-              </div>
-              <span className="text-2xl font-bold tracking-tight text-white drop-shadow-md">
-                Krishi<span className="text-primary-400">Dhara</span>
-              </span>
+              <a href="/">
+                <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto object-contain drop-shadow-lg rounded-xl" />
+              </a>
             </div>
             <p className="text-gray-400 font-light leading-relaxed">
-              Empowering India&apos;s agricultural ecosystem through digital innovation. Connecting farmers, labor, and dealers seamlessly.
+              Empowering India&apos;s agricultural ecosystem through digital innovation. Connecting farmers, labour, and dealers seamlessly.
             </p>
             <div className="flex items-center gap-4 mt-2">
               <a href="#" className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-primary-500/20 hover:border-primary-500/50 hover:text-primary-400 transition-all text-gray-400">
@@ -44,7 +41,7 @@ const Footer = () => {
             <h3 className="text-white font-semibold text-lg mb-6">Platform Portals</h3>
             <ul className="flex flex-col gap-4">
               <li><Link to="/register" className="hover:text-primary-400 transition-colors inline-flex items-center gap-2"><ArrowRight className="w-4 h-4 text-primary-500" /> Farmers Portal</Link></li>
-              <li><Link to="/register" className="hover:text-primary-400 transition-colors inline-flex items-center gap-2"><ArrowRight className="w-4 h-4 text-primary-500" /> Labor Network</Link></li>
+              <li><Link to="/register" className="hover:text-primary-400 transition-colors inline-flex items-center gap-2"><ArrowRight className="w-4 h-4 text-primary-500" /> Labour Network</Link></li>
               <li><Link to="/register" className="hover:text-primary-400 transition-colors inline-flex items-center gap-2"><ArrowRight className="w-4 h-4 text-primary-500" /> Dealers Market</Link></li>
             </ul>
           </div>

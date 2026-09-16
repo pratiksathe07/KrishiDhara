@@ -10,6 +10,7 @@ import { requestOTP } from "../../services/authService";
 import { ROLE_OPTIONS } from "../../constants/roles";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
+import { Sprout } from "lucide-react";
 
 /**
  * Registration Step 1 — Personal Information + Get OTP
@@ -38,7 +39,7 @@ const RegisterStep1 = ({ onSuccess }) => {
         role: data.role,
       };
 
-      if (data.role === "labor") {
+      if (data.role === "labour") {
         payload.experienceYears = parseInt(data.experienceYears, 10);
       }
 
@@ -50,7 +51,7 @@ const RegisterStep1 = ({ onSuccess }) => {
         firstName: data.firstName.trim(),
         lastName: data.lastName.trim(),
         mobile: data.mobile.trim(),
-        experienceYears: data.role === "labor" ? parseInt(data.experienceYears, 10) : undefined,
+        experienceYears: data.role === "labour" ? parseInt(data.experienceYears, 10) : undefined,
       });
     } catch (err) {
       toast.error(err.message);
@@ -64,10 +65,7 @@ const RegisterStep1 = ({ onSuccess }) => {
       <div className="auth-card">
         {/* Brand header */}
         <div className="text-center mb-6 relative z-10">
-          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
-            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
-            <span className="text-3xl relative z-10">🌾</span>
-          </div>
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
           <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Create Account</h1>
           <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Join the KrishiDhara community</p>
         </div>
@@ -120,11 +118,11 @@ const RegisterStep1 = ({ onSuccess }) => {
               })}
             />
 
-            {/* Experience — only for Labor */}
-            {selectedRole === "labor" && (
+            {/* Experience — only for Labour */}
+            {selectedRole === "labour" && (
               <Input
                 id="experienceYears"
-                label="Experience in Agricultural Labor (years)"
+                label="Experience in Agricultural Labour (years)"
                 placeholder="e.g. 5"
                 type="number"
                 min="0"
@@ -133,7 +131,7 @@ const RegisterStep1 = ({ onSuccess }) => {
                 inputMode="numeric"
                 error={errors.experienceYears?.message}
                 {...register("experienceYears", {
-                  required: "Experience is required for Labor.",
+                  required: "Experience is required for Labour.",
                   min: { value: 0, message: "Experience cannot be negative." },
                   max: { value: 60, message: "Experience cannot exceed 60 years." },
                   validate: (v) =>

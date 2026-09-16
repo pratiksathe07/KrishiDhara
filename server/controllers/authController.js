@@ -5,7 +5,7 @@ const { generateOTP, hashOTP, verifyOTP, normalizeMobile, isValidIndianMobile } 
 const { signAuthToken, signVerificationToken, verifyVerificationToken, getAuthCookieOptions } = require("../utils/jwt");
 const { sendOTPEmail } = require("../services/emailService");
 const { ALLOWED_ROLES } = require("../constants/roles");
-const { ALLOWED_SKILLS } = require("../constants/laborSkills");
+const { ALLOWED_SKILLS } = require("../constants/labourSkills");
 const { ALLOWED_PRODUCTS } = require("../constants/dealerProducts");
 const { NODE_ENV } = require("../config/env");
 
@@ -25,14 +25,14 @@ const validateStep1 = (body) => {
   if (!lastName || typeof lastName !== "string" || !lastName.trim()) errors.push("Last name is required.");
   if (!email || typeof email !== "string" || !/^\S+@\S+\.\S+$/.test(email.trim())) errors.push("Valid email is required.");
   if (!mobile) errors.push("Mobile number is required.");
-  if (!role || !ALLOWED_ROLES.includes(role)) errors.push("Role must be one of: farmer, labor, dealer.");
+  if (!role || !ALLOWED_ROLES.includes(role)) errors.push("Role must be one of: farmer, labour, dealer.");
 
   const normalizedMobile = normalizeMobile(String(mobile || ""));
   if (!isValidIndianMobile(normalizedMobile)) errors.push("Please provide a valid 10-digit Indian mobile number.");
 
-  if (role === "labor") {
+  if (role === "labour") {
     if (experienceYears === undefined || experienceYears === null || experienceYears === "") {
-      errors.push("Experience in agricultural labor is required.");
+      errors.push("Experience in agricultural labour is required.");
     } else {
       const exp = Number(experienceYears);
       if (!Number.isInteger(exp) || exp < 0 || exp > 60) {
@@ -51,7 +51,7 @@ const validateStep1 = (body) => {
       email: email.trim().toLowerCase(),
       mobile: normalizedMobile,
       role,
-      experienceYears: role === "labor" ? Number(experienceYears) : undefined,
+      experienceYears: role === "labour" ? Number(experienceYears) : undefined,
     },
   };
 };
@@ -196,7 +196,7 @@ const verifyOTPHandler = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   try {
-    const { verificationToken, address, farmerProfile, laborProfile, dealerProfile } = req.body;
+    const { verificationToken, address, farmerProfile, labourProfile, dealerProfile } = req.body;
 
     // 1. Validate verificationToken — backend enforces OTP was verified
     if (!verificationToken) {
@@ -226,7 +226,7 @@ const register = async (req, res, next) => {
     if (existingMobile) return next(new AppError("An account with this mobile number already exists.", 409));
 
     // 4. Validate and build role-specific profile
-    let farmerData, laborData, dealerData;
+    let farmerData, labourData, dealerData;
 
     if (role === "farmer") {
       if (!farmerProfile) return next(new AppError("Farmer profile is required.", 400));
@@ -247,9 +247,9 @@ const register = async (req, res, next) => {
       };
     }
 
-    if (role === "labor") {
-      if (!laborProfile) return next(new AppError("Labor profile is required.", 400));
-      const { skills } = laborProfile;
+    if (role === "labour") {
+      if (!labourProfile) return next(new AppError("Labour profile is required.", 400));
+      const { skills } = labourProfile;
 
       // experienceYears comes from the verified session (trusted server-side data)
       const expYears = session.experienceYears;
@@ -264,7 +264,7 @@ const register = async (req, res, next) => {
         return next(new AppError(`Invalid skill(s): ${invalidSkills.join(", ")}.`, 400));
       }
 
-      laborData = {
+      labourData = {
         experienceYears: expYears,
         skills: submittedSkills,
       };
@@ -293,11 +293,11 @@ const register = async (req, res, next) => {
       status: "active",
     };
 
-    if (address && (role === "labor" || role === "dealer")) {
+    if (address && (role === "labour" || role === "dealer")) {
       userData.address = address.trim();
     }
     if (farmerData) userData.farmerProfile = farmerData;
-    if (laborData) userData.laborProfile = laborData;
+    if (labourData) userData.labourProfile = labourData;
     if (dealerData) userData.dealerProfile = dealerData;
 
     const user = await User.create(userData);
@@ -485,7 +485,7 @@ const getMe = async (req, res, next) => {
           status: user.status,
           address: user.address,
           farmerProfile: user.farmerProfile,
-          laborProfile: user.laborProfile,
+          labourProfile: user.labourProfile,
           dealerProfile: user.dealerProfile,
           createdAt: user.createdAt,
         },

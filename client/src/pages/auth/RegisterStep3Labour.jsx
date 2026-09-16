@@ -9,12 +9,13 @@ import { register as registerApi } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
+import { Sprout } from "lucide-react";
 
 /**
- * Registration Step 3 — Labor Profile (Address + Skills)
+ * Registration Step 3 — Labour Profile (Address + Skills)
  * experienceYears comes from verifiedData (stored server-side, not re-submitted)
  */
-const RegisterStep3Labor = ({ verifiedData }) => {
+const RegisterStep3Labour = ({ verifiedData }) => {
   const navigate = useNavigate();
   const { setAuthUser } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -34,14 +35,14 @@ const RegisterStep3Labor = ({ verifiedData }) => {
       const res = await registerApi({
         verificationToken: verifiedData.verificationToken,
         address: formData.address.trim(),
-        laborProfile: {
+        labourProfile: {
           skills,
         },
       });
 
       toast.success("Registration completed successfully! Welcome to KrishiDhara!");
       setAuthUser(res.data.data.user);
-      navigate("/labor/dashboard", { replace: true });
+      navigate("/labour/dashboard", { replace: true });
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -53,12 +54,9 @@ const RegisterStep3Labor = ({ verifiedData }) => {
     <AnimatedBackground>
       <div className="auth-card" style={{ maxWidth: "560px" }}>
         <div className="text-center mb-6 relative z-10">
-          <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 mb-3 shadow-glass animate-float">
-            <div className="absolute inset-0 rounded-3xl animate-pulse-ring"></div>
-            <span className="text-3xl relative z-10">🌾</span>
-          </div>
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Labor Profile</h1>
-          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Complete your agricultural labor profile</p>
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Labour Profile</h1>
+          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Complete your agricultural labour profile</p>
         </div>
 
         <StepIndicator currentStep={3} />
@@ -120,4 +118,4 @@ const RegisterStep3Labor = ({ verifiedData }) => {
   );
 };
 
-export default RegisterStep3Labor;
+export default RegisterStep3Labour;

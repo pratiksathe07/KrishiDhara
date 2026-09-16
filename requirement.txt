@@ -15,11 +15,11 @@
 
 ## Key Functional Requirements
 - Passwordless OTP Authentication: Email-based login/registration without passwords.
-- User Roles: Three distinct roles - Farmer, Labor, and Dealer.
+- User Roles: Three distinct roles - Farmer, Labour, and Dealer.
 - Registration Flow: 3-Step process (Personal info -> OTP verify -> Role-specific profile).
 - Location Selection: Cascading selector (State -> District -> Taluka -> Village) primarily for Farmers.
 - Role-Specific Features: 
-  - Labor: 36 selectable agricultural skills.
+  - Labour: 36 selectable agricultural skills.
   - Dealer: 59 searchable agricultural products.
 - Authorization: Server-enforced role-based access control (RBAC).
 - Security Constraints: Rate limiting for OTP requests, 5-minute OTP expiry, max 5 attempts, secure cookies.
