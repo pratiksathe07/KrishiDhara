@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Sprout, Tractor, HardHat, Store, ArrowRight, Leaf, Play } from "lucide-react";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const { isAuthenticated, role } = useAuth();
@@ -227,8 +228,8 @@ const Home = () => {
             ))}
           </motion.div>
         </section>
-
       </div>
+      <Footer />
     </div>
   );
 };
