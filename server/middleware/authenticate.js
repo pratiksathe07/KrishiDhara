@@ -44,4 +44,33 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser };
+/**
+ * optionalAuthenticateUser middleware.
+ * Like authenticateUser, but doesn't throw 401 if not authenticated.
+ * Attaches req.user = null instead.
+ */
+const optionalAuthenticateUser = async (req, res, next) => {
+  try {
+    const token = req.cookies?.authToken;
+    if (!token) {
+      req.user = null;
+      return next();
+    }
+    
+    const payload = verifyAuthToken(token);
+    const user = await User.findById(payload.userId).select("-__v");
+    
+    if (!user || user.status === "inactive") {
+      req.user = null;
+      return next();
+    }
+    
+    req.user = user;
+    next();
+  } catch (err) {
+    req.user = null;
+    next();
+  }
+};
+
+module.exports = { authenticateUser, optionalAuthenticateUser };

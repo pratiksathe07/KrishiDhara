@@ -9,7 +9,7 @@ const {
   logout,
   getMe,
 } = require("../controllers/authController");
-const { authenticateUser } = require("../middleware/authenticate");
+const { authenticateUser, optionalAuthenticateUser } = require("../middleware/authenticate");
 
 const router = express.Router();
 
@@ -44,6 +44,6 @@ router.post("/login/verify-otp", otpVerifyLimiter, loginVerifyOTP);
 
 // ─── Session routes ───────────────────────────────────────────────────────
 router.post("/logout", logout);
-router.get("/me", authenticateUser, getMe);
+router.get("/me", optionalAuthenticateUser, getMe);
 
 module.exports = router;

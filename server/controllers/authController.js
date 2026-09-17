@@ -343,14 +343,15 @@ const loginRequestOTP = async (req, res, next) => {
 
     // Find user
     const user = await User.findOne({ email: cleanEmail });
-    // Use a generic message to prevent email enumeration
-    const genericMessage = "If an account with that email exists, an OTP has been sent.";
-
-    if (!user || user.status === "inactive") {
-      // Still return 200 to prevent email enumeration
-      // But for inactive users, we send a specific error only after OTP verification
-      return res.status(200).json({ success: true, message: genericMessage, data: { email: cleanEmail } });
+    if (!user) {
+      return next(new AppError("Account not found. Please register first.", 404));
     }
+
+    if (user.status === "inactive") {
+      return next(new AppError("Your account is currently inactive. Please contact the administrator.", 403));
+    }
+
+    const successMessage = "OTP sent successfully. Please check your email.";
 
     // Check resend cooldown
     const existingSession = await OtpVerification.findOne({ email: cleanEmail, type: "login" });
@@ -380,7 +381,7 @@ const loginRequestOTP = async (req, res, next) => {
 
     await sendOTPEmail({ to: cleanEmail, firstName: user.firstName, otp });
 
-    return res.status(200).json({ success: true, message: genericMessage, data: { email: cleanEmail } });
+    return res.status(200).json({ success: true, message: successMessage, data: { email: cleanEmail } });
   } catch (err) {
     next(err);
   }
@@ -470,8 +471,16 @@ const logout = (req, res) => {
 
 const getMe = async (req, res, next) => {
   try {
-    // req.user is already populated by authenticateUser middleware
+    // req.user is populated by optionalAuthenticateUser middleware
     const user = req.user;
+    
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        data: { user: null },
+      });
+    }
+
     return res.status(200).json({
       success: true,
       data: {

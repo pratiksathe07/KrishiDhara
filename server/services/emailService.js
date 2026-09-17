@@ -99,7 +99,10 @@ const sendOTPEmail = async ({ to, firstName, otp }) => {
     });
 
     if (NODE_ENV !== "production") {
-      console.log(`[DEV] OTP email sent to ${to} | Message ID: ${info.messageId}`);
+      console.log("─────────────────────────────────────────────");
+      console.log(`[DEV] OTP Email successfully sent to: ${to}`);
+      console.log(`[DEV] OTP Code is : ${otp}`);
+      console.log("─────────────────────────────────────────────");
     }
   } catch (error) {
     // Log full error details in development for debugging

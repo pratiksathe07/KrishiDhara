@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import LogoutButton from "../../components/LogoutButton";
 import { Sprout } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -11,13 +11,7 @@ const NAV_ITEMS = [
 ];
 
 const DealerDashboard = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login", { replace: true });
-  };
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-surface-50 flex flex-col">
@@ -31,7 +25,7 @@ const DealerDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <span className="hidden sm:block text-sm text-gray-600 font-medium">{user?.firstName} {user?.lastName}</span>
-            <button onClick={handleLogout} className="text-sm font-medium text-red-500 hover:text-red-600 transition">Logout</button>
+            <LogoutButton />
           </div>
         </div>
       </header>
@@ -43,6 +37,7 @@ const DealerDashboard = () => {
               <span>{item.icon}</span>{item.label}
             </a>
           ))}
+          <LogoutButton variant="sidebar" />
         </aside>
 
         <main className="flex-1 space-y-5">

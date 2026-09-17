@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import LogoutButton from "../../components/LogoutButton";
 import { Sprout } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -11,13 +11,7 @@ const NAV_ITEMS = [
 ];
 
 const FarmerDashboard = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login", { replace: true });
-  };
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-surface-50 flex flex-col">
@@ -34,12 +28,7 @@ const FarmerDashboard = () => {
             <span className="hidden sm:block text-sm text-gray-600 font-medium">
               {user?.firstName} {user?.lastName}
             </span>
-            <button
-              onClick={handleLogout}
-              className="text-sm font-medium text-red-500 hover:text-red-600 transition"
-            >
-              Logout
-            </button>
+            <LogoutButton />
           </div>
         </div>
       </header>
@@ -57,6 +46,7 @@ const FarmerDashboard = () => {
               {item.label}
             </a>
           ))}
+          <LogoutButton variant="sidebar" />
         </aside>
 
         {/* Main content */}
