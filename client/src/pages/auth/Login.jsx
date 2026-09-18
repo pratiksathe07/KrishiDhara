@@ -11,7 +11,7 @@ import { useAuth } from "../../context/AuthContext";
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
 import { Sprout } from "lucide-react";
 
-const RESEND_COOLDOWN = 60;
+const RESEND_COOLDOWN = 30;
 
 /**
  * Login page — 2-step passwordless OTP login.
