@@ -73,16 +73,16 @@ const RegisterStep3Farmer = ({ verifiedData }) => {
       <div className="auth-card">
         <div className="text-center mb-6 relative z-10">
           <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Farmer Profile</h1>
-          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Tell us about your land</p>
+          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Farmer Profile</h1>
+          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Tell us about your land</p>
         </div>
 
         <StepIndicator currentStep={3} />
 
-        <div className="card mt-6 animate-slide-up">
-          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-surface-200/50">
+        <div className="auth-glass-card mt-6 animate-slide-up">
+          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/15">
             <span className="text-xl">📍</span>
-            <h2 className="text-lg font-bold text-gray-800">Land Location</h2>
+            <h2 className="text-lg font-bold text-white">Land Location</h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate>

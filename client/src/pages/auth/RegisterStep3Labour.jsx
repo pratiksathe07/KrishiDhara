@@ -55,20 +55,20 @@ const RegisterStep3Labour = ({ verifiedData }) => {
       <div className="auth-card" style={{ maxWidth: "560px" }}>
         <div className="text-center mb-6 relative z-10">
           <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Labour Profile</h1>
-          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Complete your agricultural labour profile</p>
+          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Labour Profile</h1>
+          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Complete your agricultural labour profile</p>
         </div>
 
         <StepIndicator currentStep={3} />
 
-        <div className="card mt-6 animate-slide-up">
+        <div className="auth-glass-card mt-6 animate-slide-up">
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
             
-            {/* Experience display (read-only — comes from Step 1, stored server-side) */}
+            {/* Experience display (read-only) */}
             {verifiedData.experienceYears !== undefined && (
-              <div className="bg-primary-50/80 backdrop-blur-sm border border-primary-200/50 rounded-xl px-4 py-3 shadow-inner">
-                <p className="text-xs text-primary-600 font-medium mb-1">Agricultural Experience</p>
-                <p className="text-sm font-bold text-primary-800">
+              <div className="bg-green-500/15 backdrop-blur-sm border border-green-400/25 rounded-xl px-4 py-3 shadow-inner">
+                <p className="text-xs text-green-300 font-medium mb-1">Agricultural Experience</p>
+                <p className="text-sm font-bold text-green-200">
                   {verifiedData.experienceYears} {verifiedData.experienceYears === 1 ? "year" : "years"}
                 </p>
               </div>
@@ -76,7 +76,7 @@ const RegisterStep3Labour = ({ verifiedData }) => {
 
             {/* Address */}
             <div>
-              <label htmlFor="address" className="input-label font-semibold text-gray-700">Address</label>
+              <label htmlFor="address" className="input-label font-semibold">Address</label>
               <textarea
                 id="address"
                 placeholder="Your full address..."
@@ -91,11 +91,11 @@ const RegisterStep3Labour = ({ verifiedData }) => {
             </div>
 
             {/* Status — display only, backend sets this */}
-            <div className="bg-surface-50/80 backdrop-blur-sm border border-surface-200/50 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-500 font-medium mb-1">Account Status</p>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3">
+              <p className="text-xs text-white/50 font-medium mb-1">Account Status</p>
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></span>
-                <span className="text-sm font-bold text-green-700 tracking-wide">Active</span>
+                <span className="h-2.5 w-2.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></span>
+                <span className="text-sm font-bold text-green-300 tracking-wide">Active</span>
               </div>
             </div>
 

@@ -72,14 +72,14 @@ const RegisterStep1 = ({ onSuccess }) => {
         {/* Brand header */}
         <div className="text-center mb-6 relative z-10">
           <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-earth-600 drop-shadow-sm">Create Account</h1>
-          <p className="text-sm font-medium text-gray-500 mt-2 bg-white/50 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/40">Join the KrishiDhara community</p>
+          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Create Account</h1>
+          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Join the KrishiDhara community</p>
         </div>
 
         <StepIndicator currentStep={1} />
 
-        <div className="card mt-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-5">Personal Information</h2>
+        <div className="auth-glass-card mt-6">
+          <h2 className="text-xl font-bold text-white mb-5">Personal Information</h2>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="animate-fade-in">
             {/* First Name */}
@@ -176,7 +176,7 @@ const RegisterStep1 = ({ onSuccess }) => {
                       className={`relative flex flex-col items-center justify-center p-4 rounded-2xl cursor-pointer border-2 transition-all duration-300 ${
                         isActive
                           ? `${role.activeBorder} ${role.activeBg} shadow-md scale-105`
-                          : "border-surface-200 bg-white/70 hover:bg-white hover:border-primary-300 hover:shadow-sm hover:-translate-y-1"
+                          : "border-white/20 bg-white/10 hover:bg-white/15 hover:border-white/35 hover:shadow-sm hover:-translate-y-1"
                       }`}
                     >
                       <input
@@ -186,7 +186,7 @@ const RegisterStep1 = ({ onSuccess }) => {
                         {...register("role", { required: "Please select your role." })}
                       />
                       <Icon className={`w-8 h-8 mb-2 transition-colors ${isActive ? role.iconColor : "text-gray-400"}`} />
-                      <span className={`text-sm font-bold transition-colors ${isActive ? "text-gray-900" : "text-gray-500"}`}>
+                      <span className={`text-sm font-bold transition-colors ${isActive ? "text-gray-900" : "text-white/70"}`}>
                         {role.label}
                       </span>
                       {isActive && (
@@ -206,10 +206,10 @@ const RegisterStep1 = ({ onSuccess }) => {
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-gray-100/50">
-            <p className="text-center text-sm font-medium text-gray-500">
+          <div className="mt-6 pt-5 border-t border-white/10">
+            <p className="text-center text-sm font-medium text-white/50">
               Already have an account?{" "}
-              <Link to="/login" className="font-bold text-primary-600 hover:text-primary-700 transition-colors">
+              <Link to="/login" className="font-bold text-green-400 hover:text-green-300 transition-colors">
                 Log in
               </Link>
             </p>
