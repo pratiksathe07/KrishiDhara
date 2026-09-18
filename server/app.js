@@ -11,6 +11,7 @@ const errorHandler = require("./middleware/errorHandler");
 // Route files
 const authRoutes = require("./routes/authRoutes");
 const locationRoutes = require("./routes/locationRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.get("/api/health", (req, res) => {
 // ─── Routes ───────────────────────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
 app.use("/api/locations", locationRoutes);
+app.use("/api/users", userRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────────────────
 app.use((req, res) => {
