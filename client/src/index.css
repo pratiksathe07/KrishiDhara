@@ -87,7 +87,7 @@
 
   /* ── Auth glass card (dark deep glass for auth pages) ────────── */
   .auth-glass-card {
-    @apply rounded-3xl bg-white/15 border border-white/20 p-6 sm:p-8 backdrop-blur-[120px] relative z-10
+    @apply rounded-3xl bg-white/15 border border-white/20 p-6 sm:p-8 backdrop-blur-md relative z-10
            shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] hover:bg-white/20 transition-all duration-500;
   }
 
