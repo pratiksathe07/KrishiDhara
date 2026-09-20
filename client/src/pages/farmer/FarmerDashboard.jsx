@@ -4,17 +4,21 @@ import LogoutButton from "../../components/LogoutButton";
 import { motion, AnimatePresence } from "framer-motion";
 import HireLabour from "./HireLabour";
 import ViewDealers from "./ViewDealers";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 
-const NAV_ITEMS = [
-  { id: "dashboard", icon: "🏠", label: "Dashboard" },
-  { id: "land",      icon: "🌍", label: "My Land" },
-  { id: "crops",     icon: "🌱", label: "Crops" },
-  { id: "labour",    icon: "👷", label: "Hire Labour" },
-  { id: "dealers",   icon: "🏪", label: "Dealers" },
+const getNavItems = (t) => [
+  { id: "dashboard", icon: "🏠", label: t('dashboard.navDashboard') },
+  { id: "land",      icon: "🌍", label: t('dashboard.navMyLand') },
+  { id: "crops",     icon: "🌱", label: t('dashboard.navCrops') },
+  { id: "labour",    icon: "👷", label: t('dashboard.navHireLabour') },
+  { id: "dealers",   icon: "🏪", label: t('dashboard.navDealers') },
 ];
 
 // ─── Dashboard home tab content ──────────────────────────────────────────────
-const DashboardHome = ({ user }) => (
+const DashboardHome = ({ user }) => {
+  const { t } = useTranslation();
+  return (
   <div className="space-y-5">
     {/* Welcome banner */}
     <motion.div
@@ -24,19 +28,19 @@ const DashboardHome = ({ user }) => (
       className="backdrop-blur-xl bg-gradient-to-r from-green-500/30 to-emerald-600/20 border border-green-400/30 rounded-2xl p-6 text-white shadow-lg"
     >
       <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">
-        Welcome, {user?.firstName}! 👋
+        {t('dashboard.welcome')}, {user?.firstName}! 👋
       </h1>
       <p className="text-green-100/90 text-sm">
-        Manage your farm, hire labour, and connect with dealers — all in one place.
+        {t('dashboard.farmerBanner')}
       </p>
     </motion.div>
 
     {/* Stats grid */}
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
       {[
-        { icon: "🌿", label: "Active Crops", value: "0" },
-        { icon: "👷", label: "Hired Labour", value: "0" },
-        { icon: "🏪", label: "Dealers", value: "0" },
+        { icon: "🌿", label: t('dashboard.activeCrops'), value: "0" },
+        { icon: "👷", label: t('dashboard.hiredLabour'), value: "0" },
+        { icon: "🏪", label: t('dashboard.navDealers'), value: "0" },
       ].map((stat, i) => (
         <motion.div
           key={stat.label}
@@ -61,37 +65,37 @@ const DashboardHome = ({ user }) => (
       transition={{ duration: 0.5, delay: 0.3 }}
       className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
     >
-      <h2 className="text-base font-semibold text-white mb-4">Your Profile</h2>
+      <h2 className="text-base font-semibold text-white mb-4">{t('dashboard.yourProfile')}</h2>
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
         <div>
-          <p className="text-white/50 text-xs mb-0.5">Full Name</p>
+          <p className="text-white/50 text-xs mb-0.5">{t('dashboard.fullName')}</p>
           <p className="font-medium text-white">{user?.firstName} {user?.lastName}</p>
         </div>
         <div>
-          <p className="text-white/50 text-xs mb-0.5">Email</p>
+          <p className="text-white/50 text-xs mb-0.5">{t('login.emailLabel')}</p>
           <p className="font-medium text-white">{user?.email}</p>
         </div>
         <div>
-          <p className="text-white/50 text-xs mb-0.5">Mobile</p>
+          <p className="text-white/50 text-xs mb-0.5">{t('register.mobileNumber')}</p>
           <p className="font-medium text-white">{user?.mobile}</p>
         </div>
         <div>
-          <p className="text-white/50 text-xs mb-0.5">Status</p>
+          <p className="text-white/50 text-xs mb-0.5">{t('dashboard.status')}</p>
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-300 bg-green-500/20 border border-green-400/30 px-2 py-0.5 rounded-full backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-green-400"></span>
-            Active
+            {t('dashboard.active')}
           </span>
         </div>
         {user?.farmerProfile && (
           <>
             <div>
-              <p className="text-white/50 text-xs mb-0.5">Location</p>
+              <p className="text-white/50 text-xs mb-0.5">{t('dashboard.location')}</p>
               <p className="font-medium text-white">
                 {user.farmerProfile.village}, {user.farmerProfile.taluka}, {user.farmerProfile.district}
               </p>
             </div>
             <div>
-              <p className="text-white/50 text-xs mb-0.5">Gat No</p>
+              <p className="text-white/50 text-xs mb-0.5">{t('dashboard.gatNo')}</p>
               <p className="font-medium text-white">{user.farmerProfile.gatNo}</p>
             </div>
           </>
@@ -99,33 +103,39 @@ const DashboardHome = ({ user }) => (
       </div>
     </motion.div>
   </div>
-);
+  );
+};
 
 // ─── Placeholder tab ──────────────────────────────────────────────────────────
-const ComingSoon = ({ label, icon }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-16 text-center"
-  >
-    <p className="text-5xl mb-4">{icon}</p>
-    <h2 className="text-white font-semibold text-lg mb-2">{label}</h2>
-    <p className="text-white/50 text-sm">This section is coming soon.</p>
-  </motion.div>
-);
+const ComingSoon = ({ label, icon }) => {
+  const { t } = useTranslation();
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-16 text-center"
+    >
+      <p className="text-5xl mb-4">{icon}</p>
+      <h2 className="text-white font-semibold text-lg mb-2">{label}</h2>
+      <p className="text-white/50 text-sm">{t('dashboard.comingSoon')}</p>
+    </motion.div>
+  );
+};
 
 // ─── Main dashboard ───────────────────────────────────────────────────────────
 const FarmerDashboard = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("dashboard");
+  const navItems = getNavItems(t);
 
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard": return <DashboardHome user={user} />;
       case "labour":    return <HireLabour />;
       case "dealers":   return <ViewDealers />;
-      case "land":      return <ComingSoon label="My Land" icon="🌍" />;
-      case "crops":     return <ComingSoon label="Crops" icon="🌱" />;
+      case "land":      return <ComingSoon label={t('dashboard.navMyLand')} icon="🌍" />;
+      case "crops":     return <ComingSoon label={t('dashboard.navCrops')} icon="🌱" />;
       default:          return <DashboardHome user={user} />;
     }
   };
@@ -150,10 +160,11 @@ const FarmerDashboard = () => {
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto object-contain rounded-lg drop-shadow-md" />
             <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-green-500/30 text-green-200 rounded-full px-3 py-0.5 border border-green-400/40">
-              Farmer
+              {t('register.farmer')}
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <span className="hidden sm:block text-sm text-white/80 font-medium">
               {user?.firstName} {user?.lastName}
             </span>
@@ -166,7 +177,7 @@ const FarmerDashboard = () => {
       <div className="relative z-10 flex flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 gap-6">
         {/* Sidebar — glass */}
         <aside className="hidden md:flex flex-col w-56 shrink-0 gap-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-3 h-fit shadow-lg sticky top-28">
-          {NAV_ITEMS.map((item) => {
+          {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
@@ -192,7 +203,7 @@ const FarmerDashboard = () => {
         <main className="flex-1 min-w-0">
           {/* Mobile tab bar */}
           <div className="flex md:hidden gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
                 <button

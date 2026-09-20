@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getLabours } from "../../services/userService";
 import { Search, X, Users, Briefcase, Phone, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // All possible skills (mirrored from server constants)
 const ALL_SKILLS = [
@@ -32,6 +33,7 @@ const getAvatarColor = (name = "") =>
   AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
 const LabourCard = ({ labour, index }) => {
+  const { t } = useTranslation();
   const initials = `${labour.firstName?.[0] ?? "?"}${labour.lastName?.[0] ?? ""}`.toUpperCase();
   const avatarColor = getAvatarColor(labour.firstName);
   const skills = labour.labourProfile?.skills ?? [];
@@ -59,7 +61,7 @@ const LabourCard = ({ labour, index }) => {
           {exp !== undefined && (
             <p className="text-white/60 text-xs mt-0.5 flex items-center gap-1">
               <Briefcase className="w-3 h-3" />
-              {exp} {exp === 1 ? "year" : "years"} experience
+              {exp} {exp === 1 ? t('dashboard.yearExp') : t('dashboard.yearsExp')}
             </p>
           )}
         </div>
@@ -67,7 +69,7 @@ const LabourCard = ({ labour, index }) => {
         {/* Experience badge */}
         {exp !== undefined && (
           <span className="flex-shrink-0 text-xs font-semibold bg-green-500/20 text-green-300 border border-green-400/30 px-2.5 py-1 rounded-full">
-            {exp}y exp
+            {exp}{t('dashboard.yExpShort')}
           </span>
         )}
       </div>
@@ -75,14 +77,14 @@ const LabourCard = ({ labour, index }) => {
       {/* Skills */}
       {skills.length > 0 && (
         <div className="mb-4">
-          <p className="text-white/40 text-xs mb-2 font-medium uppercase tracking-wide">Skills</p>
+          <p className="text-white/40 text-xs mb-2 font-medium uppercase tracking-wide">{t('dashboard.skills')}</p>
           <div className="flex flex-wrap gap-1.5">
             {skills.slice(0, 6).map((skill) => (
               <span
                 key={skill}
                 className="text-xs px-2.5 py-1 rounded-lg bg-white/10 border border-white/20 text-white/80 font-medium"
               >
-                {skill}
+                {t(`skills.${skill}`)}
               </span>
             ))}
             {skills.length > 6 && (
@@ -101,7 +103,7 @@ const LabourCard = ({ labour, index }) => {
           <span>{labour.mobile}</span>
         </div>
         <button className="text-xs font-semibold bg-green-500/20 hover:bg-green-500/35 text-green-300 border border-green-400/30 px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95">
-          Contact
+          {t('dashboard.contact')}
         </button>
       </div>
     </motion.div>
@@ -109,6 +111,7 @@ const LabourCard = ({ labour, index }) => {
 };
 
 const HireLabour = () => {
+  const { t } = useTranslation();
   const [labours, setLabours] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -167,10 +170,10 @@ const HireLabour = () => {
       >
         <div className="flex items-center gap-3 mb-1">
           <Users className="w-6 h-6 text-green-300" />
-          <h1 className="text-xl sm:text-2xl font-bold drop-shadow">Hire Labour</h1>
+          <h1 className="text-xl sm:text-2xl font-bold drop-shadow">{t('dashboard.hireLabourTitle')}</h1>
         </div>
         <p className="text-green-100/80 text-sm">
-          Browse and contact registered agricultural workers. Filter by skills to find the right fit.
+          {t('dashboard.hireLabourDesc')}
         </p>
       </motion.div>
 
@@ -186,7 +189,7 @@ const HireLabour = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <input
             type="text"
-            placeholder="Search by name…"
+            placeholder={t('dashboard.searchByName')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/35 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:border-green-400/50 transition"
@@ -202,7 +205,7 @@ const HireLabour = () => {
         <div>
           <div className="flex items-center justify-between mb-2.5">
             <p className="text-white/60 text-xs font-semibold uppercase tracking-wide">
-              Filter by Skill
+              {t('dashboard.filterBySkill')}
             </p>
             <div className="flex items-center gap-3">
               {selectedSkills.length > 0 && (
@@ -210,14 +213,14 @@ const HireLabour = () => {
                   onClick={clearFilters}
                   className="text-xs text-red-300 hover:text-red-200 flex items-center gap-1 transition"
                 >
-                  <X className="w-3 h-3" /> Clear ({selectedSkills.length})
+                  <X className="w-3 h-3" /> {t('dashboard.clear')} ({selectedSkills.length})
                 </button>
               )}
               <button
                 onClick={() => setShowAllSkills((v) => !v)}
                 className="text-xs text-green-300 hover:text-green-200 transition"
               >
-                {showAllSkills ? "Show less" : "Show all"}
+                {showAllSkills ? t('dashboard.showLess') : t('dashboard.showAll')}
               </button>
             </div>
           </div>
@@ -242,7 +245,7 @@ const HireLabour = () => {
                     }`}
                   >
                     {active && <span className="mr-1">✓</span>}
-                    {skill}
+                    {t(`skills.${skill}`)}
                   </motion.button>
                 );
               })}
@@ -254,9 +257,9 @@ const HireLabour = () => {
       {/* Results header */}
       <div className="flex items-center justify-between px-1">
         <p className="text-white/60 text-sm">
-          {loading ? "Loading…" : `${displayed.length} labour${displayed.length !== 1 ? "s" : ""} found`}
+          {loading ? t('dashboard.loading') : `${displayed.length} ${displayed.length !== 1 ? t('dashboard.laboursFound') : t('dashboard.labourFound')}`}
           {selectedSkills.length > 0 && !loading && (
-            <span className="ml-1 text-green-300">• filtered by {selectedSkills.length} skill{selectedSkills.length > 1 ? "s" : ""}</span>
+            <span className="ml-1 text-green-300">• {t('dashboard.filteredBy')} {selectedSkills.length} {selectedSkills.length > 1 ? t('dashboard.skills') : t('dashboard.skill')}</span>
           )}
         </p>
       </div>
@@ -289,7 +292,7 @@ const HireLabour = () => {
           className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-12 text-center"
         >
           <p className="text-4xl mb-3">👷</p>
-          <p className="text-white/60 font-medium">No labours found</p>
+          <p className="text-white/60 font-medium">{t('dashboard.noLaboursFound')}</p>
           <p className="text-white/40 text-sm mt-1">
             {selectedSkills.length > 0
               ? "Try removing some skill filters."
@@ -300,7 +303,7 @@ const HireLabour = () => {
               onClick={clearFilters}
               className="mt-4 text-sm text-green-300 hover:text-green-200 underline transition"
             >
-              Clear all filters
+              {t('dashboard.clear')}
             </button>
           )}
         </motion.div>

@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { LogOut } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const LogoutButton = ({ className, variant = "default" }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     await logout();
@@ -16,10 +18,10 @@ const LogoutButton = ({ className, variant = "default" }) => {
     return (
       <button
         onClick={handleLogout}
-        className={`flex items-center gap-3 px-4 py-2.5 mt-4 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition w-full text-left ${className || ""}`}
+        className={`flex items-center gap-3 px-4 py-2.5 mt-4 rounded-xl text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition w-full shadow-md ${className || ""}`}
       >
         <LogOut size={18} />
-        <span>Logout</span>
+        <span>{t('dashboard.logout')}</span>
       </button>
     );
   }
@@ -28,10 +30,10 @@ const LogoutButton = ({ className, variant = "default" }) => {
   return (
     <button
       onClick={handleLogout}
-      className={`flex items-center gap-2 text-sm font-medium text-red-500 hover:text-red-600 transition ${className || ""}`}
+      className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition shadow-sm ${className || ""}`}
     >
       <LogOut size={16} />
-      <span>Logout</span>
+      <span>{t('dashboard.logout')}</span>
     </button>
   );
 };

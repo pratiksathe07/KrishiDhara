@@ -10,6 +10,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
 import { Sprout } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const RESEND_COOLDOWN = 30;
 
@@ -21,6 +22,7 @@ const RESEND_COOLDOWN = 30;
 const Login = () => {
   const navigate = useNavigate();
   const { setAuthUser, isAuthenticated, role } = useAuth();
+  const { t } = useTranslation();
 
   const [loginStep, setLoginStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -104,20 +106,20 @@ const Login = () => {
         {/* Brand header */}
         <div className="text-center mb-8 relative z-10 flex flex-col items-center">
           <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-4 animate-float drop-shadow-xl rounded-xl" />
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Agricultural Services Platform</p>
+          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">{t('common.appTagline')}</p>
         </div>
 
         <div className="auth-glass-card">
           {loginStep === 1 ? (
             <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold text-white mb-1">Welcome back</h2>
-              <p className="text-sm text-white/55 mb-6 font-medium">Enter your email to receive a login code.</p>
+              <h2 className="text-2xl font-bold text-white mb-1">{t('login.welcomeBack')}</h2>
+              <p className="text-sm text-white/55 mb-6 font-medium">{t('login.enterEmailPrompt')}</p>
 
               <form onSubmit={handleSubmit(handleRequestOTP)} noValidate>
                 <Input
                   id="loginEmail"
-                  label="Email Address"
-                  placeholder="ramesh@example.com"
+                  label={t('login.emailLabel')}
+                  placeholder={t('login.emailPlaceholder')}
                   type="email"
                   error={errors.email?.message || error}
                   {...register("email", {
@@ -126,13 +128,13 @@ const Login = () => {
                   })}
                 />
                 <Button type="submit" loading={loading} className="mt-4">
-                  Get OTP
+                  {t('login.getOtp')}
                 </Button>
               </form>
             </div>
           ) : (
             <div className="animate-slide-up">
-              <h2 className="text-2xl font-bold text-white mb-1">Enter OTP</h2>
+              <h2 className="text-2xl font-bold text-white mb-1">{t('login.enterOtp')}</h2>
               <div className="flex items-center gap-2 bg-green-500/15 backdrop-blur-sm border border-green-400/30 rounded-xl px-4 py-3 mb-6 mt-3 shadow-inner">
                 <svg className="h-5 w-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -141,7 +143,7 @@ const Login = () => {
               </div>
 
               <div className="mb-6">
-                <label className="input-label block text-center mb-3 font-semibold">6-Digit Code</label>
+                <label className="input-label block text-center mb-3 font-semibold">{t('login.otpLabel')}</label>
                 <OTPInput
                   value={otpDigits}
                   onChange={setOtpDigits}
@@ -156,7 +158,7 @@ const Login = () => {
                 loading={loading}
                 disabled={otpDigits.join("").length !== 6}
               >
-                Verify OTP & Login
+                {t('login.verifyAndLogin')}
               </Button>
 
               <div className="flex items-center justify-between mt-6 px-1">
@@ -165,15 +167,15 @@ const Login = () => {
                   onClick={() => { setLoginStep(1); setError(""); }}
                   className="btn-ghost"
                 >
-                  ← Change Email
+                  ← {t('login.changeEmail')}
                 </button>
                 {cooldown > 0 ? (
                   <span className="text-sm font-medium text-white/40 bg-white/10 px-3 py-1 rounded-full border border-white/15">
-                    Resend in <span className="font-bold text-white/70 tabular-nums">{cooldown}s</span>
+                    {t('login.resendIn')} <span className="font-bold text-white/70 tabular-nums">{cooldown}s</span>
                   </span>
                 ) : (
                   <button type="button" onClick={handleResend} disabled={resending} className="btn-ghost">
-                    {resending ? "Sending..." : "Resend OTP"}
+                    {resending ? t('login.sending') : t('login.resendOtp')}
                   </button>
                 )}
               </div>
@@ -182,9 +184,9 @@ const Login = () => {
 
           <div className="mt-8 pt-6 border-t border-white/10">
             <p className="text-center text-sm font-medium text-white/50">
-              Don&apos;t have an account?{" "}
+              {t('login.noAccount')}{" "}
               <Link to="/register" className="font-bold text-green-400 hover:text-green-300 transition-colors">
-                Register here
+                {t('login.registerHere')}
               </Link>
             </p>
           </div>

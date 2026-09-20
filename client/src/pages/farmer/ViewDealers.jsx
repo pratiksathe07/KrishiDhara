@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getDealers } from "../../services/userService";
 import { Search, X, Store, Package, Phone, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // All dealer products (mirrored from server constants)
 const ALL_PRODUCTS = [
@@ -34,6 +35,7 @@ const getAvatarColor = (name = "") =>
 
 // ─── Dealer Card ──────────────────────────────────────────────────────────────
 const DealerCard = ({ dealer, index }) => {
+  const { t } = useTranslation();
   const initials = `${dealer.firstName?.[0] ?? "?"}${dealer.lastName?.[0] ?? ""}`.toUpperCase();
   const avatarColor = getAvatarColor(dealer.firstName);
   const products = dealer.dealerProfile?.products ?? [];
@@ -70,7 +72,7 @@ const DealerCard = ({ dealer, index }) => {
         {/* Product count badge */}
         {products.length > 0 && (
           <span className="flex-shrink-0 text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30 px-2.5 py-1 rounded-full">
-            {products.length} product{products.length > 1 ? "s" : ""}
+            {products.length} {products.length > 1 ? t('dashboard.products') : t('dashboard.product')}
           </span>
         )}
       </div>
@@ -79,7 +81,7 @@ const DealerCard = ({ dealer, index }) => {
       {products.length > 0 && (
         <div className="mb-4">
           <p className="text-white/40 text-xs mb-2 font-medium uppercase tracking-wide">
-            Products
+            {t('dashboard.products')}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {products.slice(0, 5).map((product) => (
@@ -87,7 +89,7 @@ const DealerCard = ({ dealer, index }) => {
                 key={product}
                 className="text-xs px-2.5 py-1 rounded-lg bg-blue-500/15 border border-blue-400/25 text-blue-200 font-medium"
               >
-                {product}
+                {t(`products.${product}`)}
               </span>
             ))}
             {products.length > 5 && (
@@ -106,7 +108,7 @@ const DealerCard = ({ dealer, index }) => {
           <span>{dealer.mobile}</span>
         </div>
         <button className="text-xs font-semibold bg-blue-500/20 hover:bg-blue-500/35 text-blue-300 border border-blue-400/30 px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95">
-          Contact
+          {t('dashboard.contact')}
         </button>
       </div>
     </motion.div>
@@ -115,6 +117,7 @@ const DealerCard = ({ dealer, index }) => {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const ViewDealers = () => {
+  const { t } = useTranslation();
   const [dealers, setDealers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -172,10 +175,10 @@ const ViewDealers = () => {
       >
         <div className="flex items-center gap-3 mb-1">
           <Store className="w-6 h-6 text-blue-300" />
-          <h1 className="text-xl sm:text-2xl font-bold drop-shadow">Dealers</h1>
+          <h1 className="text-xl sm:text-2xl font-bold drop-shadow">{t('dashboard.dealersTitle')}</h1>
         </div>
         <p className="text-blue-100/80 text-sm">
-          Browse registered agricultural dealers. Filter by product to find the right supplier.
+          {t('dashboard.dealersDesc')}
         </p>
       </motion.div>
 
@@ -191,7 +194,7 @@ const ViewDealers = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <input
             type="text"
-            placeholder="Search by name…"
+            placeholder={t('dashboard.searchByName')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/35 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition"
@@ -210,7 +213,7 @@ const ViewDealers = () => {
         <div>
           <div className="flex items-center justify-between mb-2.5">
             <p className="text-white/60 text-xs font-semibold uppercase tracking-wide flex items-center gap-1.5">
-              <Package className="w-3 h-3" /> Filter by Product
+              <Package className="w-3 h-3" /> {t('dashboard.filterByProduct')}
             </p>
             <div className="flex items-center gap-3">
               {selectedProducts.length > 0 && (
@@ -218,14 +221,14 @@ const ViewDealers = () => {
                   onClick={clearFilters}
                   className="text-xs text-red-300 hover:text-red-200 flex items-center gap-1 transition"
                 >
-                  <X className="w-3 h-3" /> Clear ({selectedProducts.length})
+                  <X className="w-3 h-3" /> {t('dashboard.clear')} ({selectedProducts.length})
                 </button>
               )}
               <button
                 onClick={() => setShowAllProducts((v) => !v)}
                 className="text-xs text-blue-300 hover:text-blue-200 transition"
               >
-                {showAllProducts ? "Show less" : "Show all"}
+                {showAllProducts ? t('dashboard.showLess') : t('dashboard.showAll')}
               </button>
             </div>
           </div>
@@ -250,7 +253,7 @@ const ViewDealers = () => {
                     }`}
                   >
                     {active && <span className="mr-1">✓</span>}
-                    {product}
+                    {t(`products.${product}`)}
                   </motion.button>
                 );
               })}
@@ -263,11 +266,11 @@ const ViewDealers = () => {
       <div className="flex items-center justify-between px-1">
         <p className="text-white/60 text-sm">
           {loading
-            ? "Loading…"
-            : `${displayed.length} dealer${displayed.length !== 1 ? "s" : ""} found`}
+            ? t('dashboard.loading')
+            : `${displayed.length} ${displayed.length !== 1 ? t('dashboard.dealersFound') : t('dashboard.dealerFound')}`}
           {selectedProducts.length > 0 && !loading && (
             <span className="ml-1 text-blue-300">
-              • filtered by {selectedProducts.length} product{selectedProducts.length > 1 ? "s" : ""}
+              • {t('dashboard.filteredBy')} {selectedProducts.length} {selectedProducts.length > 1 ? t('dashboard.products') : t('dashboard.product')}
             </span>
           )}
         </p>
@@ -306,7 +309,7 @@ const ViewDealers = () => {
           className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-12 text-center"
         >
           <p className="text-4xl mb-3">🏪</p>
-          <p className="text-white/60 font-medium">No dealers found</p>
+          <p className="text-white/60 font-medium">{t('dashboard.noDealersFound')}</p>
           <p className="text-white/40 text-sm mt-1">
             {selectedProducts.length > 0
               ? "Try removing some product filters."
@@ -317,7 +320,7 @@ const ViewDealers = () => {
               onClick={clearFilters}
               className="mt-4 text-sm text-blue-300 hover:text-blue-200 underline transition"
             >
-              Clear all filters
+              {t('dashboard.clear')}
             </button>
           )}
         </motion.div>

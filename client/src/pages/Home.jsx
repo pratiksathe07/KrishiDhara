@@ -4,9 +4,12 @@ import { useAuth } from "../context/AuthContext";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Sprout, Tractor, HardHat, Store, ArrowRight, Leaf, Play } from "lucide-react";
 import Footer from "../components/Footer";
+import LanguageSwitcher from "../components/ui/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const { isAuthenticated, role } = useAuth();
+  const { t } = useTranslation();
 
   // Scroll animations for the video section
   const videoSectionRef = useRef(null);
@@ -83,7 +86,7 @@ const Home = () => {
 
           <motion.div variants={fadeInUp} initial="hidden" animate="show" className="hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-500/30 bg-primary-900/30 backdrop-blur-md shadow-inner whitespace-nowrap">
             <Leaf className="w-4 h-4 text-primary-400" />
-            <span className="text-sm font-medium text-primary-200 tracking-wide uppercase">Connecting Agriculture, Digitally</span>
+            <span className="text-sm font-medium text-primary-200 tracking-wide uppercase">{t('home.navTagline')}</span>
           </motion.div>
 
           <motion.div
@@ -92,17 +95,18 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="flex items-center gap-4"
           >
+            <LanguageSwitcher />
             {isAuthenticated ? (
               <Link to={`/${role}/dashboard`} className="px-6 py-2.5 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-medium transition-all shadow-glow hover:shadow-none hover:scale-105 active:scale-95 flex items-center gap-2">
-                Dashboard <ArrowRight className="w-4 h-4" />
+                {t('home.dashboard')} <ArrowRight className="w-4 h-4" />
               </Link>
             ) : (
               <>
                 <Link to="/login" className="px-6 py-2.5 rounded-full text-gray-200 hover:text-white hover:bg-white/10 transition-colors font-medium backdrop-blur-sm">
-                  Login
+                  {t('home.login')}
                 </Link>
                 <Link to="/register" className="px-6 py-2.5 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-medium transition-all shadow-glow hover:shadow-none hover:scale-105 active:scale-95 flex items-center gap-2">
-                  Get Started
+                  {t('home.getStarted')}
                 </Link>
               </>
             )}
@@ -142,11 +146,11 @@ const Home = () => {
                   <div className="bg-primary-500 rounded-full p-1">
                     <Play className="w-3 h-3 text-white fill-white" />
                   </div>
-                  <span className="text-xs font-semibold text-white tracking-widest uppercase">Interactive Vision</span>
+                  <span className="text-xs font-semibold text-white tracking-widest uppercase">{t('home.interactiveVision')}</span>
                 </div>
                 <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 drop-shadow-xl leading-tight">
-                  The Future of <br />
-                  <span className="text-primary-400">Digital Farming</span>
+                  {t('home.futureOf')} <br />
+                  <span className="text-primary-400">{t('home.digitalFarming')}</span>
                 </h2>
 
                 <p className="text-lg sm:text-xl text-gray-300 drop-shadow-md font-light leading-relaxed mb-8">
@@ -155,7 +159,7 @@ const Home = () => {
 
                 <div className="flex flex-col sm:flex-row items-start justify-start gap-4">
                   <Link to="/register" className="group px-8 py-4 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-semibold text-lg transition-all shadow-glow hover:shadow-[0_0_25px_rgba(34,197,94,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2">
-                    Start Your Journey
+                    {t('home.startJourney')}
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
@@ -175,14 +179,14 @@ const Home = () => {
 
 
             <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl font-extrabold mb-8 leading-tight tracking-tight drop-shadow-xl text-balance">
-              Empowering India&apos;s <br />
+              {t('home.heroTitle1')} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-emerald-300 filter drop-shadow-lg">
-                Agricultural Community
+                {t('home.heroTitle2')}
               </span>
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light">
-              KrishiDhara connects farmers with agricultural labour and dealers — streamlining hiring, trading, and field management for rural India with modern technology.
+              {t('home.heroSubtitle')}
             </motion.p>
 
 
@@ -199,9 +203,9 @@ const Home = () => {
             className="grid sm:grid-cols-3 gap-6 lg:gap-8"
           >
             {[
-              { icon: Tractor, role: "Farmer", desc: "Manage your land, crops, hire agricultural workers and connect with dealers directly.", color: "from-green-500/20 to-emerald-600/20", iconColor: "text-emerald-400" },
-              { icon: HardHat, role: "Labour", desc: "Find agricultural work near you. Showcase your skills and get hired by farmers.", color: "from-amber-500/20 to-orange-600/20", iconColor: "text-amber-400" },
-              { icon: Store, role: "Dealer", desc: "Connect with farmers to buy and sell agricultural produce and commodities seamlessly.", color: "from-blue-500/20 to-indigo-600/20", iconColor: "text-blue-400" },
+              { icon: Tractor, role: t('register.farmer'), desc: t('home.farmerDesc'), color: "from-green-500/20 to-emerald-600/20", iconColor: "text-emerald-400" },
+              { icon: HardHat, role: t('register.labour'), desc: t('home.labourDesc'), color: "from-amber-500/20 to-orange-600/20", iconColor: "text-amber-400" },
+              { icon: Store, role: t('register.dealer'), desc: t('home.dealerDesc'), color: "from-blue-500/20 to-indigo-600/20", iconColor: "text-blue-400" },
             ].map((card, idx) => (
               <motion.div
                 key={card.role}

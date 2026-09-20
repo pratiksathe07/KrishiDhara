@@ -11,6 +11,7 @@ import { ROLE_OPTIONS } from "../../constants/roles";
 
 import AnimatedBackground from "../../components/ui/AnimatedBackground";
 import { Sprout, Tractor, HardHat, Store, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const PREMIUM_ROLES = [
   { id: "farmer", label: "Farmer", icon: Tractor, activeBorder: "border-emerald-500", activeBg: "bg-emerald-50", iconColor: "text-emerald-500", badgeBg: "bg-emerald-500" },
@@ -24,6 +25,7 @@ const PREMIUM_ROLES = [
  */
 const RegisterStep1 = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const {
     register,
@@ -72,20 +74,20 @@ const RegisterStep1 = ({ onSuccess }) => {
         {/* Brand header */}
         <div className="text-center mb-6 relative z-10">
           <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Create Account</h1>
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Join the KrishiDhara community</p>
+          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">{t('register.title')}</h1>
+          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">{t('common.appTagline')}</p>
         </div>
 
         <StepIndicator currentStep={1} />
 
         <div className="auth-glass-card mt-6">
-          <h2 className="text-xl font-bold text-white mb-5">Personal Information</h2>
+          <h2 className="text-xl font-bold text-white mb-5">{t('register.personalInfo')}</h2>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="animate-fade-in">
             {/* First Name */}
             <Input
               id="firstName"
-              label="First Name"
+              label={t('register.firstName')}
               placeholder="Ramesh"
               error={errors.firstName?.message}
               {...register("firstName", {
@@ -97,7 +99,7 @@ const RegisterStep1 = ({ onSuccess }) => {
             {/* Last Name */}
             <Input
               id="lastName"
-              label="Last Name"
+              label={t('register.lastName')}
               placeholder="Patil"
               error={errors.lastName?.message}
               {...register("lastName", {
@@ -109,7 +111,7 @@ const RegisterStep1 = ({ onSuccess }) => {
             {/* Mobile */}
             <Input
               id="mobile"
-              label="Mobile Number"
+              label={t('register.mobileNumber')}
               placeholder="9876543210"
               type="tel"
               inputMode="numeric"
@@ -150,8 +152,8 @@ const RegisterStep1 = ({ onSuccess }) => {
             {/* Email */}
             <Input
               id="email"
-              label="Email Address"
-              placeholder="ramesh@example.com"
+              label={t('login.emailLabel')}
+              placeholder={t('login.emailPlaceholder')}
               type="email"
               error={errors.email?.message}
               {...register("email", {
@@ -165,7 +167,7 @@ const RegisterStep1 = ({ onSuccess }) => {
 
             {/* Premium Role Selector */}
             <div className="mb-6">
-              <label className="input-label mb-3">I am a</label>
+              <label className="input-label mb-3">{t('register.rolePrompt')}</label>
               <div className="grid grid-cols-3 gap-3">
                 {PREMIUM_ROLES.map((role) => {
                   const Icon = role.icon;
@@ -187,7 +189,7 @@ const RegisterStep1 = ({ onSuccess }) => {
                       />
                       <Icon className={`w-8 h-8 mb-2 transition-colors ${isActive ? role.iconColor : "text-gray-400"}`} />
                       <span className={`text-sm font-bold transition-colors ${isActive ? "text-gray-900" : "text-white/70"}`}>
-                        {role.label}
+                        {t(`register.${role.id}`)}
                       </span>
                       {isActive && (
                         <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${role.badgeBg} flex items-center justify-center shadow-sm animate-fade-in`}>
@@ -202,7 +204,7 @@ const RegisterStep1 = ({ onSuccess }) => {
             </div>
 
             <Button type="submit" loading={loading} className="mt-4">
-              Get OTP
+              {t('register.getOtp')}
             </Button>
           </form>
 

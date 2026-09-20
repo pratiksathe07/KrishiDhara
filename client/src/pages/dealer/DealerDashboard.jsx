@@ -1,17 +1,21 @@
 import { useAuth } from "../../context/AuthContext";
 import LogoutButton from "../../components/LogoutButton";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 
-const NAV_ITEMS = [
-  { icon: "🏠", label: "Dashboard", href: "/dealer/dashboard" },
-  { icon: "🏪", label: "My Products", href: "#" },
-  { icon: "🌾", label: "Farmer Leads", href: "#" },
-  { icon: "📊", label: "Analytics", href: "#" },
-  { icon: "💬", label: "Messages", href: "#" },
+const getNavItems = (t) => [
+  { icon: "🏠", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
+  { icon: "🏪", label: t('dashboard.navMyProducts'), href: "#" },
+  { icon: "🌾", label: t('dashboard.navFarmerLeads'), href: "#" },
+  { icon: "📊", label: t('dashboard.navAnalytics'), href: "#" },
+  { icon: "💬", label: t('dashboard.navMessages'), href: "#" },
 ];
 
 const DealerDashboard = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
+  const navItems = getNavItems(t);
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-gray-900">
@@ -34,10 +38,11 @@ const DealerDashboard = () => {
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg drop-shadow-md" />
             <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-blue-500/30 text-blue-200 rounded-full px-3 py-0.5 border border-blue-400/40">
-              Dealer
+              {t('register.dealer')}
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <span className="hidden sm:block text-sm text-white/80 font-medium">{user?.firstName} {user?.lastName}</span>
             <LogoutButton />
           </div>
@@ -48,7 +53,7 @@ const DealerDashboard = () => {
       <div className="relative z-10 flex flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 gap-6">
         {/* Sidebar — glass */}
         <aside className="hidden md:flex flex-col w-56 shrink-0 gap-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-3 h-fit shadow-lg">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
@@ -70,16 +75,16 @@ const DealerDashboard = () => {
             transition={{ duration: 0.5 }}
             className="backdrop-blur-xl bg-gradient-to-r from-blue-500/30 to-indigo-600/20 border border-blue-400/30 rounded-2xl p-6 text-white shadow-lg"
           >
-            <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">Welcome, {user?.firstName}! 👋</h1>
-            <p className="text-blue-100/90 text-sm">Connect with farmers and grow your agricultural business.</p>
+            <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">{t('dashboard.welcome')}, {user?.firstName}! 👋</h1>
+            <p className="text-blue-100/90 text-sm">{t('dashboard.dealerBanner')}</p>
           </motion.div>
 
           {/* Stats grid — glass cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {[
-              { icon: "🛒", label: "Active Listings", value: "0" },
-              { icon: "👨‍🌾", label: "Farmer Contacts", value: "0" },
-              { icon: "📦", label: "Products", value: user?.dealerProfile?.products?.length || "0" },
+              { icon: "🛒", label: t('dashboard.activeListings'), value: "0" },
+              { icon: "👨‍🌾", label: t('dashboard.farmerContacts'), value: "0" },
+              { icon: "📦", label: t('dashboard.products'), value: user?.dealerProfile?.products?.length || "0" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -102,27 +107,27 @@ const DealerDashboard = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
           >
-            <h2 className="text-base font-semibold text-white mb-4">Your Profile</h2>
+            <h2 className="text-base font-semibold text-white mb-4">{t('dashboard.yourProfile')}</h2>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Full Name</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('dashboard.fullName')}</p>
                 <p className="font-medium text-white">{user?.firstName} {user?.lastName}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Email</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('login.emailLabel')}</p>
                 <p className="font-medium text-white">{user?.email}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Mobile</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('register.mobileNumber')}</p>
                 <p className="font-medium text-white">{user?.mobile}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Address</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('dashboard.address')}</p>
                 <p className="font-medium text-white">{user?.address || "—"}</p>
               </div>
               {user?.dealerProfile && user.dealerProfile.products.length > 0 && (
                 <div className="sm:col-span-2">
-                  <p className="text-white/50 text-xs mb-1.5">Products</p>
+                  <p className="text-white/50 text-xs mb-1.5">{t('dashboard.products')}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {user.dealerProfile.products.map((p) => (
                       <span key={p} className="chip chip-selected text-xs">{p}</span>

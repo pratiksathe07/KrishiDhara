@@ -1,17 +1,21 @@
 import { useAuth } from "../../context/AuthContext";
 import LogoutButton from "../../components/LogoutButton";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 
-const NAV_ITEMS = [
-  { icon: "🏠", label: "Dashboard", href: "/labour/dashboard" },
-  { icon: "📋", label: "My Profile", href: "#" },
-  { icon: "🔍", label: "Find Work", href: "#" },
-  { icon: "📅", label: "My Jobs", href: "#" },
-  { icon: "💰", label: "Earnings", href: "#" },
+const getNavItems = (t) => [
+  { icon: "🏠", label: t('dashboard.navDashboard'), href: "/labour/dashboard" },
+  { icon: "📋", label: t('dashboard.navMyProfile'), href: "#" },
+  { icon: "🔍", label: t('dashboard.navFindWork'), href: "#" },
+  { icon: "📅", label: t('dashboard.navMyJobs'), href: "#" },
+  { icon: "💰", label: t('dashboard.navEarnings'), href: "#" },
 ];
 
 const LabourDashboard = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
+  const navItems = getNavItems(t);
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-gray-900">
@@ -34,10 +38,11 @@ const LabourDashboard = () => {
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg drop-shadow-md" />
             <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-orange-500/30 text-orange-200 rounded-full px-3 py-0.5 border border-orange-400/40">
-              Labour
+              {t('register.labour')}
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <span className="hidden sm:block text-sm text-white/80 font-medium">
               {user?.firstName} {user?.lastName}
             </span>
@@ -50,7 +55,7 @@ const LabourDashboard = () => {
       <div className="relative z-10 flex flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 gap-6">
         {/* Sidebar — glass */}
         <aside className="hidden md:flex flex-col w-56 shrink-0 gap-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-3 h-fit shadow-lg">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
@@ -72,16 +77,16 @@ const LabourDashboard = () => {
             transition={{ duration: 0.5 }}
             className="backdrop-blur-xl bg-gradient-to-r from-orange-500/30 to-amber-600/20 border border-orange-400/30 rounded-2xl p-6 text-white shadow-lg"
           >
-            <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">Welcome, {user?.firstName}! 👋</h1>
-            <p className="text-orange-100/90 text-sm">Find agricultural work and connect with farmers near you.</p>
+            <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">{t('dashboard.welcome')}, {user?.firstName}! 👋</h1>
+            <p className="text-orange-100/90 text-sm">{t('dashboard.labourBanner')}</p>
           </motion.div>
 
           {/* Stats grid — glass cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {[
-              { icon: "📅", label: "Active Jobs", value: "0" },
-              { icon: "✅", label: "Completed", value: "0" },
-              { icon: "⭐", label: "Rating", value: "—" },
+              { icon: "📅", label: t('dashboard.activeJobs'), value: "0" },
+              { icon: "✅", label: t('dashboard.completed'), value: "0" },
+              { icon: "⭐", label: t('dashboard.rating'), value: "—" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -104,36 +109,36 @@ const LabourDashboard = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
           >
-            <h2 className="text-base font-semibold text-white mb-4">Your Profile</h2>
+            <h2 className="text-base font-semibold text-white mb-4">{t('dashboard.yourProfile')}</h2>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Full Name</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('dashboard.fullName')}</p>
                 <p className="font-medium text-white">{user?.firstName} {user?.lastName}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Email</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('login.emailLabel')}</p>
                 <p className="font-medium text-white">{user?.email}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">Mobile</p>
+                <p className="text-white/50 text-xs mb-0.5">{t('register.mobileNumber')}</p>
                 <p className="font-medium text-white">{user?.mobile}</p>
               </div>
               {user?.labourProfile && (
                 <>
                   <div>
-                    <p className="text-white/50 text-xs mb-0.5">Experience</p>
+                    <p className="text-white/50 text-xs mb-0.5">{t('dashboard.experience')}</p>
                     <p className="font-medium text-white">
-                      {user.labourProfile.experienceYears} {user.labourProfile.experienceYears === 1 ? "year" : "years"}
+                      {user.labourProfile.experienceYears} {user.labourProfile.experienceYears === 1 ? t('dashboard.yearExp') : t('dashboard.yearsExp')}
                     </p>
                   </div>
                   <div className="sm:col-span-2">
-                    <p className="text-white/50 text-xs mb-1.5">Skills</p>
+                    <p className="text-white/50 text-xs mb-1.5">{t('dashboard.skills')}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {user.labourProfile.skills.length > 0
                         ? user.labourProfile.skills.map((s) => (
                             <span key={s} className="chip chip-selected text-xs">{s}</span>
                           ))
-                        : <span className="text-xs text-white/40">No skills added</span>
+                        : <span className="text-xs text-white/40">{t('dashboard.noSkillsAdded')}</span>
                       }
                     </div>
                   </div>
