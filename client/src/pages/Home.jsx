@@ -154,7 +154,7 @@ const Home = () => {
                 </h2>
 
                 <p className="text-lg sm:text-xl text-gray-300 drop-shadow-md font-light leading-relaxed mb-8">
-                  {/* Experience the seamless integration of traditional agriculture with modern digital solutions. As you scroll into this section, the video comes alive. */}
+                  {/* Experience the seamless integration of traditional griculture with modern digital solutions. As you scroll into this section, the video comes alive. */}
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-start justify-start gap-4">
