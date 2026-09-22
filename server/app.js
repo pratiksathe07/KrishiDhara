@@ -13,7 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const userRoutes = require("./routes/userRoutes");
 
-const app = express();
+const app = express();  
 
 // ─── Security Headers ──────────────────────────────────────────────────────
 app.use(helmet());
