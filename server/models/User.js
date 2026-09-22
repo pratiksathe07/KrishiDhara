@@ -67,7 +67,7 @@ const dealerProfileSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    firstName: { 
       type: String,
       required: [true, "First name is required."],
       trim: true,
