@@ -65,7 +65,7 @@ const dealerProfileSchema = new mongoose.Schema(
 
 // ─── Main User Schema ──────────────────────────────────────────────────────
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema( 
   {
     firstName: { 
       type: String,
