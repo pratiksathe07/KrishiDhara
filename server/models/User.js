@@ -99,7 +99,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Role is required."],
       enum: {
         values: ALLOWED_ROLES,
-        message: "Role must be one of: farmer, labour, dealer.",
+        message: "Role must be one of: farmer, labour, dealer, admin.",
       },
     },
     status: {

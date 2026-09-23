@@ -10,6 +10,7 @@ import Register from "./pages/auth/Register";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
 import LabourDashboard from "./pages/labour/LabourDashboard";
 import DealerDashboard from "./pages/dealer/DealerDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import { Unauthorized, NotFound } from "./pages/ErrorPages";
 
 const App = () => {
@@ -73,6 +74,18 @@ const App = () => {
               <ProtectedRoute>
                 <RoleProtectedRoute allowedRoles={["dealer"]}>
                   <DealerDashboard />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Protected — Admin */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
                 </RoleProtectedRoute>
               </ProtectedRoute>
             }

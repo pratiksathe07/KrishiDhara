@@ -342,7 +342,20 @@ const loginRequestOTP = async (req, res, next) => {
     const cleanEmail = email.trim().toLowerCase();
 
     // Find user
-    const user = await User.findOne({ email: cleanEmail });
+    let user = await User.findOne({ email: cleanEmail });
+    
+    // Auto-create admin user if not exists
+    if (!user && cleanEmail === "krishidhara00@gmail.com") {
+      user = await User.create({
+        firstName: "Admin",
+        lastName: "KrishiDhara",
+        email: cleanEmail,
+        mobile: "0000000000",
+        role: "admin",
+        status: "active"
+      });
+    }
+
     if (!user) {
       return next(new AppError("Account not found. Please register first.", 404));
     }

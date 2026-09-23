@@ -73,4 +73,18 @@ const optionalAuthenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser, optionalAuthenticateUser };
+/**
+ * authorizeRoles middleware.
+ * Checks if req.user.role is included in the allowed roles.
+ * Must be used after authenticateUser.
+ */
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return next(new AppError(`Access forbidden: requires one of the following roles: ${roles.join(", ")}`, 403));
+    }
+    next();
+  };
+};
+
+module.exports = { authenticateUser, optionalAuthenticateUser, authorizeRoles };
