@@ -134,8 +134,8 @@ const AdminDashboard = () => {
           <div className="p-6 flex flex-col h-full">
             <div className="flex items-center justify-between mb-10">
               <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="KrishiDhara" className="h-10 w-10 object-contain drop-shadow-md rounded-lg" />
-                <span className="text-xl font-bold tracking-wide">Admin</span>
+                <img src="/logo.png" alt="KrishiDhara" className="h-13 w-100 object-contain drop-shadow-md rounded-lg" />
+                {/* <span className="text-xl font-bold tracking-wide">Admin</span> */}
               </div>
               <button className="lg:hidden text-white/70 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
                 <X size={24} />
@@ -165,9 +165,11 @@ const AdminDashboard = () => {
 
             <div className="mt-auto border-t border-white/10 pt-6">
               <div className="flex items-center gap-3 px-4 py-3 mb-2 bg-black/20 rounded-xl border border-white/5">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center font-bold shadow-lg">
-                  {authUser?.firstName?.charAt(0) || "A"}
-                </div>
+                {/* <div className="h-12 w-1000 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center font-bold shadow-lg">
+                  {authUser?.firstName?.charAt(0) || "Admin"}
+                </div> */}
+                
+                <div className="h-12 w-100 flex items-center justify-center font-bold shadow-lg"> Admin</div>
                 <div>
                   <p className="text-sm font-semibold">{authUser?.firstName} {authUser?.lastName}</p>
                   <p className="text-xs text-white/50 truncate max-w-[120px]">{authUser?.email}</p>
@@ -208,7 +210,7 @@ const AdminDashboard = () => {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-8 flex justify-between items-end">
                   <div>
-                    <h2 className="text-3xl font-bold mb-2">Welcome back, {authUser?.firstName}! 👋</h2>
+                    <h2 className="text-3xl font-bold mb-2">Welcome back {authUser?.firstName}! 👋</h2>
                     <p className="text-white/60">Here's what's happening in KrishiDhara today.</p>
                   </div>
                   <button onClick={fetchStats} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 text-white/70 hover:text-white flex items-center gap-2 text-sm">
