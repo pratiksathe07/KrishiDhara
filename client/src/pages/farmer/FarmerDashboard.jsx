@@ -6,6 +6,7 @@ import HireLabour from "./HireLabour";
 import ViewDealers from "./ViewDealers";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
+import ProfileAvatar from "../../components/ProfileAvatar";
 
 const getNavItems = (t) => [
   { id: "dashboard", icon: "🏠", label: t('dashboard.navDashboard') },
@@ -165,6 +166,7 @@ const FarmerDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
+            <ProfileAvatar />
             <span className="hidden sm:block text-sm text-white/80 font-medium">
               {user?.firstName} {user?.lastName}
             </span>

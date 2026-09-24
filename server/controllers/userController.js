@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 const User = require("../models/User");
 const AppError = require("../utils/AppError");
 const { ALLOWED_SKILLS } = require("../constants/labourSkills");
@@ -36,7 +38,7 @@ const getLabours = async (req, res, next) => {
 
     const labours = await User.find(filter)
       .select(
-        "firstName lastName mobile address labourProfile createdAt"
+        "firstName lastName mobile address labourProfile profilePicture createdAt"
       )
       .sort({ createdAt: -1 })
       .lean();
@@ -81,7 +83,7 @@ const getDealers = async (req, res, next) => {
     }
 
     const dealers = await User.find(filter)
-      .select("firstName lastName mobile address dealerProfile createdAt")
+      .select("firstName lastName mobile address dealerProfile profilePicture createdAt")
       .sort({ createdAt: -1 })
       .lean();
 
@@ -95,4 +97,112 @@ const getDealers = async (req, res, next) => {
   }
 };
 
-module.exports = { getLabours, getDealers };
+/**
+ * PUT /api/users/profile-picture
+ * Handles uploading or updating the authenticated user's profile picture.
+ */
+const updateProfilePicture = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return next(new AppError("Please provide an image file to upload.", 400));
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return next(new AppError("User not found.", 404));
+    }
+
+    // If user already had a custom profile picture stored locally, delete the old file
+    if (user.profilePicture && user.profilePicture.startsWith("/uploads/avatars/")) {
+      const oldFilename = path.basename(user.profilePicture);
+      const oldFilePath = path.join(__dirname, "..", "uploads", "avatars", oldFilename);
+      if (fs.existsSync(oldFilePath)) {
+        try {
+          fs.unlinkSync(oldFilePath);
+        } catch (unlinkErr) {
+          console.warn("Could not delete old avatar file:", unlinkErr.message);
+        }
+      }
+    }
+
+    // Set new profile picture path
+    const relativePath = `/uploads/avatars/${req.file.filename}`;
+    user.profilePicture = relativePath;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile picture updated successfully.",
+      data: {
+        profilePicture: user.profilePicture,
+        user: {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          mobile: user.mobile,
+          role: user.role,
+          status: user.status,
+          profilePicture: user.profilePicture,
+        },
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * DELETE /api/users/profile-picture
+ * Removes the authenticated user's profile picture.
+ */
+const deleteProfilePicture = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return next(new AppError("User not found.", 404));
+    }
+
+    if (user.profilePicture && user.profilePicture.startsWith("/uploads/avatars/")) {
+      const oldFilename = path.basename(user.profilePicture);
+      const oldFilePath = path.join(__dirname, "..", "uploads", "avatars", oldFilename);
+      if (fs.existsSync(oldFilePath)) {
+        try {
+          fs.unlinkSync(oldFilePath);
+        } catch (unlinkErr) {
+          console.warn("Could not delete avatar file:", unlinkErr.message);
+        }
+      }
+    }
+
+    user.profilePicture = "";
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile picture removed successfully.",
+      data: {
+        profilePicture: "",
+        user: {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          mobile: user.mobile,
+          role: user.role,
+          status: user.status,
+          profilePicture: "",
+        },
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getLabours,
+  getDealers,
+  updateProfilePicture,
+  deleteProfilePicture,
+};

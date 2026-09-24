@@ -33,6 +33,11 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   }, []);
 
+  /** Update user fields without requiring a full reload */
+  const updateUser = useCallback((updatedFields) => {
+    setUser((prev) => (prev ? { ...prev, ...updatedFields } : prev));
+  }, []);
+
   /** Logout: clear cookie via API, then clear local state */
   const logout = useCallback(async () => {
     try {
@@ -47,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     setAuthUser,
+    updateUser,
     logout,
     isAuthenticated: !!user,
     role: user?.role || null,

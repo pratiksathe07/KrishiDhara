@@ -322,6 +322,7 @@ const register = async (req, res, next) => {
           mobile: user.mobile,
           role: user.role,
           status: user.status,
+          profilePicture: user.profilePicture || "",
         },
       },
     });
@@ -461,6 +462,7 @@ const loginVerifyOTP = async (req, res, next) => {
           mobile: user.mobile,
           role: user.role,
           status: user.status,
+          profilePicture: user.profilePicture || "",
         },
       },
     });
@@ -509,6 +511,7 @@ const getMe = async (req, res, next) => {
           farmerProfile: user.farmerProfile,
           labourProfile: user.labourProfile,
           dealerProfile: user.dealerProfile,
+          profilePicture: user.profilePicture || "",
           createdAt: user.createdAt,
         },
       },

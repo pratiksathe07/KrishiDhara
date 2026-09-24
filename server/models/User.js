@@ -114,6 +114,12 @@ const userSchema = new mongoose.Schema(
       maxlength: [300, "Address cannot exceed 300 characters."],
     },
 
+    // Profile picture URL / relative path
+    profilePicture: {
+      type: String,
+      default: "",
+    },
+
     // Only populated for role = farmer
     farmerProfile: {
       type: farmerProfileSchema,

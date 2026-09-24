@@ -12,12 +12,21 @@ const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/authRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const userRoutes = require("./routes/userRoutes");
+const path = require("path");
 const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();  
 
 // ─── Security Headers ──────────────────────────────────────────────────────
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
+
+// ─── Serve Static Uploads ─────────────────────────────────────────────────
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ─── CORS ──────────────────────────────────────────────────────────────────
 app.use(

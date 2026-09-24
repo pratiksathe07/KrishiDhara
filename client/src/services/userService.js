@@ -17,3 +17,22 @@ export const getDealers = (products = []) => {
   const params = products.length > 0 ? { products: products.join(",") } : {};
   return api.get("/users/dealers", { params });
 };
+
+/**
+ * Upload or update the logged-in user's profile picture.
+ * @param {FormData} formData - FormData containing 'profilePicture' file
+ */
+export const uploadProfilePicture = (formData) => {
+  return api.put("/users/profile-picture", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+/**
+ * Remove the logged-in user's profile picture.
+ */
+export const deleteProfilePicture = () => {
+  return api.delete("/users/profile-picture");
+};

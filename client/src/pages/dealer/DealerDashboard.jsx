@@ -3,6 +3,7 @@ import LogoutButton from "../../components/LogoutButton";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
+import ProfileAvatar from "../../components/ProfileAvatar";
 
 const getNavItems = (t) => [
   { icon: "🏠", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
@@ -43,6 +44,7 @@ const DealerDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
+            <ProfileAvatar />
             <span className="hidden sm:block text-sm text-white/80 font-medium">{user?.firstName} {user?.lastName}</span>
             <LogoutButton />
           </div>

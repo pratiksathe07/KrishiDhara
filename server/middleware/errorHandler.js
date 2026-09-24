@@ -33,6 +33,20 @@ const errorHandler = (err, req, res, next) => {
     return res.status(401).json({ success: false, message: "Token has expired." });
   }
 
+  // Multer errors (file size limit, unexpected field, etc.)
+  if (err.name === "MulterError") {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        success: false,
+        message: "File size exceeds the 5MB limit. Please choose a smaller image.",
+      });
+    }
+    return res.status(400).json({
+      success: false,
+      message: err.message || "File upload error.",
+    });
+  }
+
   // Operational errors (thrown intentionally via AppError)
   if (err.isOperational) {
     return res.status(err.statusCode).json({
