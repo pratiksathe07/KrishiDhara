@@ -126,7 +126,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <AnimatedBackground>
+    <AnimatedBackground onRefresh={fetchStats}>
       <div className="min-h-screen flex text-white relative z-10 font-sans">
         
         {/* Sidebar */}
@@ -213,10 +213,7 @@ const AdminDashboard = () => {
                     <h2 className="text-3xl font-bold mb-2">Welcome back {authUser?.firstName}! 👋</h2>
                     <p className="text-white/60">Here's what's happening in KrishiDhara today.</p>
                   </div>
-                  <button onClick={fetchStats} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 text-white/70 hover:text-white flex items-center gap-2 text-sm">
-                    <RefreshCw size={16} className={isLoadingStats ? "animate-spin" : ""} />
-                    Refresh
-                  </button>
+                 
                 </div>
 
                 {/* Stat Cards */}

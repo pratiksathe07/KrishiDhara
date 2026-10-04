@@ -1,19 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, RefreshCw } from "lucide-react";
 
-const AnimatedBackground = ({ children }) => {
+const AnimatedBackground = ({ children, onRefresh }) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gray-900">
       {/* Back Button */}
-      <Link
-        to="/"
-        className="absolute top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full border border-white/20 transition-all hover:scale-105 active:scale-95 shadow-lg"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Home
-      </Link>
+      <div className="absolute top-6 left-6 z-50 flex items-center gap-3">
+  <Link
+    to="/"
+    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full border border-white/20 transition-all hover:scale-105 active:scale-95 shadow-lg"
+  >
+    <ArrowLeft className="w-4 h-4" />
+    Back to Home
+  </Link>
+
+  <button
+    onClick={onRefresh}
+    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full border border-white/20 transition-all hover:scale-105 active:scale-95 shadow-lg"
+  >
+    <RefreshCw className="w-4 h-4" />
+    Refresh
+  </button>
+</div>
 
       {/* Hero Background with same slow-zoom as dashboard */}
       <div className="absolute inset-0 z-0 overflow-hidden">
