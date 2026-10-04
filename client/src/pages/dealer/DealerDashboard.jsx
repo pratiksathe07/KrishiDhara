@@ -6,8 +6,8 @@ import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 import ProfileAvatar from "../../components/ProfileAvatar";
 
 const getNavItems = (t) => [
-  { icon: "🏠", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
-  { icon: "🏪", label: t('dashboard.navMyProducts'), href: "#" },
+  { icon: "▦", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
+  { icon: "📦", label: t('dashboard.navMyProducts'), href: "#" },
   { icon: "🌾", label: t('dashboard.navFarmerLeads'), href: "#" },
   { icon: "📊", label: t('dashboard.navAnalytics'), href: "#" },
   { icon: "💬", label: t('dashboard.navMessages'), href: "#" },
@@ -96,7 +96,7 @@ const DealerDashboard = () => {
               >
                 <span className="text-2xl">{stat.icon}</span>
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-xs text-white/60 font-medium">{stat.label}</p>
+                <p className="text-sm text-white/60 font-medium">{stat.label}</p>
               </motion.div>
             ))}
           </div>
