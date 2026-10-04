@@ -38,7 +38,7 @@ const DealerDashboard = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg drop-shadow-md" />
-            <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-blue-500/30 text-blue-200 rounded-full px-3 py-0.5 border border-blue-400/40">
+            <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-emerald-50 text-emerald-700 rounded-full px-3 py-1 border border-emerald-200">
               {t('register.dealer')}
             </span>
           </div>
@@ -65,7 +65,6 @@ const DealerDashboard = () => {
             </a>
           ))}
           <div className="mt-1">
-            <LogoutButton variant="sidebar" />
           </div>
         </aside>
 
