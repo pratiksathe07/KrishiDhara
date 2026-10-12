@@ -1,13 +1,13 @@
 import { useAuth } from "../../context/AuthContext";
-import LogoutButton from "../../components/LogoutButton";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
-import ProfileAvatar from "../../components/ProfileAvatar";
+import DealerProfileDropdown from "../../components/dealer/DealerProfileDropdown";
 
 const getNavItems = (t) => [
   { icon: "▦", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
-  { icon: "📦", label: t('dashboard.navMyProducts'), href: "#" },
+  { icon: "📋", label: "My Profile & Requirements", href: "/dealer/profile" },
   { icon: "🌾", label: t('dashboard.navFarmerLeads'), href: "#" },
   { icon: "📊", label: t('dashboard.navAnalytics'), href: "#" },
   { icon: "💬", label: t('dashboard.navMessages'), href: "#" },
@@ -44,9 +44,8 @@ const DealerDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
-            <ProfileAvatar />
-            <span className="hidden sm:block text-sm text-white/80 font-medium">{user?.firstName} {user?.lastName}</span>
-            <LogoutButton />
+            {/* Dealer Profile Dropdown (Contains Profile Picture + Name trigger, My Profile and Logout) */}
+            <DealerProfileDropdown />
           </div>
         </div>
       </header>
@@ -108,7 +107,15 @@ const DealerDashboard = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
           >
-            <h2 className="text-base font-semibold text-white mb-4">{t('dashboard.yourProfile')}</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-semibold text-white">{t('dashboard.yourProfile')}</h2>
+              <Link
+                to="/dealer/profile"
+                className="text-xs text-blue-300 hover:text-white bg-blue-500/20 hover:bg-blue-500/30 px-3 py-1.5 rounded-xl border border-blue-400/30 transition flex items-center gap-1 font-medium"
+              >
+                <span>My Profile & Requirements →</span>
+              </Link>
+            </div>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
               <div>
                 <p className="text-white/50 text-xs mb-0.5">{t('dashboard.fullName')}</p>

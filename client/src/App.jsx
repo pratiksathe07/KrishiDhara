@@ -10,6 +10,7 @@ import Register from "./pages/auth/Register";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
 import LabourDashboard from "./pages/labour/LabourDashboard";
 import DealerDashboard from "./pages/dealer/DealerDashboard";
+import DealerProfile from "./pages/dealer/DealerProfile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import { Unauthorized, NotFound } from "./pages/ErrorPages";
 
@@ -74,6 +75,16 @@ const App = () => {
               <ProtectedRoute>
                 <RoleProtectedRoute allowedRoles={["dealer"]}>
                   <DealerDashboard />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dealer/profile"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute allowedRoles={["dealer"]}>
+                  <DealerProfile />
                 </RoleProtectedRoute>
               </ProtectedRoute>
             }
