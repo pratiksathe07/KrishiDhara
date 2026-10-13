@@ -116,6 +116,10 @@
     "dealerFound": "வியாபாரி காணப்பட்டார்",
     "product": "தயாரிப்பு",
     "noDealersFound": "வியாபாரிகள் காணப்படவில்லை",
+    "dealerRequirements": "வியாபாரி தேவைகள்",
+    "dealerPurchaseRequirements": "வியாபாரி கொள்முதல் தேவைகள்",
+    "navDealerRequirements": "வியாபாரி தேவைகள்",
+    "contactDealer": "வியாபாரியைத் தொடர்பு கொள்க",
     "logout": "வெளியேறு",
     "yExpShort": "ஆண்டு அனுபவம்"
   },

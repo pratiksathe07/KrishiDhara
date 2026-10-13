@@ -115,7 +115,10 @@
     "dealersFound": "dealers found",
     "dealerFound": "dealer found",
     "product": "product",
-    "noDealersFound": "No dealers found",
+    "dealerRequirements": "Dealer Requirements",
+    "dealerPurchaseRequirements": "Dealer Purchase Requirements",
+    "navDealerRequirements": "Dealer Requirements",
+    "contactDealer": "Contact Dealer",
     "logout": "Logout",
     "yExpShort": "y exp"
   },

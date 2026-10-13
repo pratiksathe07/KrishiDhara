@@ -1,26 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import LogoutButton from "../../components/LogoutButton";
 import { motion, AnimatePresence } from "framer-motion";
 import HireLabour from "./HireLabour";
 import ViewDealers from "./ViewDealers";
+import DealerRequirements from "./DealerRequirements";
+import { getActiveDealerRequirements } from "../../services/dealerService";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 import ProfileAvatar from "../../components/ProfileAvatar";
 
 const getNavItems = (t) => [
-  { id: "dashboard", icon: "🏠", label: t('dashboard.navDashboard') },
-  { id: "land",      icon: "🌍", label: t('dashboard.navMyLand') },
-  { id: "crops",     icon: "🌱", label: t('dashboard.navCrops') },
-  { id: "labour",    icon: "👷", label: t('dashboard.navHireLabour') },
-  { id: "dealers",   icon: "🏪", label: t('dashboard.navDealers') },
+  { id: "dashboard",    icon: "🏠", label: t('dashboard.navDashboard') },
+  { id: "requirements", icon: "📋", label: t('dashboard.dealerRequirements', 'Dealer Requirements') },
+  { id: "land",         icon: "🌍", label: t('dashboard.navMyLand') },
+  { id: "crops",        icon: "🌱", label: t('dashboard.navCrops') },
+  { id: "labour",       icon: "👷", label: t('dashboard.navHireLabour') },
+  { id: "dealers",      icon: "🏪", label: t('dashboard.navDealers') },
 ];
 
 // ─── Dashboard home tab content ──────────────────────────────────────────────
-const DashboardHome = ({ user }) => {
+const DashboardHome = ({ user, onNavigateTab }) => {
   const { t } = useTranslation();
+  const [requirementsCount, setRequirementsCount] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+    getActiveDealerRequirements()
+      .then((res) => {
+        if (isMounted && res.data?.success) {
+          setRequirementsCount(res.data.data.requirements?.length || 0);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
-  <div className="space-y-5">
+  <div className="space-y-6">
     {/* Welcome banner */}
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,22 +56,34 @@ const DashboardHome = ({ user }) => {
     </motion.div>
 
     {/* Stats grid */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       {[
         { icon: "🌿", label: t('dashboard.activeCrops'), value: "0" },
         { icon: "👷", label: t('dashboard.hiredLabour'), value: "0" },
         { icon: "🏪", label: t('dashboard.navDealers'), value: "0" },
+        {
+          icon: "📋",
+          label: t('dashboard.dealerRequirements', 'Dealer Requirements'),
+          value: String(requirementsCount),
+          highlight: true,
+          onClick: () => onNavigateTab && onNavigateTab("requirements"),
+        },
       ].map((stat, i) => (
         <motion.div
           key={stat.label}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: i * 0.1 }}
-          className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-5 flex flex-col gap-2 shadow-lg hover:bg-white/15 transition-all duration-300 cursor-default"
+          transition={{ duration: 0.4, delay: i * 0.08 }}
+          onClick={stat.onClick}
+          className={`backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col gap-2 shadow-lg transition-all duration-300 ${
+            stat.onClick ? "hover:bg-white/20 hover:scale-[1.02] cursor-pointer" : "cursor-default hover:bg-white/15"
+          }`}
         >
           <span className="text-2xl">{stat.icon}</span>
           <div>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
+            <p className={`text-2xl font-bold ${stat.highlight ? "text-blue-300" : "text-white"}`}>
+              {stat.value}
+            </p>
             <p className="text-xs text-white/60 font-medium">{stat.label}</p>
           </div>
         </motion.div>
@@ -63,7 +94,7 @@ const DashboardHome = ({ user }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
+      transition={{ duration: 0.5, delay: 0.25 }}
       className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
     >
       <h2 className="text-base font-semibold text-white mb-4">{t('dashboard.yourProfile')}</h2>
@@ -103,6 +134,15 @@ const DashboardHome = ({ user }) => {
         )}
       </div>
     </motion.div>
+
+    {/* ── Section: Dealer Purchase Requirements ── */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.35 }}
+    >
+      <DealerRequirements embedded={true} />
+    </motion.div>
   </div>
   );
 };
@@ -132,12 +172,13 @@ const FarmerDashboard = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "dashboard": return <DashboardHome user={user} />;
-      case "labour":    return <HireLabour />;
-      case "dealers":   return <ViewDealers />;
-      case "land":      return <ComingSoon label={t('dashboard.navMyLand')} icon="🌍" />;
-      case "crops":     return <ComingSoon label={t('dashboard.navCrops')} icon="🌱" />;
-      default:          return <DashboardHome user={user} />;
+      case "dashboard":    return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
+      case "requirements": return <DealerRequirements />;
+      case "labour":       return <HireLabour />;
+      case "dealers":      return <ViewDealers />;
+      case "land":         return <ComingSoon label={t('dashboard.navMyLand')} icon="🌍" />;
+      case "crops":        return <ComingSoon label={t('dashboard.navCrops')} icon="🌱" />;
+      default:             return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
     }
   };
 
