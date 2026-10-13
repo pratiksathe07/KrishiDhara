@@ -14,6 +14,7 @@ const locationRoutes = require("./routes/locationRoutes");
 const userRoutes = require("./routes/userRoutes");
 const path = require("path");
 const adminRoutes = require("./routes/adminRoutes");
+const complaintRoutes = require("./routes/complaintRoutes");
 
 const app = express();  
 
@@ -64,6 +65,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/complaints", complaintRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────────────────
 app.use((req, res) => {

@@ -20,9 +20,11 @@ import {
   XCircle,
   Trash2,
   RefreshCw,
-  MoreVertical
+  MoreVertical,
+  Flag
 } from "lucide-react";
 import toast from "react-hot-toast";
+import ReportsComplaints from "./ReportsComplaints";
 
 const AdminDashboard = () => {
   const { authUser, logout } = useAuth();
@@ -157,6 +159,13 @@ const AdminDashboard = () => {
                 <Users size={20} />
                 User Management
               </button>
+              <button 
+                onClick={() => setActiveTab("complaints")}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === "complaints" ? "bg-white/10 text-green-400 border border-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"}`}
+              >
+                <Flag size={20} />
+                Reports & Complaints
+              </button>
               <button className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:bg-white/5 hover:text-white rounded-xl font-medium transition-all">
                 <Settings size={20} />
                 System Settings
@@ -195,7 +204,7 @@ const AdminDashboard = () => {
                 <Menu size={24} />
               </button>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-                {activeTab === "overview" ? "Overview" : "User Management"}
+                {activeTab === "overview" ? "Overview" : activeTab === "users" ? "User Management" : "Reports & Complaints"}
               </h1>
             </div>
             
@@ -404,6 +413,10 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </div>
+            )}
+
+            {activeTab === "complaints" && (
+              <ReportsComplaints />
             )}
 
           </div>
