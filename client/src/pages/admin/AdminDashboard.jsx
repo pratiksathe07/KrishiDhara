@@ -22,7 +22,7 @@ import {
   Trash2,
   RefreshCw,
   MoreVertical,
-  Flag
+  MessageSquareWarning
 } from "lucide-react";
 import toast from "react-hot-toast";
 import ReportsComplaints from "./ReportsComplaints";
@@ -164,7 +164,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab("complaints")}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === "complaints" ? "bg-white/10 text-green-400 border border-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"}`}
               >
-                <Flag size={20} />
+                <MessageSquareWarning size={20} />
                 Reports & Complaints
               </button>
               <button className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:bg-white/5 hover:text-white rounded-xl font-medium transition-all">

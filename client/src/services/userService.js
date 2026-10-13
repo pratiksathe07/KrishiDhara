@@ -9,13 +9,18 @@ export const getLabours = (skills = []) => {
   return api.get("/users/labours", { params });
 };
 
-/**
- * Fetch all registered dealer users.
- * @param {string[]} products - optional array of product strings to filter by (OR logic)
- */
+// GET /api/users/dealers?products=Wheat,Rice / Paddy
 export const getDealers = (products = []) => {
   const params = products.length > 0 ? { products: products.join(",") } : {};
   return api.get("/users/dealers", { params });
+};
+
+/**
+  * Fetch all active dealer purchase requirements (for farmers).
+  * @param {Object} params - optional filters: { crop, quantityUnit, location, search }
+  */
+export const getActiveDealerRequirements = (params = {}) => {
+  return api.get("/dealer/active-requirements", { params });
 };
 
 /**

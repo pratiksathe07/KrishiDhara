@@ -116,6 +116,10 @@
     "dealerFound": "વેપારી મળ્યો",
     "product": "ઉત્પાદન",
     "noDealersFound": "કોઈ વેપારી મળ્યા નથી",
+    "dealerRequirements": "વેપારી જરૂરિયાતો",
+    "dealerPurchaseRequirements": "વેપારી ખરીદ જરૂરિયાતો",
+    "navDealerRequirements": "વેપારી જરૂરિયાતો",
+    "contactDealer": "વેપારીનો સંપર્ક કરો",
     "logout": "લોગ આઉટ",
     "yExpShort": "વર્ષનો અનુભવ"
   },

@@ -116,6 +116,10 @@
     "dealerFound": "व्यापारी सापडला",
     "product": "उत्पादन",
     "noDealersFound": "कोणतेही व्यापारी आढळले नाहीत",
+    "dealerRequirements": "व्यापारी आवश्यकता",
+    "dealerPurchaseRequirements": "व्यापारी खरेदी आवश्यकता",
+    "navDealerRequirements": "व्यापारी आवश्यकता",
+    "contactDealer": "व्यापाऱ्याशी संपर्क साधा",
     "logout": "लॉग आउट",
     "yExpShort": "वर्ष अनुभव"
   },

@@ -8,6 +8,14 @@ export const getDealerRequirements = () => {
 };
 
 /**
+ * Fetch all active dealer purchase requirements (for farmers and marketplace discovery).
+ * @param {Object} params - Optional filters: { crop, quantityUnit, location, search }
+ */
+export const getActiveDealerRequirements = (params = {}) => {
+  return api.get("/dealer/active-requirements", { params });
+};
+
+/**
  * Create a new crop purchase requirement for one of the dealer's registered crops.
  * @param {Object} data - { crop, quantity, quantityUnit, expectedPrice, priceUnit, deliveryLocation, qualityGrade, notes }
  */

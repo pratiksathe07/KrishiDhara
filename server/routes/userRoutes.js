@@ -5,6 +5,7 @@ const {
   updateProfilePicture,
   deleteProfilePicture,
 } = require("../controllers/userController");
+const { getActiveDealerRequirements } = require("../controllers/dealerController");
 const { authenticateUser } = require("../middleware/authenticate");
 const { uploadAvatar } = require("../middleware/uploadMiddleware");
 
@@ -18,6 +19,10 @@ router.get("/labours", authenticateUser, getLabours);
 // GET /api/users/dealers?products=Wheat,Rice / Paddy
 // Returns all registered dealer users with their profiles.
 router.get("/dealers", authenticateUser, getDealers);
+
+// GET /api/users/dealer-requirements
+// Returns active dealer purchase requirements for farmers/authenticated users
+router.get("/dealer-requirements", authenticateUser, getActiveDealerRequirements);
 
 // PUT /api/users/profile-picture
 // Upload or update profile picture for the logged-in user.
