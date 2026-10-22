@@ -203,9 +203,38 @@ const updateComplaint = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Delete an individual complaint or report
+ * @route   DELETE /api/complaints/:id
+ * @access  Private (Admin only)
+ */
+const deleteComplaint = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new AppError("Invalid complaint ID.", 400));
+    }
+
+    const complaint = await Complaint.findByIdAndDelete(id);
+    if (!complaint) {
+      return next(new AppError("Complaint not found.", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Complaint deleted successfully.",
+      data: { id: complaint._id },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createComplaint,
   getAllComplaints,
   getComplaintStats,
   updateComplaint,
+  deleteComplaint,
 };

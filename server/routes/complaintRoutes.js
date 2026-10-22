@@ -4,6 +4,7 @@ const {
   getAllComplaints,
   getComplaintStats,
   updateComplaint,
+  deleteComplaint,
 } = require("../controllers/complaintController");
 const { authenticateUser, authorizeRoles } = require("../middleware/authenticate");
 
@@ -24,5 +25,9 @@ router.get("/", authenticateUser, authorizeRoles("admin"), getAllComplaints);
 // ─── PATCH /api/complaints/:id ─────────────────────────────────────────────
 // Admin only: Update status, priority, and admin notes
 router.patch("/:id", authenticateUser, authorizeRoles("admin"), updateComplaint);
+
+// ─── DELETE /api/complaints/:id ────────────────────────────────────────────
+// Admin only: Delete an individual complaint or report
+router.delete("/:id", authenticateUser, authorizeRoles("admin"), deleteComplaint);
 
 module.exports = router;
