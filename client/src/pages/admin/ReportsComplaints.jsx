@@ -14,7 +14,8 @@ import {
   User,
   Save,
   ShieldAlert,
-  ChevronDown
+  ChevronDown,
+  Trash2,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -50,6 +51,10 @@ const ReportsComplaints = () => {
     adminNote: "",
   });
   const [isSaving, setIsSaving] = useState(false);
+
+  // Delete modal state
+  const [complaintToDelete, setComplaintToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Fetch stats
   const fetchStats = useCallback(async () => {
@@ -132,6 +137,47 @@ const ReportsComplaints = () => {
       toast.error(error.message || "Failed to update complaint");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  // Open delete confirmation modal
+  const handleOpenDeleteModal = (complaint) => {
+    setComplaintToDelete(complaint);
+  };
+
+  // Close delete confirmation modal
+  const handleCloseDeleteModal = () => {
+    if (isDeleting) return;
+    setComplaintToDelete(null);
+  };
+
+  // Confirm delete complaint
+  const handleConfirmDelete = async () => {
+    if (!complaintToDelete) return;
+
+    setIsDeleting(true);
+    try {
+      const res = await complaintService.deleteComplaint(complaintToDelete._id);
+      if (res.success) {
+        toast.success(res.message || "Complaint deleted successfully");
+        // Remove locally from state immediately
+        setComplaints((prev) => prev.filter((c) => c._id !== complaintToDelete._id));
+        // If the view/edit details modal is open for this complaint, close it too
+        if (selectedComplaint && selectedComplaint._id === complaintToDelete._id) {
+          setSelectedComplaint(null);
+        }
+        // Close delete confirmation modal
+        setComplaintToDelete(null);
+        // Refresh summary cards and list
+        fetchStats();
+        fetchComplaints();
+      } else {
+        toast.error(res.message || "Failed to delete complaint");
+      }
+    } catch (error) {
+      toast.error(error.message || "Failed to delete complaint");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -290,7 +336,7 @@ const ReportsComplaints = () => {
                 <th className="px-6 py-4 font-semibold">Priority</th>
                 <th className="px-6 py-4 font-semibold">Status</th>
                 <th className="px-6 py-4 font-semibold">Date</th>
-                <th className="px-6 py-4 text-right font-semibold">Action</th>
+                <th className="px-6 py-4 text-right font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -433,15 +479,26 @@ const ReportsComplaints = () => {
                       })}
                     </td>
 
-                    {/* View Button */}
+                    {/* Actions */}
                     <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleOpenModal(item)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 hover:border-green-500/30 border border-white/10 rounded-lg text-xs font-medium text-white transition-all shadow-sm"
-                      >
-                        <Eye size={14} />
-                        View
-                      </button>
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => handleOpenModal(item)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 hover:border-green-500/30 border border-white/10 rounded-lg text-xs font-medium text-white transition-all shadow-sm"
+                          title="View Details"
+                        >
+                          <Eye size={14} />
+                          View
+                        </button>
+                        <button
+                          onClick={() => handleOpenDeleteModal(item)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 hover:border-red-500/40 rounded-lg text-xs font-medium transition-all shadow-sm"
+                          title="Delete Complaint"
+                        >
+                          <Trash2 size={14} />
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -630,25 +687,117 @@ const ReportsComplaints = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-end gap-3 pt-3">
+                <div className="flex items-center justify-between pt-3">
                   <button
                     type="button"
-                    onClick={handleCloseModal}
+                    onClick={() => handleOpenDeleteModal(selectedComplaint)}
                     disabled={isSaving}
-                    className="px-4 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-xs font-medium text-red-400 hover:text-red-300 transition-colors disabled:opacity-50"
                   >
-                    Cancel
+                    <Trash2 size={14} />
+                    Delete
                   </button>
-                  <button
-                    type="submit"
-                    disabled={isSaving}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-green-500/20 transition-all disabled:opacity-50"
-                  >
-                    {isSaving && <RefreshCw size={14} className="animate-spin" />}
-                    Save Changes
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={handleCloseModal}
+                      disabled={isSaving}
+                      className="px-4 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSaving}
+                      className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-green-500/20 transition-all disabled:opacity-50"
+                    >
+                      {isSaving && <RefreshCw size={14} className="animate-spin" />}
+                      Save Changes
+                    </button>
+                  </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {complaintToDelete && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+          <div className="bg-zinc-950/95 border border-red-500/30 rounded-2xl max-w-md w-full p-6 shadow-2xl relative text-white">
+            {/* Top close button */}
+            <button
+              onClick={handleCloseDeleteModal}
+              disabled={isDeleting}
+              className="absolute top-4 right-4 text-white/40 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors disabled:opacity-50"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Header with warning icon */}
+            <div className="flex items-center gap-3.5 mb-4">
+              <div className="h-12 w-12 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400 shrink-0">
+                <Trash2 size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">Delete Complaint</h3>
+                <p className="text-xs text-white/50 font-mono">
+                  ID: {complaintToDelete._id}
+                </p>
+              </div>
+            </div>
+
+            {/* Confirmation text */}
+            <div className="space-y-3 mb-6">
+              <p className="text-sm text-white/80 leading-relaxed">
+                Are you sure you want to delete this complaint? This action cannot be undone.
+              </p>
+              <div className="bg-black/50 border border-white/10 rounded-xl p-3.5 text-xs space-y-1.5">
+                <div>
+                  <span className="text-white/40">Subject: </span>
+                  <span className="font-semibold text-white">{complaintToDelete.subject}</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-white/60">
+                  <span>
+                    Category: <strong className="text-white/90">{categoryLabels[complaintToDelete.category] || complaintToDelete.category}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    Status: <strong className="capitalize text-white/90">{complaintToDelete.status.replace("_", " ")}</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={handleCloseDeleteModal}
+                disabled={isDeleting}
+                className="px-4 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-sm font-medium text-white/70 hover:text-white transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={isDeleting}
+                className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-red-600/30 transition-all disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <>
+                    <RefreshCw size={14} className="animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 size={16} />
+                    Delete Permanently
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>

@@ -39,4 +39,13 @@ export const complaintService = {
     const response = await api.post("/complaints", data);
     return response.data;
   },
+
+  /**
+   * Delete an individual complaint/report
+   * @param {string} id - Complaint ID
+   */
+  deleteComplaint: async (id) => {
+    const response = await api.delete(`/complaints/${id}`);
+    return response.data;
+  },
 };
