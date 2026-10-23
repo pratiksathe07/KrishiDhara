@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,12 +11,12 @@ import {
   Store,
   RefreshCw,
   SlidersHorizontal,
-  ChevronDown,
-  Sparkles,
   Package,
+  AlertCircle,
 } from "lucide-react";
 import { getActiveDealerRequirements } from "../../services/dealerService";
 import ContactDealerModal from "../../components/farmer/ContactDealerModal";
+import { DEALER_PRODUCTS } from "../../constants/dealerProducts";
 
 const QUANTITY_UNITS = ["All", "Ton", "Quintal", "Kilogram (kg)"];
 
@@ -186,112 +186,177 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
 
 /**
  * DealerRequirements
- * Full view with filters, search, and live active requirements cards.
+ * Search-based discovery of active dealer crop purchase requirements.
+ * Does not show requirements by default. Displays results only after a crop search.
  */
 const DealerRequirements = ({ embedded = false, limit = null }) => {
   const { t } = useTranslation();
 
+  // Search & results state
+  const [search, setSearch] = useState("");
+  const [searchedCrop, setSearchedCrop] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const [requirements, setRequirements] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  const [searchError, setSearchError] = useState("");
 
   // Filters state
-  const [search, setSearch] = useState("");
-  const [selectedCrop, setSelectedCrop] = useState("All");
+  const [showFiltersPanel, setShowFiltersPanel] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState("All");
   const [locationFilter, setLocationFilter] = useState("");
-  const [showFiltersPanel, setShowFiltersPanel] = useState(false);
+  const [qualityGradeFilter, setQualityGradeFilter] = useState("");
+
+  // Autocomplete state
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const searchContainerRef = useRef(null);
 
   // Contact Modal state
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedRequirementForContact, setSelectedRequirementForContact] = useState(null);
 
-  // Fetch from MongoDB
-  const fetchRequirements = useCallback(async (isRefresh = false) => {
-    if (isRefresh) {
-      setRefreshing(true);
-    } else {
+  // Autocomplete suggestions based on DEALER_PRODUCTS
+  const autocompleteMatches = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return [];
+    return DEALER_PRODUCTS.filter((product) =>
+      product.toLowerCase().includes(q)
+    ).slice(0, 8);
+  }, [search]);
+
+  // Close autocomplete on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target)
+      ) {
+        setShowAutocomplete(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Perform backend search for crop
+  const performSearch = useCallback(
+    async (cropTerm) => {
+      const term = (cropTerm !== undefined ? cropTerm : search).trim();
+      if (!term) {
+        setSearchError("Please enter a crop name to search.");
+        return;
+      }
+
+      setSearchError("");
+      setShowAutocomplete(false);
       setLoading(true);
-    }
+      setError(null);
+      setHasSearched(true);
+      setSearchedCrop(term);
+      setSearch(term);
+
+      try {
+        const res = await getActiveDealerRequirements({ crop: term });
+        if (res.data?.success) {
+          setRequirements(res.data.data.requirements || []);
+        } else {
+          setRequirements([]);
+        }
+      } catch (err) {
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to load active dealer requirements. Please try again."
+        );
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    },
+    [search]
+  );
+
+  // Refresh latest data for the currently searched crop
+  const handleRefresh = useCallback(async () => {
+    if (!hasSearched || !searchedCrop) return;
+    setRefreshing(true);
     setError(null);
 
     try {
-      const res = await getActiveDealerRequirements();
+      const res = await getActiveDealerRequirements({ crop: searchedCrop });
       if (res.data?.success) {
         setRequirements(res.data.data.requirements || []);
       }
     } catch (err) {
-      setError(err.message || "Failed to load active dealer requirements.");
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to refresh requirements. Please try again."
+      );
     } finally {
-      setLoading(false);
       setRefreshing(false);
     }
+  }, [hasSearched, searchedCrop]);
+
+  // Clear search and return to initial empty state
+  const handleClearSearch = useCallback(() => {
+    setSearch("");
+    setSearchedCrop("");
+    setHasSearched(false);
+    setRequirements([]);
+    setSearchError("");
+    setError(null);
+    setShowAutocomplete(false);
+    setSelectedUnit("All");
+    setLocationFilter("");
+    setQualityGradeFilter("");
   }, []);
 
-  useEffect(() => {
-    fetchRequirements();
-  }, [fetchRequirements]);
-
-  // Extract unique crops present in the active requirements for fast filter chips
-  const availableCrops = useMemo(() => {
-    const cropSet = new Set(requirements.map((r) => r.crop).filter(Boolean));
-    return ["All", ...Array.from(cropSet).sort()];
-  }, [requirements]);
-
-  // Filtered requirements
+  // Filtered requirements: applies only to the searched crop results
   const filteredRequirements = useMemo(() => {
-    return requirements.filter((req) => {
-      // 1. Crop filter
-      if (selectedCrop !== "All" && req.crop !== selectedCrop) {
-        return false;
-      }
+    if (!hasSearched) return [];
 
-      // 2. Quantity Unit filter
+    return requirements.filter((req) => {
+      // 1. Quantity unit filter
       if (selectedUnit !== "All" && req.quantityUnit !== selectedUnit) {
         return false;
       }
 
-      // 3. Location filter
+      // 2. Location filter
       if (locationFilter.trim()) {
-        const loc = (req.deliveryLocation || "").toLowerCase();
-        if (!loc.includes(locationFilter.trim().toLowerCase())) {
+        const qLoc = locationFilter.trim().toLowerCase();
+        const delLoc = (req.deliveryLocation || "").toLowerCase();
+        const dealerAddr = (req.dealer?.address || "").toLowerCase();
+        if (!delLoc.includes(qLoc) && !dealerAddr.includes(qLoc)) {
           return false;
         }
       }
 
-      // 4. Search text (crop, dealer name, location, grade, notes)
-      if (search.trim()) {
-        const q = search.trim().toLowerCase();
-        const dealerName = `${req.dealer?.firstName || ""} ${req.dealer?.lastName || ""}`.toLowerCase();
-        const cropMatch = req.crop?.toLowerCase().includes(q);
-        const nameMatch = dealerName.includes(q);
-        const locMatch = req.deliveryLocation?.toLowerCase().includes(q);
-        const gradeMatch = req.qualityGrade?.toLowerCase().includes(q);
-        const notesMatch = req.notes?.toLowerCase().includes(q);
-
-        if (!cropMatch && !nameMatch && !locMatch && !gradeMatch && !notesMatch) {
+      // 3. Quality/Grade filter
+      if (qualityGradeFilter.trim()) {
+        const qGrade = qualityGradeFilter.trim().toLowerCase();
+        const grade = (req.qualityGrade || "").toLowerCase();
+        if (!grade.includes(qGrade)) {
           return false;
         }
       }
 
       return true;
     });
-  }, [requirements, selectedCrop, selectedUnit, locationFilter, search]);
+  }, [hasSearched, requirements, selectedUnit, locationFilter, qualityGradeFilter]);
 
   const displayedList = limit ? filteredRequirements.slice(0, limit) : filteredRequirements;
 
   const hasActiveFilters =
-    selectedCrop !== "All" ||
     selectedUnit !== "All" ||
     Boolean(locationFilter.trim()) ||
-    Boolean(search.trim());
+    Boolean(qualityGradeFilter.trim());
 
   const clearFilters = () => {
-    setSelectedCrop("All");
     setSelectedUnit("All");
     setLocationFilter("");
-    setSearch("");
+    setQualityGradeFilter("");
   };
 
   const handleOpenContact = (req) => {
@@ -320,24 +385,26 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
                 </span>
               </div>
               <p className="text-blue-100/80 text-sm max-w-2xl">
-                Discover live crop purchase requirements posted by verified agricultural dealers. Review requested quantities, pricing, and connect directly.
+                Search for a crop to discover active purchase requirements posted by verified agricultural dealers.
               </p>
             </div>
 
-            <button
-              onClick={() => fetchRequirements(true)}
-              disabled={refreshing || loading}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold text-white transition self-start sm:self-auto disabled:opacity-50"
-              title="Refresh latest requirements from database"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
-              <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
-            </button>
+            {hasSearched && (
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing || loading}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold text-white transition self-start sm:self-auto disabled:opacity-50"
+                title="Refresh latest requirements from database"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
+                <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
+              </button>
+            )}
           </div>
         </motion.div>
       )}
 
-      {/* When embedded in DashboardHome, show clean section heading */}
+      {/* Embedded section heading in DashboardHome */}
       {embedded && (
         <div className="flex items-center justify-between gap-3 pt-2">
           <div className="flex items-center gap-2.5">
@@ -347,57 +414,120 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
                 Dealer Purchase Requirements
               </h2>
               <p className="text-xs text-white/60">
-                Active purchasing criteria posted by registered dealers
+                Search for a crop to view active purchasing criteria posted by registered dealers
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => fetchRequirements(true)}
-              disabled={refreshing || loading}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white/80 hover:text-white transition disabled:opacity-50"
-              title="Refresh requirements"
-            >
-              <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
-            </button>
-          </div>
+          {hasSearched && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing || loading}
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white/80 hover:text-white transition disabled:opacity-50"
+                title="Refresh requirements"
+              >
+                <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-      {/* ── Search & Filter Panel ── */}
+      {/* ── Search Bar & Filters Trigger ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.08 }}
-        className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4"
+        className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3"
       >
-        {/* Search Bar + Filters Toggle */}
-        <div className="flex flex-col sm:flex-row gap-2.5">
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            performSearch();
+          }}
+          className="flex flex-col sm:flex-row gap-2.5"
+        >
+          {/* Search Input with Autocomplete Container */}
+          <div ref={searchContainerRef} className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search by crop, dealer name, location, grade..."
+              placeholder="Search by crop (e.g., Cotton, Tomato, Potato)..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setSearchError("");
+                setShowAutocomplete(true);
+              }}
+              onFocus={() => {
+                if (search.trim().length > 0) {
+                  setShowAutocomplete(true);
+                }
+              }}
               className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition"
             />
             {search && (
               <button
                 type="button"
-                onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition"
+                onClick={handleClearSearch}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition"
+                title="Clear search"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
+
+            {/* Autocomplete Dropdown */}
+            <AnimatePresence>
+              {showAutocomplete && autocompleteMatches.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 right-0 top-full mt-2 z-30 backdrop-blur-2xl bg-gray-900/95 border border-white/20 rounded-xl shadow-2xl overflow-hidden py-1.5"
+                >
+                  <div className="px-3 py-1 text-[11px] font-semibold text-blue-300 uppercase tracking-wider border-b border-white/10">
+                    Suggested Crops
+                  </div>
+                  <div className="max-h-60 overflow-y-auto">
+                    {autocompleteMatches.map((cropName) => (
+                      <button
+                        key={cropName}
+                        type="button"
+                        onClick={() => {
+                          setSearch(cropName);
+                          setShowAutocomplete(false);
+                          performSearch(cropName);
+                        }}
+                        className="w-full px-3.5 py-2 text-left text-xs sm:text-sm text-white/90 hover:bg-blue-600/25 hover:text-white flex items-center gap-2.5 transition"
+                      >
+                        <span className="text-base">🌾</span>
+                        <span className="font-medium">{cropName}</span>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
+          {/* Search Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm transition shadow-md shadow-blue-600/30 disabled:opacity-50"
+          >
+            <Search className="w-4 h-4" />
+            <span>Search</span>
+          </button>
+
+          {/* Filters Toggle Button */}
           <button
             type="button"
             onClick={() => setShowFiltersPanel((prev) => !prev)}
-            className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-semibold transition ${
+            className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold transition ${
               showFiltersPanel || hasActiveFilters
                 ? "bg-blue-500/25 border-blue-400/40 text-blue-200"
                 : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15 hover:text-white"
@@ -409,58 +539,27 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
             )}
           </button>
-        </div>
+        </form>
 
-        {/* Collapsible / Quick Filter Chips */}
+        {/* Empty search submitted inline warning */}
+        {searchError && (
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-500/15 border border-amber-400/30 text-amber-200 text-xs sm:text-sm">
+            <AlertCircle className="w-4 h-4 shrink-0 text-amber-400" />
+            <span>{searchError}</span>
+          </div>
+        )}
+
+        {/* ── Filters Panel (Operates on search results) ── */}
         <AnimatePresence>
-          {(showFiltersPanel || hasActiveFilters || !embedded) && (
+          {showFiltersPanel && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="pt-3 border-t border-white/10 space-y-3.5 overflow-hidden"
             >
-              {/* Crop Filter Chips */}
-              {availableCrops.length > 2 && (
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-white/60 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                      <Package className="w-3.5 h-3.5 text-blue-300" /> Filter by Crop
-                    </p>
-                    {selectedCrop !== "All" && (
-                      <button
-                        onClick={() => setSelectedCrop("All")}
-                        className="text-[11px] text-blue-300 hover:underline"
-                      >
-                        Reset Crop
-                      </button>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {availableCrops.map((c) => {
-                      const isActive = selectedCrop === c;
-                      return (
-                        <button
-                          key={c}
-                          type="button"
-                          onClick={() => setSelectedCrop(c)}
-                          className={`text-xs px-3 py-1.5 rounded-xl border font-medium transition ${
-                            isActive
-                              ? "bg-blue-500/30 border-blue-400/60 text-blue-200 shadow-sm"
-                              : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
-                          }`}
-                        >
-                          {c === "All" ? "All Crops" : `🌾 ${c}`}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* Quantity Unit & Location Inputs */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                {/* Quantity Unit */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                {/* Quantity Unit Filter */}
                 <div>
                   <label className="block text-white/60 text-xs font-semibold uppercase tracking-wider mb-1.5">
                     Quantity Unit
@@ -478,7 +577,7 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
                   </select>
                 </div>
 
-                {/* Delivery Location filter */}
+                {/* Delivery Location Filter */}
                 <div>
                   <label className="block text-white/60 text-xs font-semibold uppercase tracking-wider mb-1.5">
                     Delivery Location
@@ -487,20 +586,37 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
                     <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/40" />
                     <input
                       type="text"
-                      placeholder="Filter by city, APMC, or area..."
+                      placeholder="Filter by city, APMC, area..."
                       value={locationFilter}
                       onChange={(e) => setLocationFilter(e.target.value)}
                       className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/35 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition"
                     />
                   </div>
                 </div>
+
+                {/* Quality/Grade Filter */}
+                <div>
+                  <label className="block text-white/60 text-xs font-semibold uppercase tracking-wider mb-1.5">
+                    Quality / Grade
+                  </label>
+                  <div className="relative">
+                    <CheckCircle2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/40" />
+                    <input
+                      type="text"
+                      placeholder="Filter by quality or grade..."
+                      value={qualityGradeFilter}
+                      onChange={(e) => setQualityGradeFilter(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/35 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition"
+                    />
+                  </div>
+                </div>
               </div>
 
-              {/* Clear All Filters */}
+              {/* Clear Filters bar */}
               {hasActiveFilters && (
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-xs text-white/60">
-                    Showing matching active requirements
+                    Filters applied to search results
                   </span>
                   <button
                     type="button"
@@ -516,85 +632,121 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
         </AnimatePresence>
       </motion.div>
 
-      {/* ── Status Count Header ── */}
-      <div className="flex items-center justify-between px-1">
-        <p className="text-white/70 text-xs sm:text-sm">
-          {loading ? (
-            "Loading active requirements..."
-          ) : (
-            <>
-              <span className="font-bold text-white">{filteredRequirements.length}</span>{" "}
-              {filteredRequirements.length === 1
-                ? "active requirement available"
-                : "active requirements available"}
-              {hasActiveFilters && (
-                <span className="ml-1 text-blue-300 font-medium">
-                  (filtered from {requirements.length} total)
-                </span>
-              )}
-            </>
-          )}
-        </p>
-      </div>
-
-      {/* ── Loading Skeleton ── */}
-      {loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl p-5 animate-pulse h-64"
-            />
-          ))}
+      {/* ── Status Count Header (Shown after search) ── */}
+      {hasSearched && !loading && !error && (
+        <div className="flex items-center justify-between px-1">
+          <p className="text-white/80 text-xs sm:text-sm">
+            <span className="font-bold text-white">{filteredRequirements.length}</span>{" "}
+            {filteredRequirements.length === 1
+              ? "active requirement found"
+              : "active requirements found"}{" "}
+            for <span className="font-bold text-blue-300">"{searchedCrop}"</span>
+            {hasActiveFilters && (
+              <span className="ml-1 text-white/50">
+                (filtered from {requirements.length} total)
+              </span>
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={handleClearSearch}
+            className="text-xs text-white/60 hover:text-white underline transition"
+          >
+            Clear Search
+          </button>
         </div>
       )}
 
-      {/* ── Error State ── */}
+      {/* ── State 1: Initial Empty State (Before a search has been submitted) ── */}
+      {!hasSearched && !loading && !error && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl p-10 sm:p-14 text-center"
+        >
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-blue-300 shadow-inner">
+            <Search className="w-7 h-7" />
+          </div>
+          <h3 className="text-white font-bold text-base sm:text-lg mb-1.5">
+            Search for a crop to view dealer purchase requirements.
+          </h3>
+          <p className="text-white/60 text-xs sm:text-sm max-w-md mx-auto">
+            Enter a crop name to find dealers who want to purchase it.
+          </p>
+        </motion.div>
+      )}
+
+      {/* ── State 2: Loading State ── */}
+      {loading && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-white/70 text-xs sm:text-sm px-1">
+            <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />
+            <span>Searching dealer requirements for "{searchedCrop || search}"...</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl p-5 animate-pulse h-64"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── State 3: API Failure State ── */}
       {!loading && error && (
-        <div className="backdrop-blur-xl bg-red-500/15 border border-red-400/30 rounded-2xl p-6 text-center text-red-300">
-          <p className="font-semibold">{error}</p>
+        <div className="backdrop-blur-xl bg-red-500/15 border border-red-400/30 rounded-2xl p-6 text-center text-red-300 space-y-3">
+          <p className="font-semibold text-sm">{error}</p>
           <button
             type="button"
-            onClick={() => fetchRequirements()}
-            className="mt-3 text-xs bg-red-500/30 hover:bg-red-500/50 px-4 py-1.5 rounded-xl text-red-100 font-semibold transition"
+            onClick={() => performSearch(searchedCrop || search)}
+            className="text-xs bg-red-500/30 hover:bg-red-500/50 px-4 py-2 rounded-xl text-red-100 font-semibold transition"
           >
             Try Again
           </button>
         </div>
       )}
 
-      {/* ── Empty State ── */}
-      {!loading && !error && displayedList.length === 0 && (
+      {/* ── State 4: No Matching Requirements State ── */}
+      {hasSearched && !loading && !error && displayedList.length === 0 && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl p-12 text-center"
+          className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl p-10 sm:p-14 text-center"
         >
           <p className="text-4xl mb-3">🌾</p>
-          <h3 className="text-white font-semibold text-base mb-1">
-            {hasActiveFilters
-              ? "No requirements matching your filters"
-              : "No active purchase requirements posted yet"}
+          <h3 className="text-white font-bold text-base sm:text-lg mb-1.5">
+            No active dealer requirements found for this crop.
           </h3>
-          <p className="text-white/50 text-xs sm:text-sm max-w-md mx-auto">
+          <p className="text-white/55 text-xs sm:text-sm max-w-md mx-auto mb-4">
             {hasActiveFilters
-              ? "Try adjusting your search keywords, crop selection, or clearing filters."
-              : "Registered dealers have not posted any active crop purchase requirements yet. Check back soon!"}
+              ? `No requirements match your current filters for "${searchedCrop}". Try clearing or adjusting your filters.`
+              : `Registered dealers have not posted active purchase requirements for "${searchedCrop}". Try searching for another crop like Cotton, Tomato, or Potato.`}
           </p>
-          {hasActiveFilters && (
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="text-xs font-semibold bg-blue-500/25 hover:bg-blue-500/40 text-blue-200 border border-blue-400/30 px-4 py-2 rounded-xl transition"
+              >
+                Clear Filters
+              </button>
+            )}
             <button
               type="button"
-              onClick={clearFilters}
-              className="mt-4 text-xs font-semibold bg-blue-500/25 hover:bg-blue-500/40 text-blue-200 border border-blue-400/30 px-4 py-2 rounded-xl transition"
+              onClick={handleClearSearch}
+              className="text-xs font-semibold bg-white/10 hover:bg-white/20 text-white/80 border border-white/20 px-4 py-2 rounded-xl transition"
             >
-              Clear Filters
+              Search Another Crop
             </button>
-          )}
+          </div>
         </motion.div>
       )}
 
-      {/* ── Active Requirements Grid ── */}
-      {!loading && !error && displayedList.length > 0 && (
+      {/* ── State 5: Search Results Cards Grid ── */}
+      {hasSearched && !loading && !error && displayedList.length > 0 && (
         <AnimatePresence mode="popLayout">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {displayedList.map((req, i) => (
