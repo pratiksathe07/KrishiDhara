@@ -23,6 +23,7 @@ import {
 import toast from "react-hot-toast";
 import ReportsComplaints from "./ReportsComplaints";
 import TopBar from "./TopBar";
+import RegistrationChart from "./RegistrationChart";
 
 const AdminDashboard = () => {
   const { authUser, user, logout } = useAuth();
@@ -32,6 +33,7 @@ const AdminDashboard = () => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("overview"); // "overview" or "users"
+  const [registrationTimeframe, setRegistrationTimeframe] = useState("7d");
   
   // Data state
   const [stats, setStats] = useState({ farmers: 0, labours: 0, dealers: 0, activeUsers: 0 });
@@ -234,18 +236,17 @@ const AdminDashboard = () => {
                   <div className="xl:col-span-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-h-[400px]">
                      <div className="flex items-center justify-between mb-6">
                         <h3 className="text-lg font-bold">Registration Activity</h3>
-                        <select className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white/80 focus:outline-none focus:border-green-500/50">
-                          <option>Last 7 days</option>
-                          <option>Last 30 days</option>
-                          <option>This Year</option>
+                        <select 
+                          value={registrationTimeframe}
+                          onChange={(e) => setRegistrationTimeframe(e.target.value)}
+                          className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white/80 focus:outline-none focus:border-green-500/50 cursor-pointer transition-colors"
+                        >
+                          <option value="7d">Last 7 days</option>
+                          <option value="30d">Last 30 days</option>
+                          <option value="90d">Last 90 days</option>
                         </select>
                      </div>
-                     <div className="flex items-center justify-center h-[300px] border border-dashed border-white/10 rounded-xl bg-white/5">
-                        <p className="text-white/40 font-medium flex items-center gap-2">
-                           <Activity size={20} />
-                           Chart Placeholder (Implement with Recharts/Chartjs later)
-                        </p>
-                     </div>
+                     <RegistrationChart timeframe={registrationTimeframe} />
                   </div>
                   <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-h-[400px]">
                      <h3 className="text-lg font-bold mb-6">System Health</h3>
