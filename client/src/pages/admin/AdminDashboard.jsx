@@ -7,28 +7,26 @@ import { adminService } from "../../services/adminService";
 import {
   Users,
   Tractor,
-  Briefcase,
   Store,
   LogOut,
   Settings,
   TrendingUp,
   Activity,
-  Menu,
   X,
   Search,
   CheckCircle,
   XCircle,
-  
   Trash2,
   RefreshCw,
-  MoreVertical,
   MessageSquareWarning
 } from "lucide-react";
 import toast from "react-hot-toast";
 import ReportsComplaints from "./ReportsComplaints";
+import TopBar from "./TopBar";
 
 const AdminDashboard = () => {
-  const { authUser, logout } = useAuth();
+  const { authUser, user, logout } = useAuth();
+  const adminUser = authUser || user;
   const navigate = useNavigate();
   const { t } = useTranslation();
   
@@ -181,8 +179,8 @@ const AdminDashboard = () => {
                 
                 <div className="h-12 w-100 flex items-center justify-center font-bold shadow-lg"> Admin</div>
                 <div>
-                  <p className="text-sm font-semibold">{authUser?.firstName} {authUser?.lastName}</p>
-                  <p className="text-xs text-white/50 truncate max-w-[120px]">{authUser?.email}</p>
+                  <p className="text-sm font-semibold">{adminUser?.firstName || authUser?.firstName || "Admin"} {adminUser?.lastName || authUser?.lastName || ""}</p>
+                  <p className="text-xs text-white/50 truncate max-w-[120px]">{adminUser?.email || authUser?.email || "admin@krishidhara.com"}</p>
                 </div>
               </div>
               <button 
@@ -198,29 +196,19 @@ const AdminDashboard = () => {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
-          {/* Header */}
-          <header className="h-20 flex items-center justify-between px-8 bg-black/20 backdrop-blur-sm border-b border-white/5 sticky top-0 z-40">
-            <div className="flex items-center gap-4">
-              <button className="lg:hidden text-white/70 hover:text-white" onClick={() => setIsSidebarOpen(true)}>
-                <Menu size={24} />
-              </button>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-                {activeTab === "overview" ? "Overview" : activeTab === "users" ? "User Management" : "Reports & Complaints"}
-              </h1>
-            </div>
-            
-            <div className="flex items-center gap-4">
-               {/* Placeholders for notifications etc. */}
-            </div>
-          </header>
+          {/* Top Bar */}
+          <TopBar 
+            activeTab={activeTab} 
+            onMenuClick={() => setIsSidebarOpen(true)} 
+          />
 
-          <div className="p-8">
+          <div className="px-4 sm:px-8 pb-8 pt-2">
             
             {activeTab === "overview" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-8 flex justify-between items-end">
                   <div>
-                    <h2 className="text-3xl font-bold mb-2">Welcome back {authUser?.firstName}! 👋</h2>
+                    <h2 className="text-3xl font-bold mb-2">Welcome back {adminUser?.firstName || authUser?.firstName || "Admin"}! 👋</h2>
                     <p className="text-white/60">Here's what's happening in KrishiDhara today.</p>
                   </div>
                  
