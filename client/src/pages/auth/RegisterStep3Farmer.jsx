@@ -71,18 +71,21 @@ const RegisterStep3Farmer = ({ verifiedData }) => {
   return (
     <AnimatedBackground>
       <div className="auth-card">
-        <div className="text-center mb-6 relative z-10">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Farmer Profile</h1>
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">Tell us about your land</p>
+        <div className="text-center mb-6 relative z-10 flex flex-col items-center">
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto mx-auto object-contain mb-3 drop-shadow-sm rounded-xl" />
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Farmer Profile</h1>
+          <p className="text-xs font-bold text-slate-600 bg-white/80 backdrop-blur-sm inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/90 shadow-sm mt-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3b38e4]"></span>
+            Tell us about your land
+          </p>
         </div>
 
         <StepIndicator currentStep={3} />
 
         <div className="auth-glass-card mt-6 animate-slide-up">
-          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/15">
+          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
             <span className="text-xl">📍</span>
-            <h2 className="text-lg font-bold text-white">Land Location</h2>
+            <h2 className="text-lg font-bold text-slate-900">Land Location</h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate>

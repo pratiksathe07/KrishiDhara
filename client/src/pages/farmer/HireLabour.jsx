@@ -45,7 +45,7 @@ const LabourCard = ({ labour, index }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.35, delay: index * 0.06 }}
-      className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-5 shadow-lg hover:bg-white/15 hover:border-white/30 hover:-translate-y-1 transition-all duration-300"
+      className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:border-[#3b38e4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
     >
       {/* Header row */}
       <div className="flex items-start gap-4 mb-4">
@@ -55,12 +55,12 @@ const LabourCard = ({ labour, index }) => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-semibold text-base truncate">
+          <h3 className="text-slate-900 font-bold text-base truncate">
             {labour.firstName} {labour.lastName}
           </h3>
           {exp !== undefined && (
-            <p className="text-white/60 text-xs mt-0.5 flex items-center gap-1">
-              <Briefcase className="w-3 h-3" />
+            <p className="text-slate-500 text-xs mt-0.5 flex items-center gap-1 font-medium">
+              <Briefcase className="w-3.5 h-3.5 text-[#3b38e4]" />
               {exp} {exp === 1 ? t('dashboard.yearExp') : t('dashboard.yearsExp')}
             </p>
           )}
@@ -68,7 +68,7 @@ const LabourCard = ({ labour, index }) => {
 
         {/* Experience badge */}
         {exp !== undefined && (
-          <span className="flex-shrink-0 text-xs font-semibold bg-green-500/20 text-green-300 border border-green-400/30 px-2.5 py-1 rounded-full">
+          <span className="flex-shrink-0 text-xs font-bold bg-indigo-50 text-[#3b38e4] border border-indigo-200 px-2.5 py-1 rounded-full shadow-sm">
             {exp}{t('dashboard.yExpShort')}
           </span>
         )}
@@ -77,18 +77,18 @@ const LabourCard = ({ labour, index }) => {
       {/* Skills */}
       {skills.length > 0 && (
         <div className="mb-4">
-          <p className="text-white/40 text-xs mb-2 font-medium uppercase tracking-wide">{t('dashboard.skills')}</p>
+          <p className="text-slate-400 text-xs mb-2 font-bold uppercase tracking-wide">{t('dashboard.skills')}</p>
           <div className="flex flex-wrap gap-1.5">
             {skills.slice(0, 6).map((skill) => (
               <span
                 key={skill}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 border border-white/20 text-white/80 font-medium"
+                className="text-xs px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 font-semibold"
               >
                 {t(`skills.${skill}`)}
               </span>
             ))}
             {skills.length > 6 && (
-              <span className="text-xs px-2.5 py-1 rounded-lg bg-white/10 border border-white/20 text-white/50">
+              <span className="text-xs px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-medium">
                 +{skills.length - 6} more
               </span>
             )}
@@ -97,12 +97,12 @@ const LabourCard = ({ labour, index }) => {
       )}
 
       {/* Contact */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/10">
-        <div className="flex items-center gap-1.5 text-white/60 text-xs">
-          <Phone className="w-3 h-3" />
+      <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+        <div className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
+          <Phone className="w-3.5 h-3.5 text-[#3b38e4]" />
           <span>{labour.mobile}</span>
         </div>
-        <button className="text-xs font-semibold bg-green-500/20 hover:bg-green-500/35 text-green-300 border border-green-400/30 px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95">
+        <button className="text-xs font-bold bg-[#3b38e4] hover:bg-[#302dc4] text-white px-4 py-1.5 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm shadow-[#3b38e4]/20">
           {t('dashboard.contact')}
         </button>
       </div>
@@ -166,13 +166,14 @@ const HireLabour = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="backdrop-blur-xl bg-gradient-to-r from-green-500/30 to-emerald-600/20 border border-green-400/30 rounded-2xl p-6 text-white shadow-lg"
+        className="rounded-2xl bg-gradient-to-r from-[#3b38e4] via-[#4338ca] to-[#6366f1] p-6 text-white shadow-lg shadow-[#3b38e4]/20 border border-indigo-400/20 relative overflow-hidden"
       >
-        <div className="flex items-center gap-3 mb-1">
-          <Users className="w-6 h-6 text-green-300" />
-          <h1 className="text-xl sm:text-2xl font-bold drop-shadow">{t('dashboard.hireLabourTitle')}</h1>
+        <div className="absolute -top-10 -right-10 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative z-10 flex items-center gap-3 mb-1">
+          <Users className="w-6 h-6 text-indigo-200" />
+          <h1 className="text-xl sm:text-2xl font-bold">{t('dashboard.hireLabourTitle')}</h1>
         </div>
-        <p className="text-green-100/80 text-sm">
+        <p className="text-indigo-100 text-sm font-medium relative z-10">
           {t('dashboard.hireLabourDesc')}
         </p>
       </motion.div>
@@ -182,20 +183,20 @@ const HireLabour = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-5 shadow-lg"
+        className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm"
       >
         {/* Search bar */}
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
             placeholder={t('dashboard.searchByName')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/35 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:border-green-400/50 transition"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#3b38e4]/30 focus:border-[#3b38e4] transition"
           />
           {search && (
-            <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition">
+            <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition">
               <X className="w-4 h-4" />
             </button>
           )}
@@ -204,21 +205,21 @@ const HireLabour = () => {
         {/* Skill filter chips */}
         <div>
           <div className="flex items-center justify-between mb-2.5">
-            <p className="text-white/60 text-xs font-semibold uppercase tracking-wide">
+            <p className="text-slate-500 text-xs font-bold uppercase tracking-wide">
               {t('dashboard.filterBySkill')}
             </p>
             <div className="flex items-center gap-3">
               {selectedSkills.length > 0 && (
                 <button
                   onClick={clearFilters}
-                  className="text-xs text-red-300 hover:text-red-200 flex items-center gap-1 transition"
+                  className="text-xs text-red-500 hover:text-red-600 font-semibold flex items-center gap-1 transition"
                 >
                   <X className="w-3 h-3" /> {t('dashboard.clear')} ({selectedSkills.length})
                 </button>
               )}
               <button
                 onClick={() => setShowAllSkills((v) => !v)}
-                className="text-xs text-green-300 hover:text-green-200 transition"
+                className="text-xs font-bold text-[#3b38e4] hover:text-[#302dc4] transition"
               >
                 {showAllSkills ? t('dashboard.showLess') : t('dashboard.showAll')}
               </button>
@@ -238,10 +239,10 @@ const HireLabour = () => {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.15 }}
                     onClick={() => toggleSkill(skill)}
-                    className={`text-xs px-3 py-1.5 rounded-xl border font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${
+                    className={`text-xs px-3 py-1.5 rounded-xl border font-semibold transition-all duration-200 hover:scale-105 active:scale-95 ${
                       active
-                        ? "bg-green-500/30 border-green-400/60 text-green-200 shadow-sm"
-                        : "bg-white/8 border-white/15 text-white/60 hover:bg-white/15 hover:text-white/90 hover:border-white/30"
+                        ? "bg-[#3b38e4] border-[#3b38e4] text-white shadow-sm"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300"
                     }`}
                   >
                     {active && <span className="mr-1">✓</span>}
@@ -256,10 +257,10 @@ const HireLabour = () => {
 
       {/* Results header */}
       <div className="flex items-center justify-between px-1">
-        <p className="text-white/60 text-sm">
+        <p className="text-slate-600 text-sm font-medium">
           {loading ? t('dashboard.loading') : `${displayed.length} ${displayed.length !== 1 ? t('dashboard.laboursFound') : t('dashboard.labourFound')}`}
           {selectedSkills.length > 0 && !loading && (
-            <span className="ml-1 text-green-300">• {t('dashboard.filteredBy')} {selectedSkills.length} {selectedSkills.length > 1 ? t('dashboard.skills') : t('dashboard.skill')}</span>
+            <span className="ml-1 text-[#3b38e4] font-bold">• {t('dashboard.filteredBy')} {selectedSkills.length} {selectedSkills.length > 1 ? t('dashboard.skills') : t('dashboard.skill')}</span>
           )}
         </p>
       </div>
@@ -268,17 +269,17 @@ const HireLabour = () => {
       {loading && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-5 animate-pulse h-44" />
+            <div key={i} className="bg-white border border-slate-200/80 rounded-2xl p-5 animate-pulse h-44 shadow-sm" />
           ))}
         </div>
       )}
 
       {!loading && error && (
-        <div className="backdrop-blur-xl bg-red-500/15 border border-red-400/30 rounded-2xl p-6 text-center text-red-300">
-          <p className="font-medium">{error}</p>
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center text-red-600 shadow-sm">
+          <p className="font-semibold">{error}</p>
           <button
             onClick={() => fetchLabours(selectedSkills)}
-            className="mt-3 text-sm text-red-200 underline hover:no-underline"
+            className="mt-3 text-sm text-red-700 font-bold underline hover:no-underline"
           >
             Try again
           </button>
@@ -289,11 +290,11 @@ const HireLabour = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="backdrop-blur-xl bg-white/8 border border-white/15 rounded-2xl p-12 text-center"
+          className="bg-white border border-slate-200/90 rounded-2xl p-12 text-center shadow-sm"
         >
           <p className="text-4xl mb-3">👷</p>
-          <p className="text-white/60 font-medium">{t('dashboard.noLaboursFound')}</p>
-          <p className="text-white/40 text-sm mt-1">
+          <p className="text-slate-800 font-bold text-base">{t('dashboard.noLaboursFound')}</p>
+          <p className="text-slate-500 text-sm mt-1">
             {selectedSkills.length > 0
               ? "Try removing some skill filters."
               : "No registered labours yet."}
@@ -301,7 +302,7 @@ const HireLabour = () => {
           {selectedSkills.length > 0 && (
             <button
               onClick={clearFilters}
-              className="mt-4 text-sm text-green-300 hover:text-green-200 underline transition"
+              className="mt-4 text-sm font-bold text-[#3b38e4] hover:text-[#302dc4] underline transition"
             >
               {t('dashboard.clear')}
             </button>

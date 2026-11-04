@@ -53,16 +53,16 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-lg backdrop-blur-2xl bg-gray-900/95 border border-white/20 rounded-3xl shadow-2xl p-6 sm:p-7 text-white my-8 max-h-[90vh] overflow-y-auto"
+          className="relative w-full max-w-lg bg-white border border-slate-200/90 rounded-3xl shadow-2xl p-6 sm:p-7 text-slate-800 my-8 max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <span className="text-[11px] font-bold tracking-wider uppercase text-blue-300 bg-blue-500/20 border border-blue-400/30 px-2.5 py-0.5 rounded-full">
+              <span className="text-[11px] font-bold tracking-wider uppercase text-[#3b38e4] bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
                 Dealer Contact
               </span>
-              <h2 className="text-xl font-bold mt-1.5 flex items-center gap-2">
+              <h2 className="text-xl font-bold mt-1.5 flex items-center gap-2 text-slate-900">
                 <span>🏪</span>
                 <span>Contact Dealer</span>
               </h2>
@@ -70,7 +70,7 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
             <button
               type="button"
               onClick={onClose}
-              className="p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition"
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -78,7 +78,7 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
           </div>
 
           {/* Dealer Identification Card */}
-          <div className="my-4 p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+          <div className="my-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-4">
             <div
               className={`shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br ${avatarBg} flex items-center justify-center text-white text-lg font-bold shadow-md`}
             >
@@ -97,29 +97,29 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-white truncate">{dealerName}</h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shrink-0">
+                <h3 className="text-base font-bold text-slate-900 truncate">{dealerName}</h3>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                   Verified Dealer
                 </span>
               </div>
               {dealer.address ? (
-                <p className="text-xs text-white/60 mt-1 flex items-center gap-1.5 truncate">
-                  <MapPin className="w-3.5 h-3.5 shrink-0 text-blue-400" />
+                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 truncate font-medium">
+                  <MapPin className="w-3.5 h-3.5 shrink-0 text-[#3b38e4]" />
                   <span className="truncate">{dealer.address}</span>
                 </p>
               ) : (
-                <p className="text-xs text-white/40 mt-1 italic">Location details not provided</p>
+                <p className="text-xs text-slate-400 mt-1 italic">Location details not provided</p>
               )}
             </div>
           </div>
 
           {/* Associated Crop Requirement Summary */}
-          <div className="mb-5 p-4 rounded-2xl bg-gradient-to-br from-blue-950/40 via-emerald-950/30 to-gray-900/40 border border-blue-400/25">
+          <div className="mb-5 p-4 rounded-2xl bg-indigo-50/40 border border-indigo-100">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-blue-200 uppercase tracking-wide flex items-center gap-1.5">
+              <span className="text-xs font-bold text-[#3b38e4] uppercase tracking-wide flex items-center gap-1.5">
                 <Package className="w-3.5 h-3.5" /> Associated Crop Requirement
               </span>
-              <span className="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/30 px-2.5 py-0.5 rounded-full">
+              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                 Active
               </span>
             </div>
@@ -127,49 +127,49 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">🌾</span>
               <div>
-                <h4 className="text-base font-extrabold text-white">{requirement.crop}</h4>
-                <p className="text-xs text-white/60">Registered crop purchase inquiry</p>
+                <h4 className="text-base font-extrabold text-slate-900">{requirement.crop}</h4>
+                <p className="text-xs text-slate-500 font-medium">Registered crop purchase inquiry</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                <span className="text-white/50 block text-[11px]">Required Quantity</span>
-                <span className="font-bold text-white text-sm">
+              <div className="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-sm">
+                <span className="text-slate-500 block text-[11px] font-semibold">Required Quantity</span>
+                <span className="font-bold text-slate-900 text-sm">
                   {requirement.quantity} {requirement.quantityUnit}
                 </span>
               </div>
 
-              <div className="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                <span className="text-white/50 block text-[11px]">Expected Price</span>
-                <span className="font-bold text-emerald-300 text-sm">
+              <div className="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-sm">
+                <span className="text-slate-500 block text-[11px] font-semibold">Expected Price</span>
+                <span className="font-bold text-emerald-700 text-sm">
                   ₹{requirement.expectedPrice?.toLocaleString()} / {requirement.priceUnit?.replace(/^Per\s+/i, "")}
                 </span>
               </div>
             </div>
 
             {(requirement.deliveryLocation || requirement.qualityGrade || requirement.notes) && (
-              <div className="mt-2.5 pt-2.5 border-t border-white/10 space-y-1.5 text-xs text-white/80">
+              <div className="mt-2.5 pt-2.5 border-t border-indigo-100 space-y-1.5 text-xs text-slate-700">
                 {requirement.deliveryLocation && (
                   <div className="flex items-center gap-1.5">
-                    <MapPin className="w-3 h-3 text-blue-400 shrink-0" />
-                    <span className="text-white/50">Delivery Location:</span>
-                    <span className="font-medium text-white truncate">{requirement.deliveryLocation}</span>
+                    <MapPin className="w-3.5 h-3.5 text-[#3b38e4] shrink-0" />
+                    <span className="text-slate-500">Delivery Location:</span>
+                    <span className="font-semibold text-slate-800 truncate">{requirement.deliveryLocation}</span>
                   </div>
                 )}
                 {requirement.qualityGrade && (
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
-                    <span className="text-white/50">Quality Grade:</span>
-                    <span className="font-medium text-white truncate">{requirement.qualityGrade}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="text-slate-500">Quality Grade:</span>
+                    <span className="font-semibold text-slate-800 truncate">{requirement.qualityGrade}</span>
                   </div>
                 )}
                 {requirement.notes && (
                   <div className="flex items-start gap-1.5">
-                    <FileText className="w-3 h-3 text-amber-400 shrink-0 mt-0.5" />
+                    <FileText className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-white/50">Notes: </span>
-                      <span className="font-medium text-white">{requirement.notes}</span>
+                      <span className="text-slate-500">Notes: </span>
+                      <span className="font-normal text-slate-700">{requirement.notes}</span>
                     </div>
                   </div>
                 )}
@@ -178,11 +178,11 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
           </div>
 
           {/* Messaging Notice */}
-          <div className="mb-5 p-3.5 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-start gap-2.5 text-xs text-blue-200">
-            <MessageSquare className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+          <div className="mb-5 p-3.5 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-start gap-2.5 text-xs text-indigo-900">
+            <MessageSquare className="w-4 h-4 text-[#3b38e4] shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-blue-100">In-App Messaging Status</p>
-              <p className="text-blue-200/80 mt-0.5">
+              <p className="font-bold text-[#3b38e4]">In-App Messaging Status</p>
+              <p className="text-slate-600 mt-0.5 font-medium leading-relaxed">
                 Direct in-app messaging is currently under development. You can directly call or email this dealer using the verified contact details below.
               </p>
             </div>
@@ -194,23 +194,23 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
             {dealer.mobile ? (
               <a
                 href={`tel:${dealer.mobile}`}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/30 text-white font-semibold text-sm transition group"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100/70 border border-emerald-200 text-emerald-950 font-semibold text-sm transition group shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-500/30 border border-emerald-400/40 flex items-center justify-center text-emerald-200 group-hover:scale-105 transition">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white group-hover:scale-105 transition shadow-sm">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-emerald-300 font-medium">Direct Phone Call</p>
-                    <p className="text-sm font-bold text-white">+91 {dealer.mobile}</p>
+                    <p className="text-[11px] text-emerald-700 font-bold">Direct Phone Call</p>
+                    <p className="text-sm font-bold text-slate-900">+91 {dealer.mobile}</p>
                   </div>
                 </div>
-                <span className="text-xs bg-emerald-500/40 px-3 py-1.5 rounded-xl border border-emerald-400/40 text-emerald-100 font-semibold group-hover:bg-emerald-500/60 transition">
+                <span className="text-xs bg-emerald-600 px-3 py-1.5 rounded-xl text-white font-bold group-hover:bg-emerald-700 transition">
                   Call Now ↗
                 </span>
               </a>
             ) : (
-              <div className="p-3 rounded-xl bg-white/5 text-white/50 text-xs italic">
+              <div className="p-3 rounded-xl bg-slate-50 text-slate-400 text-xs italic">
                 Phone number not made public by this dealer.
               </div>
             )}
@@ -219,36 +219,36 @@ const ContactDealerModal = ({ isOpen, onClose, requirement }) => {
             {dealer.email ? (
               <a
                 href={`mailto:${dealer.email}?subject=${emailSubject}&body=${emailBody}`}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/30 text-white font-semibold text-sm transition group"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100/70 border border-indigo-200 text-indigo-950 font-semibold text-sm transition group shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/30 border border-blue-400/40 flex items-center justify-center text-blue-200 group-hover:scale-105 transition">
+                  <div className="w-9 h-9 rounded-xl bg-[#3b38e4] flex items-center justify-center text-white group-hover:scale-105 transition shadow-sm">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[11px] text-blue-300 font-medium">Email Dealer</p>
-                    <p className="text-sm font-bold text-white truncate max-w-[200px] sm:max-w-xs">
+                    <p className="text-[11px] text-[#3b38e4] font-bold">Email Dealer</p>
+                    <p className="text-sm font-bold text-slate-900 truncate max-w-[200px] sm:max-w-xs">
                       {dealer.email}
                     </p>
                   </div>
                 </div>
-                <span className="text-xs bg-blue-500/40 px-3 py-1.5 rounded-xl border border-blue-400/40 text-blue-100 font-semibold group-hover:bg-blue-500/60 transition shrink-0">
+                <span className="text-xs bg-[#3b38e4] px-3 py-1.5 rounded-xl text-white font-bold group-hover:bg-[#302dc4] transition shrink-0">
                   Send Email ↗
                 </span>
               </a>
             ) : (
-              <div className="p-3 rounded-xl bg-white/5 text-white/50 text-xs italic">
+              <div className="p-3 rounded-xl bg-slate-50 text-slate-400 text-xs italic">
                 Email address not available.
               </div>
             )}
           </div>
 
           {/* Close button */}
-          <div className="mt-5 pt-4 border-t border-white/10 text-right">
+          <div className="mt-5 pt-4 border-t border-slate-100 text-right">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition"
+              className="px-5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
             >
               Close
             </button>

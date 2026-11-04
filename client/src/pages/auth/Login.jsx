@@ -105,15 +105,18 @@ const Login = () => {
       <div className="auth-card">
         {/* Brand header */}
         <div className="text-center mb-8 relative z-10 flex flex-col items-center">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-4 animate-float drop-shadow-xl rounded-xl" />
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">{t('common.appTagline')}</p>
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto mx-auto object-contain mb-3 drop-shadow-sm rounded-xl" />
+          <p className="text-xs font-bold text-slate-600 bg-white/80 backdrop-blur-sm inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/90 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3b38e4]"></span>
+            {t('common.appTagline')}
+          </p>
         </div>
 
         <div className="auth-glass-card">
           {loginStep === 1 ? (
             <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold text-white mb-1">{t('login.welcomeBack')}</h2>
-              <p className="text-sm text-white/55 mb-6 font-medium">{t('login.enterEmailPrompt')}</p>
+              <h2 className="text-2xl font-bold text-slate-900 mb-1 tracking-tight">{t('login.welcomeBack')}</h2>
+              <p className="text-sm text-slate-500 mb-6 font-medium">{t('login.enterEmailPrompt')}</p>
 
               <form onSubmit={handleSubmit(handleRequestOTP)} noValidate>
                 <Input
@@ -134,16 +137,16 @@ const Login = () => {
             </div>
           ) : (
             <div className="animate-slide-up">
-              <h2 className="text-2xl font-bold text-white mb-1">{t('login.enterOtp')}</h2>
-              <div className="flex items-center gap-2 bg-green-500/15 backdrop-blur-sm border border-green-400/30 rounded-xl px-4 py-3 mb-6 mt-3 shadow-inner">
-                <svg className="h-5 w-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <h2 className="text-2xl font-bold text-slate-900 mb-1 tracking-tight">{t('login.enterOtp')}</h2>
+              <div className="flex items-center gap-2 bg-indigo-50/80 border border-indigo-100 rounded-xl px-4 py-3 mb-6 mt-3 shadow-sm">
+                <svg className="h-5 w-5 text-[#3b38e4] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span className="text-sm font-semibold text-green-200 tracking-wide">{email}</span>
+                <span className="text-sm font-semibold text-slate-800 tracking-wide">{email}</span>
               </div>
 
               <div className="mb-6">
-                <label className="input-label block text-center mb-3 font-semibold">{t('login.otpLabel')}</label>
+                <label className="input-label block text-center mb-3 font-semibold text-slate-700">{t('login.otpLabel')}</label>
                 <OTPInput
                   value={otpDigits}
                   onChange={setOtpDigits}
@@ -170,8 +173,8 @@ const Login = () => {
                   ← {t('login.changeEmail')}
                 </button>
                 {cooldown > 0 ? (
-                  <span className="text-sm font-medium text-white/40 bg-white/10 px-3 py-1 rounded-full border border-white/15">
-                    {t('login.resendIn')} <span className="font-bold text-white/70 tabular-nums">{cooldown}s</span>
+                  <span className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                    {t('login.resendIn')} <span className="font-bold text-slate-800 tabular-nums">{cooldown}s</span>
                   </span>
                 ) : (
                   <button type="button" onClick={handleResend} disabled={resending} className="btn-ghost">
@@ -182,10 +185,10 @@ const Login = () => {
             </div>
           )}
 
-          <div className="mt-8 pt-6 border-t border-white/10">
-            <p className="text-center text-sm font-medium text-white/50">
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <p className="text-center text-sm font-medium text-slate-600">
               {t('login.noAccount')}{" "}
-              <Link to="/register" className="font-bold text-green-400 hover:text-green-300 transition-colors">
+              <Link to="/register" className="font-bold text-[#3b38e4] hover:text-[#302dc4] transition-colors">
                 {t('login.registerHere')}
               </Link>
             </p>

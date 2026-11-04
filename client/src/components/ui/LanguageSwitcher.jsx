@@ -11,7 +11,7 @@ const languages = [
   { code: 'ta', name: 'தமிழ்', short: 'TA' }
 ];
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ light = false }) => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -38,12 +38,16 @@ const LanguageSwitcher = () => {
     <div className="relative inline-block text-left z-50" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl shadow-sm backdrop-blur-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/30"
+        className={`flex items-center gap-2 px-3 py-2 text-sm font-semibold rounded-xl shadow-sm backdrop-blur-md transition-all duration-200 focus:outline-none ${
+          light
+            ? 'text-sky-900 bg-white/80 hover:bg-white border border-sky-200 hover:border-sky-300 focus:ring-2 focus:ring-sky-300'
+            : 'text-white bg-white/10 hover:bg-white/20 border border-white/20 focus:ring-2 focus:ring-white/30'
+        }`}
       >
-        <Globe className="w-4 h-4 text-white/80" />
+        <Globe className={`w-4 h-4 ${light ? 'text-sky-600' : 'text-white/80'}`} />
         <span className="hidden sm:inline-block">{currentLang.name}</span>
         <span className="sm:hidden">{currentLang.short}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 ${light ? 'text-sky-600' : 'text-white/70'} transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -53,7 +57,11 @@ const LanguageSwitcher = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-32 origin-top-right rounded-xl bg-[#1e293b]/90 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden"
+            className={`absolute right-0 mt-2 w-32 origin-top-right rounded-xl backdrop-blur-xl shadow-2xl overflow-hidden ${
+              light
+                ? 'bg-white/95 border border-sky-100 text-slate-700'
+                : 'bg-[#1e293b]/90 border border-white/10 text-white'
+            }`}
           >
             <div className="py-1.5 flex flex-col">
               {languages.map((lng) => (
@@ -62,8 +70,12 @@ const LanguageSwitcher = () => {
                   onClick={() => changeLanguage(lng.code)}
                   className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                     currentLang.code === lng.code
-                      ? 'bg-white/15 text-white font-semibold'
-                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                      ? light
+                        ? 'bg-sky-50 text-sky-700 font-bold'
+                        : 'bg-white/15 text-white font-semibold'
+                      : light
+                        ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        : 'text-white/70 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {lng.name}

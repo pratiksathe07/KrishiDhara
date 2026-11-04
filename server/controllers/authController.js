@@ -380,7 +380,7 @@ const loginRequestOTP = async (req, res, next) => {
       }
     }
 
-    const otp = NODE_ENV !== "production" ? "123456" : generateOTP();
+    const otp = generateOTP();
     const otpHash = await hashOTP(otp);
 
     await OtpVerification.findOneAndReplace(

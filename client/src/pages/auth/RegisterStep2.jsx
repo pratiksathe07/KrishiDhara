@@ -76,10 +76,13 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
   return (
     <AnimatedBackground>
       <div className="auth-card">
-        <div className="text-center mb-6 relative z-10">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">Verify Your Email</h1>
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">One step closer to joining KrishiDhara</p>
+        <div className="text-center mb-6 relative z-10 flex flex-col items-center">
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto mx-auto object-contain mb-3 drop-shadow-sm rounded-xl" />
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Verify Your Email</h1>
+          <p className="text-xs font-bold text-slate-600 bg-white/80 backdrop-blur-sm inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/90 shadow-sm mt-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3b38e4]"></span>
+            One step closer to joining KrishiDhara
+          </p>
         </div>
 
         <StepIndicator currentStep={2} />
@@ -87,20 +90,20 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
         <div className="auth-glass-card mt-6 animate-slide-up">
           {/* Email display */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 bg-green-500/15 backdrop-blur-sm border border-green-400/30 rounded-xl px-4 py-2 mb-2 shadow-inner">
-              <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="inline-flex items-center gap-2 bg-indigo-50/80 border border-indigo-100 rounded-xl px-4 py-2 mb-2 shadow-sm">
+              <svg className="h-5 w-5 text-[#3b38e4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="text-sm font-semibold text-green-200 tracking-wide">{step1Data.email}</span>
+              <span className="text-sm font-semibold text-slate-800 tracking-wide">{step1Data.email}</span>
             </div>
-            <p className="text-sm font-medium text-white/50 mt-1">
+            <p className="text-sm font-medium text-slate-500 mt-1">
               We sent a 6-digit code to your email address.
             </p>
           </div>
 
           {/* OTP Input */}
           <div className="mb-6">
-            <label className="input-label text-center block mb-3 font-semibold">Enter OTP</label>
+            <label className="input-label text-center block mb-3 font-semibold text-slate-700">Enter OTP</label>
             <OTPInput
               value={otpDigits}
               onChange={setOtpDigits}
@@ -132,9 +135,9 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
             </button>
 
             {cooldown > 0 ? (
-              <span className="text-sm font-medium text-white/40 bg-white/10 px-3 py-1 rounded-full border border-white/15">
+              <span className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                 Resend in{" "}
-                <span className="font-bold text-white/70 tabular-nums">{cooldown}s</span>
+                <span className="font-bold text-slate-800 tabular-nums">{cooldown}s</span>
               </span>
             ) : (
               <button

@@ -2,8 +2,7 @@ import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
-import DealerProfileDropdown from "../../components/dealer/DealerProfileDropdown";
+import DealerHeader from "../../components/dealer/DealerHeader";
 
 const getNavItems = (t) => [
   { icon: "▦", label: t('dashboard.navDashboard'), href: "/dealer/dashboard" },
@@ -19,67 +18,71 @@ const DealerDashboard = () => {
   const navItems = getNavItems(t);
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-gray-900">
-      {/* Hero Background with slow zoom animation */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#f8faff] text-slate-800">
+      {/* SapphireIQ Ambient Glow Backdrop (Light) */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#e0e7ff25_1px,transparent_1px),linear-gradient(to_bottom,#e0e7ff25_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        
+        {/* Ambient floating pastel orbs */}
         <motion.div
-          initial={{ scale: 1 }}
-          animate={{ scale: 1.06 }}
-          transition={{ duration: 24, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+          animate={{ x: [0, 25, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-32 -left-20 w-[550px] h-[550px] rounded-full bg-[#3b38e4]/08 blur-[130px]"
         />
-        {/* Dark gradient overlay — blue tint for dealer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/75 via-blue-950/45 to-gray-900/85" />
+        <motion.div
+          animate={{ x: [0, -30, 0], y: [0, 35, 0], scale: [1, 1.08, 1] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-1/4 -right-24 w-[600px] h-[600px] rounded-full bg-[#00b4d8]/08 blur-[140px]"
+        />
+        <motion.div
+          animate={{ x: [0, 20, 0], y: [0, -25, 0], scale: [1, 1.12, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute -bottom-28 left-1/3 w-[650px] h-[650px] rounded-full bg-[#8b5cf6]/06 blur-[150px]"
+        />
       </div>
 
-      {/* Header — glassmorphism */}
-      <header className="sticky top-0 z-20 backdrop-blur-xl bg-white/10 border-b border-white/20 shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 w-auto object-contain rounded-lg drop-shadow-md" />
-            <span className="hidden sm:inline-block ml-2 text-xs font-semibold bg-emerald-50 text-emerald-700 rounded-full px-3 py-1 border border-emerald-200">
-              {t('register.dealer')}
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <LanguageSwitcher />
-            {/* Dealer Profile Dropdown (Contains Profile Picture + Name trigger, My Profile and Logout) */}
-            <DealerProfileDropdown />
-          </div>
-        </div>
-      </header>
+      {/* Header — clean white glass */}
+      <DealerHeader showBackToDashboard={false} />
 
       {/* Page body */}
       <div className="relative z-10 flex flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 gap-6">
-        {/* Sidebar — glass */}
-        <aside className="hidden md:flex flex-col w-56 shrink-0 gap-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-3 h-fit shadow-lg">
-          {navItems.map((item) => (
-            <a
+        {/* Sidebar — clean white card */}
+        <aside className="hidden md:flex flex-col w-56 shrink-0 gap-1.5 bg-white border border-slate-200/90 rounded-2xl p-3 h-fit shadow-sm sticky top-24">
+          {navItems.map((item, index) => (
+            <Link
               key={item.label}
-              href={item.href}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-all duration-200"
+              to={item.href}
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                index === 0
+                  ? "bg-[#3b38e4] text-white shadow-md shadow-[#3b38e4]/25"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+              }`}
             >
               <span>{item.icon}</span>{item.label}
-            </a>
+            </Link>
           ))}
-          <div className="mt-1">
-          </div>
         </aside>
 
         <main className="flex-1 space-y-5">
-          {/* Welcome banner — glass */}
+          {/* Welcome banner — SapphireIQ Gradient */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="backdrop-blur-xl bg-gradient-to-r from-blue-500/30 to-indigo-600/20 border border-blue-400/30 rounded-2xl p-6 text-white shadow-lg"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#3b38e4] via-[#4338ca] to-[#6366f1] p-6 sm:p-7 text-white shadow-lg shadow-[#3b38e4]/20 border border-indigo-400/20"
           >
-            <h1 className="text-xl sm:text-2xl font-bold mb-1 drop-shadow">{t('dashboard.welcome')}, {user?.firstName}! 👋</h1>
-            <p className="text-blue-100/90 text-sm">{t('dashboard.dealerBanner')}</p>
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="relative z-10">
+              <h1 className="text-xl sm:text-2xl font-bold mb-1 tracking-tight">
+                {t('dashboard.welcome')}, {user?.firstName}! 👋
+              </h1>
+              <p className="text-indigo-100 text-sm font-medium">
+                {t('dashboard.dealerBanner')}
+              </p>
+            </div>
           </motion.div>
 
-          {/* Stats grid — glass cards */}
+          {/* Stats grid — clean cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {[
               { icon: "🛒", label: t('dashboard.activeListings'), value: "0" },
@@ -91,54 +94,54 @@ const DealerDashboard = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-5 flex flex-col gap-2 shadow-lg hover:bg-white/15 transition-all duration-300 cursor-default"
+                className="bg-white border border-slate-200/90 rounded-2xl p-5 flex flex-col gap-2 shadow-sm hover:border-[#3b38e4]/50 hover:shadow-md transition-all duration-300 cursor-default"
               >
                 <span className="text-2xl">{stat.icon}</span>
-                <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-white/60 font-medium">{stat.label}</p>
+                <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
+                <p className="text-xs text-slate-500 font-semibold">{stat.label}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Profile info — glass card */}
+          {/* Profile info — white card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
+            className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-semibold text-white">{t('dashboard.yourProfile')}</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('dashboard.yourProfile')}</h2>
               <Link
                 to="/dealer/profile"
-                className="text-xs text-blue-300 hover:text-white bg-blue-500/20 hover:bg-blue-500/30 px-3 py-1.5 rounded-xl border border-blue-400/30 transition flex items-center gap-1 font-medium"
+                className="text-xs text-[#3b38e4] hover:text-white bg-indigo-50 hover:bg-[#3b38e4] px-3.5 py-1.5 rounded-xl border border-indigo-200 transition flex items-center gap-1.5 font-semibold shadow-sm"
               >
                 <span>My Profile & Requirements →</span>
               </Link>
             </div>
-            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
               <div>
-                <p className="text-white/50 text-xs mb-0.5">{t('dashboard.fullName')}</p>
-                <p className="font-medium text-white">{user?.firstName} {user?.lastName}</p>
+                <p className="text-slate-500 text-xs font-semibold mb-0.5">{t('dashboard.fullName')}</p>
+                <p className="font-semibold text-slate-800">{user?.firstName} {user?.lastName}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">{t('login.emailLabel')}</p>
-                <p className="font-medium text-white">{user?.email}</p>
+                <p className="text-slate-500 text-xs font-semibold mb-0.5">{t('login.emailLabel')}</p>
+                <p className="font-semibold text-slate-800">{user?.email}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">{t('register.mobileNumber')}</p>
-                <p className="font-medium text-white">{user?.mobile}</p>
+                <p className="text-slate-500 text-xs font-semibold mb-0.5">{t('register.mobileNumber')}</p>
+                <p className="font-semibold text-slate-800">{user?.mobile}</p>
               </div>
               <div>
-                <p className="text-white/50 text-xs mb-0.5">{t('dashboard.address')}</p>
-                <p className="font-medium text-white">{user?.address || "—"}</p>
+                <p className="text-slate-500 text-xs font-semibold mb-0.5">{t('dashboard.address')}</p>
+                <p className="font-semibold text-slate-800">{user?.address || "—"}</p>
               </div>
               {user?.dealerProfile && user.dealerProfile.products.length > 0 && (
                 <div className="sm:col-span-2">
-                  <p className="text-white/50 text-xs mb-1.5">{t('dashboard.products')}</p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <p className="text-slate-500 text-xs font-semibold mb-1.5">{t('dashboard.products')}</p>
+                  <div className="flex flex-wrap gap-2">
                     {user.dealerProfile.products.map((p) => (
-                      <span key={p} className="chip chip-selected text-xs">{p}</span>
+                      <span key={p} className="px-3 py-1 bg-indigo-50 text-[#3b38e4] border border-indigo-200/80 rounded-full text-xs font-semibold">{p}</span>
                     ))}
                   </div>
                 </div>

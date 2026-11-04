@@ -122,25 +122,24 @@ const AdminDashboard = () => {
   };
 
   const statCards = [
-    { title: "Total Farmers", value: stats.farmers, icon: Tractor, color: "text-blue-400", bg: "bg-blue-500/10" },
-    { title: "Total Labourers", value: stats.labours, icon: Users, color: "text-orange-400", bg: "bg-orange-500/10" },
-    { title: "Total Dealers", value: stats.dealers, icon: Store, color: "text-purple-400", bg: "bg-purple-500/10" },
-    { title: "Active Users", value: stats.activeUsers, icon: Activity, color: "text-green-400", bg: "bg-green-500/10" },
+    { title: "Total Farmers", value: stats.farmers, icon: Tractor, color: "text-blue-600", bg: "bg-blue-50" },
+    { title: "Total Labourers", value: stats.labours, icon: Users, color: "text-amber-600", bg: "bg-amber-50" },
+    { title: "Total Dealers", value: stats.dealers, icon: Store, color: "text-[#3b38e4]", bg: "bg-indigo-50" },
+    { title: "Active Users", value: stats.activeUsers, icon: Activity, color: "text-emerald-600", bg: "bg-emerald-50" },
   ];
 
   return (
     <AnimatedBackground onRefresh={fetchStats}>
-      <div className="min-h-screen flex text-white relative z-10 font-sans">
+      <div className="min-h-screen flex text-slate-800 relative z-10 font-sans">
         
         {/* Sidebar */}
-        <aside className={`fixed lg:static top-0 left-0 h-full w-64 bg-black/40 backdrop-blur-md border-r border-white/10 transition-transform duration-300 z-50 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+        <aside className={`fixed lg:static top-0 left-0 h-full w-64 bg-white border-r border-slate-200/90 shadow-sm transition-transform duration-300 z-50 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
           <div className="p-6 flex flex-col h-full">
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="KrishiDhara" className="h-13 w-100 object-contain drop-shadow-md rounded-lg" />
-                {/* <span className="text-xl font-bold tracking-wide">Admin</span> */}
+                <img src="/logo.png" alt="KrishiDhara" className="h-14 sm:h-16 w-auto object-contain drop-shadow-sm rounded-lg" />
               </div>
-              <button className="lg:hidden text-white/70 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
+              <button className="lg:hidden text-slate-500 hover:text-slate-800" onClick={() => setIsSidebarOpen(false)}>
                 <X size={24} />
               </button>
             </div>
@@ -148,48 +147,58 @@ const AdminDashboard = () => {
             <nav className="flex-1 space-y-2">
               <button 
                 onClick={() => setActiveTab("overview")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === "overview" ? "bg-white/10 text-green-400 border border-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"}`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${
+                  activeTab === "overview" 
+                    ? "bg-[#3b38e4] text-white shadow-md shadow-[#3b38e4]/25" 
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                }`}
               >
                 <TrendingUp size={20} />
                 Dashboard
               </button>
               <button 
                 onClick={() => setActiveTab("users")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === "users" ? "bg-white/10 text-green-400 border border-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"}`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${
+                  activeTab === "users" 
+                    ? "bg-[#3b38e4] text-white shadow-md shadow-[#3b38e4]/25" 
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                }`}
               >
                 <Users size={20} />
                 User Management
               </button>
               <button 
                 onClick={() => setActiveTab("complaints")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === "complaints" ? "bg-white/10 text-green-400 border border-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"}`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${
+                  activeTab === "complaints" 
+                    ? "bg-[#3b38e4] text-white shadow-md shadow-[#3b38e4]/25" 
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                }`}
               >
                 <MessageSquareWarning size={20} />
                 Reports & Complaints
               </button>
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:bg-white/5 hover:text-white rounded-xl font-medium transition-all">
+              <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-semibold transition-all">
                 <Settings size={20} />
                 System Settings
               </button>
             </nav>
 
-            <div className="mt-auto border-t border-white/10 pt-6">
-              <div className="flex items-center gap-3 px-4 py-3 mb-2 bg-black/20 rounded-xl border border-white/5">
-                {/* <div className="h-12 w-1000 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center font-bold shadow-lg">
-                  {authUser?.firstName?.charAt(0) || "Admin"}
-                </div> */}
-                
-                <div className="h-12 w-100 flex items-center justify-center font-bold shadow-lg"> Admin</div>
-                <div>
-                  <p className="text-sm font-semibold">{authUser?.firstName} {authUser?.lastName}</p>
-                  <p className="text-xs text-white/50 truncate max-w-[120px]">{authUser?.email}</p>
+            <div className="mt-auto border-t border-slate-100 pt-6">
+              <div className="flex items-center gap-3 px-4 py-3 mb-2 bg-slate-50 rounded-xl border border-slate-200/60">
+                <div className="h-10 w-10 rounded-xl bg-indigo-50 border border-indigo-200 text-[#3b38e4] flex items-center justify-center font-bold text-xs shrink-0">
+                  ADM
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-slate-900 truncate">{authUser?.firstName} {authUser?.lastName}</p>
+                  <p className="text-xs text-slate-500 truncate">{authUser?.email}</p>
                 </div>
               </div>
               <button 
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-xl font-medium transition-all shadow-md"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-all shadow-md shadow-red-500/20"
               >
-                <LogOut size={20} />
+                <LogOut size={18} />
                 Logout
               </button>
             </div>
@@ -199,18 +208,14 @@ const AdminDashboard = () => {
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
           {/* Header */}
-          <header className="h-20 flex items-center justify-between px-8 bg-black/20 backdrop-blur-sm border-b border-white/5 sticky top-0 z-40">
+          <header className="h-20 flex items-center justify-between px-8 bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-sm">
             <div className="flex items-center gap-4">
-              <button className="lg:hidden text-white/70 hover:text-white" onClick={() => setIsSidebarOpen(true)}>
+              <button className="lg:hidden text-slate-600 hover:text-slate-900" onClick={() => setIsSidebarOpen(true)}>
                 <Menu size={24} />
               </button>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                 {activeTab === "overview" ? "Overview" : activeTab === "users" ? "User Management" : "Reports & Complaints"}
               </h1>
-            </div>
-            
-            <div className="flex items-center gap-4">
-               {/* Placeholders for notifications etc. */}
             </div>
           </header>
 
@@ -220,22 +225,21 @@ const AdminDashboard = () => {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-8 flex justify-between items-end">
                   <div>
-                    <h2 className="text-3xl font-bold mb-2">Welcome back {authUser?.firstName}! 👋</h2>
-                    <p className="text-white/60">Here's what's happening in KrishiDhara today.</p>
+                    <h2 className="text-3xl font-extrabold text-slate-900 mb-1">Welcome back {authUser?.firstName}! 👋</h2>
+                    <p className="text-slate-500 font-medium">Here's what's happening in KrishiDhara today.</p>
                   </div>
-                 
                 </div>
 
                 {/* Stat Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
                   {statCards.map((stat, idx) => (
-                    <div key={idx} className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 flex items-center gap-5 hover:bg-black/40 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20">
-                      <div className={`h-14 w-14 rounded-xl ${stat.bg} flex items-center justify-center ${stat.color}`}>
+                    <div key={idx} className="bg-white border border-slate-200/90 rounded-2xl p-6 flex items-center gap-5 hover:border-[#3b38e4]/50 hover:shadow-md transition-all">
+                      <div className={`h-14 w-14 rounded-xl ${stat.bg} flex items-center justify-center ${stat.color} shrink-0`}>
                         <stat.icon size={28} />
                       </div>
                       <div>
-                        <p className="text-white/60 text-sm font-medium mb-1">{stat.title}</p>
-                        <p className="text-3xl font-bold">{isLoadingStats ? "..." : stat.value}</p>
+                        <p className="text-slate-500 text-sm font-semibold mb-1">{stat.title}</p>
+                        <p className="text-3xl font-extrabold text-slate-900">{isLoadingStats ? "..." : stat.value}</p>
                       </div>
                     </div>
                   ))}
@@ -243,37 +247,37 @@ const AdminDashboard = () => {
 
                 {/* Dashboard Content area */}
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                  <div className="xl:col-span-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-h-[400px]">
+                  <div className="xl:col-span-2 bg-white border border-slate-200/90 rounded-2xl p-6 min-h-[400px] shadow-sm">
                      <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-bold">Registration Activity</h3>
-                        <select className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white/80 focus:outline-none focus:border-green-500/50">
+                        <h3 className="text-lg font-bold text-slate-900">Registration Activity</h3>
+                        <select className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#3b38e4]/20 focus:border-[#3b38e4]">
                           <option>Last 7 days</option>
                           <option>Last 30 days</option>
                           <option>This Year</option>
                         </select>
                      </div>
-                     <div className="flex items-center justify-center h-[300px] border border-dashed border-white/10 rounded-xl bg-white/5">
-                        <p className="text-white/40 font-medium flex items-center gap-2">
+                     <div className="flex items-center justify-center h-[300px] border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                        <p className="text-slate-400 font-semibold flex items-center gap-2">
                            <Activity size={20} />
-                           Chart Placeholder (Implement with Recharts/Chartjs later)
+                           Activity Graph
                         </p>
                      </div>
                   </div>
-                  <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-h-[400px]">
-                     <h3 className="text-lg font-bold mb-6">System Health</h3>
+                  <div className="bg-white border border-slate-200/90 rounded-2xl p-6 min-h-[400px] shadow-sm">
+                     <h3 className="text-lg font-bold text-slate-900 mb-6">System Health</h3>
                      <div className="space-y-4">
-                        <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center gap-4">
-                          <CheckCircle className="text-green-400" size={24} />
+                        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-4">
+                          <CheckCircle className="text-emerald-600" size={24} />
                           <div>
-                            <p className="font-semibold text-green-400">Database Connected</p>
-                            <p className="text-xs text-green-400/70">Latency: 24ms</p>
+                            <p className="font-bold text-emerald-900">Database Connected</p>
+                            <p className="text-xs text-emerald-700">Latency: 24ms</p>
                           </div>
                         </div>
-                        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center gap-4">
-                          <Activity className="text-blue-400" size={24} />
+                        <div className="p-4 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center gap-4">
+                          <Activity className="text-[#3b38e4]" size={24} />
                           <div>
-                            <p className="font-semibold text-blue-400">API Server Active</p>
-                            <p className="text-xs text-blue-400/70">Uptime: 99.9%</p>
+                            <p className="font-bold text-indigo-900">API Server Active</p>
+                            <p className="text-xs text-indigo-700">Uptime: 99.9%</p>
                           </div>
                         </div>
                      </div>
@@ -286,20 +290,20 @@ const AdminDashboard = () => {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 
                 {/* Filter Bar */}
-                <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-4 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="bg-white border border-slate-200/90 rounded-2xl p-4 mb-6 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
                   <div className="relative w-full md:w-96">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <input 
                       type="text" 
                       placeholder="Search users by name, email, or mobile..." 
-                      className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-green-500/50 transition-colors"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#3b38e4]/20 focus:border-[#3b38e4] transition-colors"
                       value={userFilters.search}
                       onChange={(e) => setUserFilters({...userFilters, search: e.target.value})}
                     />
                   </div>
                   <div className="flex gap-4 w-full md:w-auto">
                     <select 
-                      className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-green-500/50 flex-1 md:flex-none"
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#3b38e4]/20 focus:border-[#3b38e4] flex-1 md:flex-none font-medium"
                       value={userFilters.role}
                       onChange={(e) => setUserFilters({...userFilters, role: e.target.value})}
                     >
@@ -310,7 +314,7 @@ const AdminDashboard = () => {
                       <option value="admin">Admins</option>
                     </select>
                     <select 
-                      className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-green-500/50 flex-1 md:flex-none"
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#3b38e4]/20 focus:border-[#3b38e4] flex-1 md:flex-none font-medium"
                       value={userFilters.status}
                       onChange={(e) => setUserFilters({...userFilters, status: e.target.value})}
                     >
@@ -322,84 +326,84 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Users Table */}
-                <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left">
-                      <thead className="text-xs text-white/50 uppercase bg-black/40 border-b border-white/10">
+                      <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200 font-bold">
                         <tr>
-                          <th className="px-6 py-4 font-semibold">User</th>
-                          <th className="px-6 py-4 font-semibold">Contact Info</th>
-                          <th className="px-6 py-4 font-semibold">Role</th>
-                          <th className="px-6 py-4 font-semibold">Status</th>
-                          <th className="px-6 py-4 font-semibold">Joined</th>
-                          <th className="px-6 py-4 text-right font-semibold">Actions</th>
+                          <th className="px-6 py-4 font-bold">User</th>
+                          <th className="px-6 py-4 font-bold">Contact Info</th>
+                          <th className="px-6 py-4 font-bold">Role</th>
+                          <th className="px-6 py-4 font-bold">Status</th>
+                          <th className="px-6 py-4 font-bold">Joined</th>
+                          <th className="px-6 py-4 text-right font-bold">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {isLoadingUsers ? (
                           <tr>
-                            <td colSpan="6" className="px-6 py-8 text-center text-white/50">
-                              <RefreshCw className="mx-auto animate-spin mb-2" size={24} />
+                            <td colSpan="6" className="px-6 py-8 text-center text-slate-500">
+                              <RefreshCw className="mx-auto animate-spin mb-2 text-[#3b38e4]" size={24} />
                               Loading users...
                             </td>
                           </tr>
                         ) : users.length === 0 ? (
                           <tr>
-                            <td colSpan="6" className="px-6 py-8 text-center text-white/50">
+                            <td colSpan="6" className="px-6 py-8 text-center text-slate-500">
                               No users found matching your filters.
                             </td>
                           </tr>
                         ) : (
                           users.map((user) => (
-                            <tr key={user._id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                            <tr key={user._id} className="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group">
                               <td className="px-6 py-4">
                                 <div className="flex items-center gap-3">
-                                  <div className="h-9 w-9 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center font-bold text-white shadow-lg text-xs">
+                                  <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#3b38e4] to-indigo-600 flex items-center justify-center font-bold text-white shadow-sm text-xs">
                                     {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
                                   </div>
                                   <div>
-                                    <p className="font-semibold">{user.firstName} {user.lastName}</p>
-                                    <p className="text-xs text-white/50">{user._id.substring(user._id.length - 6)}</p>
+                                    <p className="font-bold text-slate-900">{user.firstName} {user.lastName}</p>
+                                    <p className="text-xs text-slate-400">ID: {user._id.substring(user._id.length - 6)}</p>
                                   </div>
                                 </div>
                               </td>
                               <td className="px-6 py-4">
-                                <p className="truncate max-w-[150px]">{user.email}</p>
-                                <p className="text-white/50 text-xs mt-0.5">{user.mobile}</p>
+                                <p className="truncate max-w-[150px] font-semibold text-slate-800">{user.email}</p>
+                                <p className="text-slate-500 text-xs mt-0.5">{user.mobile}</p>
                               </td>
                               <td className="px-6 py-4">
-                                <span className={`px-2.5 py-1 rounded-md text-xs font-medium capitalize border
-                                  ${user.role === 'farmer' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 
-                                    user.role === 'labour' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : 
-                                    user.role === 'dealer' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 
-                                    'bg-red-500/10 text-red-400 border-red-500/20'}`}
+                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold capitalize border
+                                  ${user.role === 'farmer' ? 'bg-blue-50 text-blue-700 border-blue-200' : 
+                                    user.role === 'labour' ? 'bg-amber-50 text-amber-700 border-amber-200' : 
+                                    user.role === 'dealer' ? 'bg-indigo-50 text-[#3b38e4] border-indigo-200' : 
+                                    'bg-purple-50 text-purple-700 border-purple-200'}`}
                                 >
                                   {user.role}
                                 </span>
                               </td>
                               <td className="px-6 py-4">
-                                <span className={`flex items-center gap-1.5 w-fit px-2.5 py-1 rounded-md text-xs font-medium border
-                                  ${user.status === 'active' ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}
+                                <span className={`flex items-center gap-1.5 w-fit px-2.5 py-1 rounded-full text-xs font-bold border
+                                  ${user.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'}`}
                                 >
                                   {user.status === 'active' ? <CheckCircle size={12} /> : <XCircle size={12} />}
                                   {user.status}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-white/70">
+                              <td className="px-6 py-4 text-slate-500 font-medium">
                                 {new Date(user.createdAt).toLocaleDateString()}
                               </td>
                               <td className="px-6 py-4 text-right">
                                 <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                   <button 
                                     onClick={() => handleToggleStatus(user._id, user.status)}
-                                    className="p-1.5 rounded-md hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                                    className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors"
                                     title={user.status === "active" ? "Deactivate User" : "Activate User"}
                                   >
                                     {user.status === "active" ? <XCircle size={16} /> : <CheckCircle size={16} />}
                                   </button>
                                   <button 
                                     onClick={() => handleDeleteUser(user._id)}
-                                    className="p-1.5 rounded-md hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-colors"
+                                    className="p-1.5 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
                                     title="Delete User"
                                   >
                                     <Trash2 size={16} />

@@ -72,16 +72,19 @@ const RegisterStep1 = ({ onSuccess }) => {
     <AnimatedBackground>
       <div className="auth-card">
         {/* Brand header */}
-        <div className="text-center mb-6 relative z-10">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-24 w-auto mx-auto object-contain mb-3 animate-float drop-shadow-xl rounded-xl" />
-          <h1 className="text-3xl font-extrabold text-white drop-shadow-sm">{t('register.title')}</h1>
-          <p className="text-sm font-medium text-white/60 mt-2 bg-white/10 backdrop-blur-sm inline-block px-3 py-1 rounded-full border border-white/20">{t('common.appTagline')}</p>
+        <div className="text-center mb-6 relative z-10 flex flex-col items-center">
+          <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto mx-auto object-contain mb-3 drop-shadow-sm rounded-xl" />
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t('register.title')}</h1>
+          <p className="text-xs font-bold text-slate-600 bg-white/80 backdrop-blur-sm inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/90 shadow-sm mt-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3b38e4]"></span>
+            {t('common.appTagline')}
+          </p>
         </div>
 
         <StepIndicator currentStep={1} />
 
         <div className="auth-glass-card mt-6">
-          <h2 className="text-xl font-bold text-white mb-5">{t('register.personalInfo')}</h2>
+          <h2 className="text-xl font-bold text-slate-900 mb-5 tracking-tight">{t('register.personalInfo')}</h2>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="animate-fade-in">
             {/* First Name */}
@@ -178,7 +181,7 @@ const RegisterStep1 = ({ onSuccess }) => {
                       className={`relative flex flex-col items-center justify-center p-4 rounded-2xl cursor-pointer border-2 transition-all duration-300 ${
                         isActive
                           ? `${role.activeBorder} ${role.activeBg} shadow-md scale-105`
-                          : "border-white/20 bg-white/10 hover:bg-white/15 hover:border-white/35 hover:shadow-sm hover:-translate-y-1"
+                          : "border-slate-200 bg-slate-50/80 hover:bg-white hover:border-[#3b38e4]/40 hover:shadow-sm hover:-translate-y-0.5"
                       }`}
                     >
                       <input
@@ -187,8 +190,8 @@ const RegisterStep1 = ({ onSuccess }) => {
                         className="sr-only"
                         {...register("role", { required: "Please select your role." })}
                       />
-                      <Icon className={`w-8 h-8 mb-2 transition-colors ${isActive ? role.iconColor : "text-gray-400"}`} />
-                      <span className={`text-sm font-bold transition-colors ${isActive ? "text-gray-900" : "text-white/70"}`}>
+                      <Icon className={`w-8 h-8 mb-2 transition-colors ${isActive ? role.iconColor : "text-slate-400"}`} />
+                      <span className={`text-sm font-bold transition-colors ${isActive ? "text-slate-900" : "text-slate-600"}`}>
                         {t(`register.${role.id}`)}
                       </span>
                       {isActive && (
@@ -208,10 +211,10 @@ const RegisterStep1 = ({ onSuccess }) => {
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-white/10">
-            <p className="text-center text-sm font-medium text-white/50">
+          <div className="mt-6 pt-5 border-t border-slate-100">
+            <p className="text-center text-sm font-medium text-slate-600">
               Already have an account?{" "}
-              <Link to="/login" className="font-bold text-green-400 hover:text-green-300 transition-colors">
+              <Link to="/login" className="font-bold text-[#3b38e4] hover:text-[#302dc4] transition-colors">
                 Log in
               </Link>
             </p>

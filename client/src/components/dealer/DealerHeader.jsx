@@ -7,24 +7,24 @@ const DealerHeader = ({ showBackToDashboard = false }) => {
   const { t } = useTranslation();
 
   return (
-    <header className="sticky top-0 z-20 backdrop-blur-xl bg-white/10 border-b border-white/20 shadow-lg">
+    <header className="sticky top-0 z-20 backdrop-blur-md bg-white/95 border-b border-slate-200/80 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link to="/dealer/dashboard" className="flex items-center gap-2 group">
             <img
               src="/logo.png"
               alt="KrishiDhara Logo"
-              className="h-14 w-auto object-contain rounded-lg drop-shadow-md group-hover:scale-105 transition-transform duration-200"
+              className="h-14 sm:h-16 w-auto object-contain rounded-lg drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
             />
           </Link>
-          <span className="hidden sm:inline-block text-xs font-semibold bg-blue-500/20 text-blue-300 rounded-full px-3 py-1 border border-blue-400/30">
-            {t("register.dealer", "Dealer")}
+          <span className="hidden sm:inline-block text-xs font-bold bg-indigo-50 text-[#3b38e4] rounded-full px-3 py-1 border border-indigo-200/80 shadow-sm">
+            • {t("register.dealer", "Dealer")}
           </span>
 
           {showBackToDashboard && (
             <Link
               to="/dealer/dashboard"
-              className="text-xs text-white/70 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-xl transition border border-white/10 hidden md:inline-flex items-center gap-1.5"
+              className="text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 px-3 py-1.5 rounded-xl transition border border-slate-200 hidden md:inline-flex items-center gap-1.5 font-semibold"
             >
               <span>←</span>
               <span>Back to Dashboard</span>
@@ -33,7 +33,7 @@ const DealerHeader = ({ showBackToDashboard = false }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <LanguageSwitcher />
+          <LanguageSwitcher light={true} />
           <DealerProfileDropdown />
         </div>
       </div>

@@ -51,11 +51,11 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-5 shadow-lg hover:bg-white/15 hover:border-white/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+      className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:border-[#3b38e4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
     >
       <div>
         {/* Dealer Header */}
-        <div className="flex items-start gap-3.5 mb-4 pb-3 border-b border-white/10">
+        <div className="flex items-start gap-3.5 mb-4 pb-3 border-b border-slate-100">
           <div
             className={`shrink-0 h-11 w-11 rounded-xl bg-gradient-to-br ${avatarBg} flex items-center justify-center text-white font-bold text-base shadow-md`}
           >
@@ -75,32 +75,32 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-[11px] text-white/50 font-medium">Dealer:</span>
-              <h3 className="text-white font-bold text-sm sm:text-base truncate">
+              <span className="text-[11px] text-slate-400 font-medium">Dealer:</span>
+              <h3 className="text-slate-900 font-bold text-sm sm:text-base truncate">
                 {dealerName}
               </h3>
             </div>
             {dealer.address && (
-              <p className="text-white/60 text-xs mt-0.5 flex items-center gap-1 truncate">
-                <MapPin className="w-3 h-3 shrink-0 text-blue-400" />
+              <p className="text-slate-500 text-xs mt-0.5 flex items-center gap-1 truncate font-medium">
+                <MapPin className="w-3.5 h-3.5 shrink-0 text-[#3b38e4]" />
                 <span className="truncate">{dealer.address}</span>
               </p>
             )}
           </div>
 
-          <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+          <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
             Active
           </span>
         </div>
 
         {/* Crop Badge & Title */}
         <div className="mb-3.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2.5 py-0.5 rounded-full">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#3b38e4] bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
             Dealer's Registered Crop
           </span>
           <div className="flex items-center gap-2 mt-1.5">
             <span className="text-xl">🌾</span>
-            <h4 className="text-lg font-extrabold text-white tracking-tight">
+            <h4 className="text-lg font-extrabold text-slate-900 tracking-tight">
               {requirement.crop}
             </h4>
           </div>
@@ -108,21 +108,21 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
 
         {/* Core Metrics: Required Quantity & Expected Price */}
         <div className="grid grid-cols-2 gap-2.5 mb-3.5">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-            <p className="text-[11px] text-white/50 font-medium mb-0.5">Required Quantity</p>
-            <p className="text-sm sm:text-base font-bold text-white">
+          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <p className="text-[11px] text-slate-500 font-semibold mb-0.5">Required Quantity</p>
+            <p className="text-sm sm:text-base font-bold text-slate-900">
               {requirement.quantity}{" "}
-              <span className="text-xs font-normal text-white/70">
+              <span className="text-xs font-normal text-slate-500">
                 {requirement.quantityUnit}
               </span>
             </p>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-            <p className="text-[11px] text-white/50 font-medium mb-0.5">Expected Price</p>
-            <p className="text-sm sm:text-base font-bold text-emerald-300">
+          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <p className="text-[11px] text-slate-500 font-semibold mb-0.5">Expected Price</p>
+            <p className="text-sm sm:text-base font-bold text-emerald-700">
               ₹{requirement.expectedPrice?.toLocaleString()}{" "}
-              <span className="text-xs font-normal text-white/70">
+              <span className="text-xs font-normal text-slate-500">
                 / {requirement.priceUnit?.replace(/^Per\s+/i, "")}
               </span>
             </p>
@@ -130,39 +130,39 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
         </div>
 
         {/* Detailed Preferences: Location, Quality, Notes */}
-        <div className="space-y-1.5 text-xs text-white/80 mb-4 bg-white/5 rounded-xl p-3 border border-white/10">
+        <div className="space-y-1.5 text-xs text-slate-700 mb-4 bg-slate-50 rounded-xl p-3 border border-slate-200/80">
           {requirement.deliveryLocation ? (
             <div className="flex items-start gap-2">
-              <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
+              <MapPin className="w-3.5 h-3.5 text-[#3b38e4] shrink-0 mt-0.5" />
               <div className="truncate">
-                <span className="text-white/50">Preferred Location: </span>
-                <span className="font-semibold text-white">{requirement.deliveryLocation}</span>
+                <span className="text-slate-400">Preferred Location: </span>
+                <span className="font-semibold text-slate-800">{requirement.deliveryLocation}</span>
               </div>
             </div>
           ) : null}
 
           {requirement.qualityGrade ? (
             <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
               <div className="truncate">
-                <span className="text-white/50">Quality/Grade: </span>
-                <span className="font-semibold text-white">{requirement.qualityGrade}</span>
+                <span className="text-slate-400">Quality/Grade: </span>
+                <span className="font-semibold text-slate-800">{requirement.qualityGrade}</span>
               </div>
             </div>
           ) : null}
 
           {requirement.notes ? (
             <div className="flex items-start gap-2">
-              <FileText className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+              <FileText className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
               <div>
-                <span className="text-white/50">Notes: </span>
-                <span className="font-normal text-white/90">{requirement.notes}</span>
+                <span className="text-slate-400">Notes: </span>
+                <span className="font-normal text-slate-700">{requirement.notes}</span>
               </div>
             </div>
           ) : null}
 
           {!requirement.deliveryLocation && !requirement.qualityGrade && !requirement.notes && (
-            <p className="text-white/40 italic text-[11px]">
+            <p className="text-slate-400 italic text-[11px]">
               No additional specifications provided.
             </p>
           )}
@@ -170,11 +170,11 @@ export const RequirementCard = ({ requirement, onContact, index = 0 }) => {
       </div>
 
       {/* Card Action: Contact Dealer Button */}
-      <div className="pt-3 border-t border-white/10">
+      <div className="pt-3 border-t border-slate-100">
         <button
           type="button"
           onClick={() => onContact(requirement)}
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-blue-500/25 hover:bg-blue-500/40 text-blue-200 hover:text-white border border-blue-400/35 hover:border-blue-400/50 font-semibold text-xs sm:text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md"
+          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#3b38e4] hover:bg-[#302dc4] text-white font-bold text-xs sm:text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-[#3b38e4]/20"
         >
           <Phone className="w-3.5 h-3.5" />
           <span>Contact Dealer</span>
@@ -371,20 +371,20 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="backdrop-blur-xl bg-gradient-to-r from-blue-500/30 via-indigo-600/25 to-teal-600/20 border border-blue-400/30 rounded-2xl p-6 text-white shadow-lg"
+          className="rounded-2xl bg-gradient-to-r from-[#3b38e4] via-[#4338ca] to-[#6366f1] p-6 text-white shadow-lg shadow-[#3b38e4]/20 border border-indigo-400/20 relative overflow-hidden"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2.5 mb-1.5">
-                <Store className="w-6 h-6 text-blue-300" />
-                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight drop-shadow">
+                <Store className="w-6 h-6 text-indigo-200" />
+                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
                   Dealer Purchase Requirements
                 </h1>
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/25 text-blue-200 border border-blue-400/40">
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30">
                   Live Marketplace
                 </span>
               </div>
-              <p className="text-blue-100/80 text-sm max-w-2xl">
+              <p className="text-indigo-100 text-sm max-w-2xl font-medium">
                 Search for a crop to discover active purchase requirements posted by verified agricultural dealers.
               </p>
             </div>
@@ -393,7 +393,7 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
               <button
                 onClick={handleRefresh}
                 disabled={refreshing || loading}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold text-white transition self-start sm:self-auto disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-xs font-semibold text-white transition self-start sm:self-auto disabled:opacity-50"
                 title="Refresh latest requirements from database"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
@@ -410,10 +410,10 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
           <div className="flex items-center gap-2.5">
             <span className="text-2xl">📋</span>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                 Dealer Purchase Requirements
               </h2>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-slate-500 font-medium">
                 Search for a crop to view active purchasing criteria posted by registered dealers
               </p>
             </div>
@@ -424,7 +424,7 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
               <button
                 onClick={handleRefresh}
                 disabled={refreshing || loading}
-                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white/80 hover:text-white transition disabled:opacity-50"
+                className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 shadow-sm transition disabled:opacity-50"
                 title="Refresh requirements"
               >
                 <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
@@ -439,7 +439,7 @@ const DealerRequirements = ({ embedded = false, limit = null }) => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.08 }}
-        className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3"
+        className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3"
       >
         <form
           onSubmit={(e) => {

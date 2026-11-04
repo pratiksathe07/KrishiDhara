@@ -35,8 +35,8 @@ const StepIndicator = ({ currentStep }) => {
                 )}
               </div>
               <span
-                className={`mt-1.5 text-xs font-medium hidden sm:block ${
-                  currentStep >= step.number ? "text-primary-700" : "text-gray-400"
+                className={`mt-1.5 text-xs font-semibold hidden sm:block ${
+                  currentStep >= step.number ? "text-sky-300" : "text-white/40"
                 }`}
               >
                 {step.label}
@@ -47,7 +47,7 @@ const StepIndicator = ({ currentStep }) => {
             {index < STEPS.length - 1 && (
               <div
                 className={`h-0.5 w-16 sm:w-20 mx-1 transition-all duration-300 ${
-                  currentStep > step.number ? "bg-primary-500" : "bg-surface-200"
+                  currentStep > step.number ? "bg-[#3b38e4]" : "bg-white/20"
                 }`}
               />
             )}

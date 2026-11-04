@@ -7,6 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        // SapphireIQ brand palette
+        sapphire: {
+          50:  "#eef2ff",
+          100: "#e0e7ff",
+          200: "#c7d2fe",
+          300: "#a5b4fc",
+          400: "#818cf8",
+          500: "#6366f1",
+          600: "#3b38e4", // Signature SapphireIQ electric blurple
+          700: "#302dc4",
+          800: "#2623a1",
+          900: "#1e1b7e",
+          950: "#110e54",
+        },
         // KrishiDhara brand palette — agriculture greens
         primary: {
           50:  "#f0fdf4",
