@@ -77,7 +77,9 @@ const RegisterStep2 = ({ step1Data, onSuccess, onBack }) => {
     <AnimatedBackground>
       <div className="auth-card">
         <div className="text-center mb-6 relative z-10 flex flex-col items-center">
-          <img src="/logo.png" alt="KrishiDhara Logo" className="h-20 w-auto mx-auto object-contain mb-3 drop-shadow-sm rounded-xl" />
+          <div className="px-5 py-2.5 rounded-xl bg-[#3b38e4] hover:bg-[#302dc4] text-white font-bold text-sm shadow-md shadow-[#3b38e4]/25 hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 mx-auto mb-3 w-fit">
+            <img src="/logo.png" alt="KrishiDhara Logo" className="h-5 w-auto object-contain" />
+          </div>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Verify Your Email</h1>
           <p className="text-xs font-bold text-slate-600 bg-white/80 backdrop-blur-sm inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/90 shadow-sm mt-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[#3b38e4]"></span>

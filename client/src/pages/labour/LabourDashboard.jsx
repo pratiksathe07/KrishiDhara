@@ -46,7 +46,9 @@ const LabourDashboard = () => {
       <header className="sticky top-0 z-20 backdrop-blur-md bg-white/95 border-b border-slate-200/80 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="KrishiDhara Logo" className="h-14 sm:h-16 w-auto object-contain rounded-lg drop-shadow-sm" />
+            <div className="px-5 py-2.5 rounded-xl bg-[#3b38e4] hover:bg-[#302dc4] text-white font-bold text-sm shadow-md shadow-[#3b38e4]/25 hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
+              <img src="/logo.png" alt="KrishiDhara Logo" className="h-5 w-auto object-contain" />
+            </div>
             <span className="hidden sm:inline-block ml-2 text-xs font-bold bg-indigo-50 text-[#3b38e4] rounded-full px-3 py-1 border border-indigo-200/80 shadow-sm">
               • {t('register.labour')}
             </span>
