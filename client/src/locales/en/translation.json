@@ -58,6 +58,7 @@
   },
   "dashboard": {
     "navDashboard": "Dashboard",
+    "navLabourRequirements": "Post",
     "navMyLand": "My Land",
     "navCrops": "Crops",
     "navHireLabour": "Hire Labour",
@@ -92,6 +93,7 @@
     "noLaboursFound": "No labours found",
     "navMyProfile": "My Profile",
     "navFindWork": "Find Work",
+    "navGetJob": "Get Job",
     "navMyJobs": "My Jobs",
     "navEarnings": "Earnings",
     "navMyProducts": "My Products",

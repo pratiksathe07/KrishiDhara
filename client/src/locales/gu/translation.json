@@ -58,6 +58,7 @@
   },
   "dashboard": {
     "navDashboard": "ડેશબોર્ડ",
+    "navLabourRequirements": "પોસ્ટ",
     "navMyLand": "મારી જમીન",
     "navCrops": "પાક",
     "navHireLabour": "મજૂર રાખો",
@@ -92,6 +93,7 @@
     "noLaboursFound": "કોઈ મજૂર મળ્યો નથી",
     "navMyProfile": "મારી પ્રોફાઇલ",
     "navFindWork": "કામ શોધો",
+    "navGetJob": "કામ મેળવો",
     "navMyJobs": "મારા કામ",
     "navEarnings": "કમાણી",
     "navMyProducts": "મારા ઉત્પાદનો",

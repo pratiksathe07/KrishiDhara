@@ -16,6 +16,7 @@ const path = require("path");
 const adminRoutes = require("./routes/adminRoutes");
 const dealerRoutes = require("./routes/dealerRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
+const labourRequirementRoutes = require("./routes/labourRequirementRoutes");
 
 const app = express();  
 
@@ -68,6 +69,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/dealer", dealerRoutes);
 app.use("/api/complaints", complaintRoutes);
+app.use("/api/labour-requirements", labourRequirementRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────────────────
 app.use((req, res) => {

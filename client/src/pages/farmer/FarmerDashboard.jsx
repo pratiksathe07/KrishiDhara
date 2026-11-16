@@ -6,21 +6,25 @@ import HireLabour from "./HireLabour";
 import ViewDealers from "./ViewDealers";
 import DealerRequirements from "./DealerRequirements";
 import { getActiveDealerRequirements } from "../../services/dealerService";
+import { getMyLabourRequirements } from "../../services/labourRequirementService";
+import FarmerPostFeed from "./FarmerPostFeed";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 import ProfileAvatar from "../../components/ProfileAvatar";
 
 const getNavItems = (t) => [
-  { id: "dashboard",    icon: "🏠", label: t('dashboard.navDashboard') },
-  { id: "requirements", icon: "📋", label: t('dashboard.dealerRequirements', 'Dealer Requirements') },
-  { id: "labour",       icon: "👷", label: t('dashboard.navHireLabour') },
-  { id: "dealers",      icon: "🏪", label: t('dashboard.navDealers') },
+  { id: "dashboard",           icon: "🏠", label: t('dashboard.navDashboard') },
+  { id: "labour-requirements", icon: "📢", label: t('dashboard.navLabourRequirements', 'Post') },
+  { id: "labour",              icon: "👷", label: t('dashboard.navHireLabour') },
+  { id: "requirements",        icon: "📋", label: t('dashboard.dealerRequirements', 'Dealer Requirements') },
+  { id: "dealers",             icon: "🏪", label: t('dashboard.navDealers') },
 ];
 
 // ─── Dashboard home tab content ──────────────────────────────────────────────
 const DashboardHome = ({ user, onNavigateTab }) => {
   const { t } = useTranslation();
   const [requirementsCount, setRequirementsCount] = useState(0);
+  const [labourReqCount, setLabourReqCount] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -31,6 +35,15 @@ const DashboardHome = ({ user, onNavigateTab }) => {
         }
       })
       .catch(() => {});
+
+    getMyLabourRequirements()
+      .then((res) => {
+        if (isMounted && res.data?.success) {
+          setLabourReqCount(res.data.data.stats?.active || res.data.data.requirements?.length || 0);
+        }
+      })
+      .catch(() => {});
+
     return () => {
       isMounted = false;
     };
@@ -59,7 +72,13 @@ const DashboardHome = ({ user, onNavigateTab }) => {
     {/* Stats grid */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       {[
-        { icon: "🌿", label: t('dashboard.activeCrops'), value: "0" },
+        {
+          icon: "📢",
+          label: t('dashboard.navLabourRequirements', 'Post'),
+          value: String(labourReqCount),
+          highlight: true,
+          onClick: () => onNavigateTab && onNavigateTab("labour-requirements"),
+        },
         { icon: "👷", label: t('dashboard.hiredLabour'), value: "0" },
         { icon: "🏪", label: t('dashboard.navDealers'), value: "0" },
         {
@@ -174,6 +193,7 @@ const FarmerDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":    return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
+      case "labour-requirements": return <FarmerPostFeed user={user} />;
       case "requirements": return <DealerRequirements />;
       case "labour":       return <HireLabour />;
       case "dealers":      return <ViewDealers />;

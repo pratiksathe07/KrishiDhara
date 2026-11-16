@@ -58,6 +58,7 @@
   },
   "dashboard": {
     "navDashboard": "डैशबोर्ड",
+    "navLabourRequirements": "पोस्ट",
     "navMyLand": "मेरी ज़मीन",
     "navCrops": "फसलें",
     "navHireLabour": "मज़दूर बुलाएँ",
@@ -92,6 +93,7 @@
     "noLaboursFound": "कोई मज़दूर नहीं मिला",
     "navMyProfile": "मेरी प्रोफाइल",
     "navFindWork": "काम खोजें",
+    "navGetJob": "काम पाएं",
     "navMyJobs": "मेरे काम",
     "navEarnings": "कमाई",
     "navMyProducts": "मेरे उत्पाद",

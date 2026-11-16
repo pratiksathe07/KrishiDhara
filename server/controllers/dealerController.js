@@ -1,6 +1,7 @@
 const PurchaseRequirement = require("../models/PurchaseRequirement");
 const User = require("../models/User");
 const AppError = require("../utils/AppError");
+const { ALLOWED_PRODUCTS } = require("../constants/dealerProducts");
 
 const VALID_QUANTITY_UNITS = ["Ton", "Quintal", "Kilogram (kg)"];
 const VALID_PRICE_UNITS = ["Per ton", "Per quintal", "Per kg"];
@@ -68,43 +69,30 @@ const createRequirement = async (req, res, next) => {
       return next(new AppError("Only registered dealers can create purchase requirements.", 403));
     }
 
-    const registeredCrops = dealer.dealerProfile?.products || [];
-    if (!crop || typeof crop !== "string" || !registeredCrops.includes(crop.trim())) {
-      return next(
-        new AppError(
-          `Crop "${crop}" is not in your registered crops. You can only configure requirements for crops selected during registration.`,
-          400
-        )
-      );
+    const cleanCrop = crop ? crop.trim() : "";
+    if (!cleanCrop) {
+      return next(new AppError("Crop/Product name is required.", 400));
     }
-    const cleanCrop = crop.trim();
 
-    // 2. Enforce 3 active requirements limit
+    const registeredCrops = dealer.dealerProfile?.products || [];
+    if (!registeredCrops.includes(cleanCrop)) {
+      if (ALLOWED_PRODUCTS.includes(cleanCrop)) {
+        dealer.dealerProfile = dealer.dealerProfile || { products: [] };
+        dealer.dealerProfile.products.push(cleanCrop);
+        await dealer.save();
+      }
+    }
+
+    // Enforce reasonable limit of 25 active requirements per dealer
     const activeCount = await PurchaseRequirement.countDocuments({
       dealerId,
       status: "active",
     });
 
-    if (activeCount >= 3) {
+    if (activeCount >= 25) {
       return next(
         new AppError(
-          "Maximum limit of 3 active crop purchase requirements reached. Please edit or delete an existing requirement.",
-          400
-        )
-      );
-    }
-
-    // 3. Prevent duplicate active requirement for the same crop
-    const existing = await PurchaseRequirement.findOne({
-      dealerId,
-      crop: cleanCrop,
-      status: "active",
-    });
-
-    if (existing) {
-      return next(
-        new AppError(
-          `An active purchase requirement for "${cleanCrop}" already exists. You can edit your existing requirement.`,
+          "Limit of 25 active purchase requirements reached. Please edit or delete an existing requirement.",
           400
         )
       );
@@ -305,10 +293,7 @@ const getActiveDealerRequirements = async (req, res, next) => {
       query.quantityUnit = quantityUnit.trim();
     }
 
-    const locFilter = (location || deliveryLocation || "").trim();
-    if (locFilter) {
-      query.deliveryLocation = { $regex: locFilter, $options: "i" };
-    }
+    const locFilter = (location || deliveryLocation || "").trim().toLowerCase();
 
     // Fetch requirements with dealer info
     let requirements = await PurchaseRequirement.find(query)
@@ -323,6 +308,15 @@ const getActiveDealerRequirements = async (req, res, next) => {
     requirements = requirements.filter(
       (r) => r.dealerId && r.dealerId.status === "active"
     );
+
+    // Apply location filter (matches deliveryLocation OR dealer's address)
+    if (locFilter) {
+      requirements = requirements.filter((r) => {
+        const delivMatch = r.deliveryLocation && r.deliveryLocation.toLowerCase().includes(locFilter);
+        const addrMatch = r.dealerId?.address && r.dealerId.address.toLowerCase().includes(locFilter);
+        return delivMatch || addrMatch;
+      });
+    }
 
     // Apply search filter if provided
     if (search && typeof search === "string" && search.trim()) {

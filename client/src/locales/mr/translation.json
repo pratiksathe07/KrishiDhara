@@ -58,6 +58,7 @@
   },
   "dashboard": {
     "navDashboard": "डॅशबोर्ड",
+    "navLabourRequirements": "पोस्ट",
     "navMyLand": "माझी जमीन",
     "navCrops": "पिके",
     "navHireLabour": "मजूर नेमा",
@@ -92,6 +93,7 @@
     "noLaboursFound": "कोणतेही मजूर आढळले नाहीत",
     "navMyProfile": "माझी प्रोफाइल",
     "navFindWork": "काम शोधा",
+    "navGetJob": "काम मिळवा",
     "navMyJobs": "माझी कामे",
     "navEarnings": "कमाई",
     "navMyProducts": "माझी उत्पादने",

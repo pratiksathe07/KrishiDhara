@@ -58,6 +58,7 @@
   },
   "dashboard": {
     "navDashboard": "டாஷ்போர்டு",
+    "navLabourRequirements": "போஸ்ட்",
     "navMyLand": "என் நிலம்",
     "navCrops": "பயிர்கள்",
     "navHireLabour": "தொழிலாளர்களை நியமிக்க",
@@ -92,6 +93,7 @@
     "noLaboursFound": "தொழிலாளர்கள் காணப்படவில்லை",
     "navMyProfile": "என் விவரக்குறிப்பு",
     "navFindWork": "வேலை தேடுக",
+    "navGetJob": "வேலை பெறுக",
     "navMyJobs": "என் வேலைகள்",
     "navEarnings": "வருவாய்",
     "navMyProducts": "என் தயாரிப்புகள்",
