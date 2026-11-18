@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import LogoutButton from "../../components/LogoutButton";
 import { motion, AnimatePresence } from "framer-motion";
 import HireLabour from "./HireLabour";
 import ViewDealers from "./ViewDealers";
@@ -8,9 +7,11 @@ import DealerRequirements from "./DealerRequirements";
 import { getActiveDealerRequirements } from "../../services/dealerService";
 import { getMyLabourRequirements } from "../../services/labourRequirementService";
 import FarmerPostFeed from "./FarmerPostFeed";
+import FarmerProfileView from "./FarmerProfileView";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/ui/LanguageSwitcher";
 import ProfileAvatar from "../../components/ProfileAvatar";
+import ProfileDropdown from "../../components/ProfileDropdown";
 
 const getNavItems = (t) => [
   { id: "dashboard",           icon: "🏠", label: t('dashboard.navDashboard') },
@@ -112,12 +113,38 @@ const DashboardHome = ({ user, onNavigateTab }) => {
 
     {/* Profile info */}
     <motion.div
+      id="profile-section"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.25 }}
       className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm"
     >
-      <h2 className="text-base font-bold text-slate-900 mb-4">{t('dashboard.yourProfile')}</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-base font-bold text-slate-900">{t('dashboard.yourProfile')}</h2>
+        <button
+          type="button"
+          onClick={() => onNavigateTab && onNavigateTab("profile")}
+          className="text-xs text-[#3b38e4] hover:text-white bg-indigo-50 hover:bg-[#3b38e4] px-3.5 py-1.5 rounded-xl border border-indigo-200 transition flex items-center gap-1.5 font-semibold shadow-sm cursor-pointer"
+        >
+          <span>View Full Profile →</span>
+        </button>
+      </div>
+
+      <div className="flex items-center gap-4 pb-4 mb-4 border-b border-slate-100">
+        <div className="shrink-0">
+          <ProfileAvatar />
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900">{user?.firstName} {user?.lastName}</h3>
+            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-[#3b38e4] border border-indigo-200">
+              {t('register.farmer', 'Farmer')}
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 font-medium">{user?.email}</p>
+        </div>
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
         <div>
           <p className="text-slate-400 text-xs mb-0.5 font-medium">{t('dashboard.fullName')}</p>
@@ -192,12 +219,13 @@ const FarmerDashboard = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "dashboard":    return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
+      case "dashboard":           return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
+      case "profile":             return <FarmerProfileView user={user} onBack={() => setActiveTab("dashboard")} onNavigateTab={setActiveTab} />;
       case "labour-requirements": return <FarmerPostFeed user={user} />;
-      case "requirements": return <DealerRequirements />;
-      case "labour":       return <HireLabour />;
-      case "dealers":      return <ViewDealers />;
-      default:             return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
+      case "requirements":        return <DealerRequirements />;
+      case "labour":              return <HireLabour />;
+      case "dealers":             return <ViewDealers />;
+      default:                    return <DashboardHome user={user} onNavigateTab={setActiveTab} />;
     }
   };
 
@@ -250,11 +278,15 @@ const FarmerDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher light={true} />
-            <ProfileAvatar />
-            <span className="hidden sm:block text-sm text-slate-800 font-semibold">
-              {user?.firstName} {user?.lastName}
-            </span>
-            <LogoutButton />
+            <ProfileDropdown
+              role="farmer"
+              roleLabel={t('register.farmer', 'Farmer')}
+              profileSubtitle="Personal Details & Farm Info"
+              onProfileClick={() => {
+                setActiveTab("profile");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            />
           </div>
         </div>
       </header>
@@ -280,9 +312,6 @@ const FarmerDashboard = () => {
               </button>
             );
           })}
-          <div className="mt-2 pt-2 border-t border-slate-100">
-            <LogoutButton variant="sidebar" />
-          </div>
         </aside>
 
         {/* Main content */}
