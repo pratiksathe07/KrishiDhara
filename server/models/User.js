@@ -45,12 +45,43 @@ const labourProfileSchema = new mongoose.Schema(
         message: "One or more skills are invalid.",
       },
     },
+    expectedWage: {
+      type: Number,
+      min: [0, "Expected wage cannot be negative."],
+    },
+    availability: {
+      type: String,
+      enum: ["available", "busy", "part-time", "any", ""],
+      default: "available",
+    },
+    stateId: { type: String, trim: true, default: "" },
+    state: { type: String, trim: true, default: "" },
+    districtId: { type: String, trim: true, default: "" },
+    district: { type: String, trim: true, default: "" },
+    talukaId: { type: String, trim: true, default: "" },
+    taluka: { type: String, trim: true, default: "" },
+    villageId: { type: String, trim: true, default: "" },
+    village: { type: String, trim: true, default: "" },
   },
   { _id: false }
 );
 
 const dealerProfileSchema = new mongoose.Schema(
   {
+    businessName: {
+      type: String,
+      trim: true,
+      maxlength: [100, "Business name cannot exceed 100 characters."],
+      default: "",
+    },
+    stateId: { type: String, trim: true, default: "" },
+    state: { type: String, trim: true, default: "" },
+    districtId: { type: String, trim: true, default: "" },
+    district: { type: String, trim: true, default: "" },
+    talukaId: { type: String, trim: true, default: "" },
+    taluka: { type: String, trim: true, default: "" },
+    villageId: { type: String, trim: true, default: "" },
+    village: { type: String, trim: true, default: "" },
     products: {
       type: [String],
       default: [],

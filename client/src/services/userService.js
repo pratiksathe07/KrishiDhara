@@ -41,3 +41,18 @@ export const uploadProfilePicture = (formData) => {
 export const deleteProfilePicture = () => {
   return api.delete("/users/profile-picture");
 };
+
+/**
+ * Fetch currently authenticated user's profile.
+ */
+export const getProfile = () => {
+  return api.get("/users/profile");
+};
+
+/**
+ * Update currently authenticated user's profile.
+ * @param {Object} data - profile update payload
+ */
+export const updateProfile = (data) => {
+  return api.put("/users/profile", data);
+};

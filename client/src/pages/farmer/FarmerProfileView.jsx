@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ProfileAvatar from "../../components/ProfileAvatar";
-import { User, Mail, Phone, MapPin, FileText, ArrowLeft, Briefcase, Store } from "lucide-react";
+import EditProfileModal from "../../components/EditProfileModal";
+import { User, Mail, Phone, MapPin, FileText, ArrowLeft, Briefcase, Store, Edit3 } from "lucide-react";
 
 const FarmerProfileView = ({ user, onBack, onNavigateTab }) => {
   const { t } = useTranslation();
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -23,14 +26,24 @@ const FarmerProfileView = ({ user, onBack, onNavigateTab }) => {
             {t("dashboard.navMyProfile", "My Profile")}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="text-xs text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200 transition flex items-center gap-1.5 font-semibold shadow-sm cursor-pointer"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>{t("dashboard.backToDashboard", "Back to Dashboard")}</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsEditOpen(true)}
+            className="text-xs text-white bg-[#3b38e4] hover:bg-[#302dc4] px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 font-semibold shadow-sm shadow-[#3b38e4]/25 cursor-pointer"
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Edit Profile</span>
+          </button>
+          <button
+            type="button"
+            onClick={onBack}
+            className="text-xs text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200 transition flex items-center gap-1.5 font-semibold shadow-sm cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>{t("dashboard.backToDashboard", "Back to Dashboard")}</span>
+          </button>
+        </div>
       </div>
 
       {/* Main Profile Card */}
@@ -193,6 +206,12 @@ const FarmerProfileView = ({ user, onBack, onNavigateTab }) => {
           </span>
         </button>
       </motion.div>
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+      />
     </div>
   );
 };

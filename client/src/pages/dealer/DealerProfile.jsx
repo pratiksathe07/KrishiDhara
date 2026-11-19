@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import DealerHeader from "../../components/dealer/DealerHeader";
 import ProfileAvatar from "../../components/ProfileAvatar";
+import EditProfileModal from "../../components/EditProfileModal";
 import RequirementModal from "../../components/dealer/RequirementModal";
 import {
   getDealerRequirements,
@@ -43,6 +44,7 @@ const DealerProfile = () => {
 
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [activeCropForModal, setActiveCropForModal] = useState("");
   const [editingRequirement, setEditingRequirement] = useState(null);
 
@@ -164,12 +166,22 @@ const DealerProfile = () => {
             <span>/</span>
             <span className="text-slate-900 font-semibold">My Profile & Requirements</span>
           </div>
-          <Link
-            to="/dealer/dashboard"
-            className="text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 px-3 py-1.5 rounded-xl border border-slate-200 transition flex items-center gap-1.5 font-semibold"
-          >
-            <span>←</span> Back to Dashboard
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsEditModalOpen(true)}
+              className="text-xs text-white bg-[#3b38e4] hover:bg-[#302dc4] px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 font-semibold shadow-sm shadow-[#3b38e4]/25 cursor-pointer"
+            >
+              <Edit2 className="w-3.5 h-3.5" />
+              <span>Edit Profile</span>
+            </button>
+            <Link
+              to="/dealer/dashboard"
+              className="text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 px-3 py-1.5 rounded-xl border border-slate-200 transition flex items-center gap-1.5 font-semibold"
+            >
+              <span>←</span> Back to Dashboard
+            </Link>
+          </div>
         </div>
 
         {/* ── Section 1: Dealer Registration Profile Card ── */}
@@ -605,6 +617,12 @@ const DealerProfile = () => {
         crop={activeCropForModal}
         requirement={editingRequirement}
         onSuccess={fetchRequirements}
+      />
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
       />
     </div>
   );

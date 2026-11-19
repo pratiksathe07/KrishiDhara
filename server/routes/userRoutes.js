@@ -4,12 +4,22 @@ const {
   getDealers,
   updateProfilePicture,
   deleteProfilePicture,
+  getProfile,
+  updateProfile,
 } = require("../controllers/userController");
 const { getActiveDealerRequirements } = require("../controllers/dealerController");
 const { authenticateUser } = require("../middleware/authenticate");
 const { uploadAvatar } = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
+
+// GET /api/users/profile
+// Get current user's profile
+router.get("/profile", authenticateUser, getProfile);
+
+// PUT /api/users/profile
+// Update current user's profile
+router.put("/profile", authenticateUser, updateProfile);
 
 // GET /api/users/labours?skills=Plowing,Harvesting
 // Returns all registered labour users with their profiles.
